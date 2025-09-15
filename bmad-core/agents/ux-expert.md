@@ -77,7 +77,7 @@ dependencies:
 memory_integration:
   # Search project memory before starting ANY new UX work
   startup_search: |
-    search_memory("UX_DESIGN UX_USER UX_FLOW UX_PROTOTYPE UX_RESEARCH user experience design wireframes", project_id="{project_name}")
+    search_memory("UX_DESIGN UX_USER UX_FLOW UX_PROTOTYPE UX_RESEARCH user experience design wireframes", project_id="{project_name}", agent_role="UX")
 
   # Store all UX outputs with proper prefixes
   storage_rules:
@@ -107,25 +107,25 @@ search_patterns:
 # Memory-Enhanced Workflow
 enhanced_workflow:
   before_ux_work:
-    1. "search_memory('UX_DESIGN UX_FLOW UX_PROTOTYPE user experience design', project_id='{project_name}')"
-    2. "search_memory('BA_REQ BA_BUSINESS PO_STORY PM_SCOPE user requirements', project_id='{project_name}')"
+    1. "search_memory('UX_DESIGN UX_FLOW UX_PROTOTYPE user experience design', project_id='{project_name}', agent_role='UX')"
+    2. "search_memory('BA_REQ BA_BUSINESS PO_STORY PM_SCOPE user requirements', project_id='{project_name}', agent_role='UX')"
     3. Review existing designs and user research to avoid conflicts
     4. Identify gaps in current UX understanding
   during_ux_work:
-    1. "store_memory('UX_DESIGN: [design decisions and rationale]', project_id='{project_name}')"
-    2. "store_memory('UX_FLOW: [user flow documentation]', project_id='{project_name}')"
-    3. "store_memory('UX_PROTOTYPE: [wireframe/prototype details]', project_id='{project_name}')"
-    4. "store_memory('UX_RESEARCH: [user research findings]', project_id='{project_name}')"
-    5. "store_memory('UX_USER: [persona and user insights]', project_id='{project_name}')"
+    1. "store_memory('UX_DESIGN: [design decisions and rationale]', project_id='{project_name}', agent_role='UX')"
+    2. "store_memory('UX_FLOW: [user flow documentation]', project_id='{project_name}', agent_role='UX')"
+    3. "store_memory('UX_PROTOTYPE: [wireframe/prototype details]', project_id='{project_name}', agent_role='UX')"
+    4. "store_memory('UX_RESEARCH: [user research findings]', project_id='{project_name}', agent_role='UX')"
+    5. "store_memory('UX_USER: [persona and user insights]', project_id='{project_name}', agent_role='UX')"
   handoff_preparation:
-    1. "search_memory('UX_DESIGN UX_FLOW UX_PROTOTYPE UX_RESEARCH UX_USER', project_id='{project_name}')"
+    1. "search_memory('UX_DESIGN UX_FLOW UX_PROTOTYPE UX_RESEARCH UX_USER', project_id='{project_name}', agent_role='UX')"
     2. Summarize all UX outputs for development teams
-    3. "store_memory('UX_HANDOFF: [summary for Dev/QA teams]', project_id='{project_name}')"
+    3. "store_memory('UX_HANDOFF: [summary for Dev/QA teams]', project_id='{project_name}', agent_role='UX')"
 
 # Memory Commands Reference
 memory_commands:
-  store: "store_memory('[PREFIX]: content', project_id='{project_name}')"
-  search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}')"
+  store: "store_memory('[PREFIX]: content', project_id='{project_name}', agent_role='UX')"
+  search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='UX')"
 
 # Critical Memory Integration Rules
 memory_rules:
@@ -142,15 +142,15 @@ command_examples:
   memory_aware_designs: |
     *create-front-end-spec {spec_name}
     # Will automatically:
-    # 1. search_memory("UX_DESIGN UX_FLOW BA_REQ user interface requirements", project_id="{project_name}")
+    # 1. search_memory("UX_DESIGN UX_FLOW BA_REQ user interface requirements", project_id="{project_name}", agent_role="UX")
     # 2. Review existing designs before creating new specs
-    # 3. store_memory("UX_DESIGN: {design_specifications}", project_id="{project_name}")
+    # 3. store_memory("UX_DESIGN: {design_specifications}", project_id="{project_name}", agent_role="UX")
 
   context_aware_prototypes: |
     *generate-ui-prompt
     # Will automatically:
-    # 1. search_memory("UX_PROTOTYPE UX_DESIGN PO_STORY BA_REQ existing prototypes", project_id="{project_name}")
-    # 2. search_memory("ARCH_DECISION DEV_CODE existing technical constraints", project_id="{project_name}")
+    # 1. search_memory("UX_PROTOTYPE UX_DESIGN PO_STORY BA_REQ existing prototypes", project_id="{project_name}", agent_role="UX")
+    # 2. search_memory("ARCH_DECISION DEV_CODE existing technical constraints", project_id="{project_name}", agent_role="UX")
     # 3. Build on existing design patterns and constraints
-    # 4. store_memory("UX_PROTOTYPE: {prototype_details}", project_id="{project_name}")
+    # 4. store_memory("UX_PROTOTYPE: {prototype_details}", project_id="{project_name}", agent_role="UX")
 ```

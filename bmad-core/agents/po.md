@@ -89,7 +89,7 @@ dependencies:
 memory_integration:
   # Search project memory before starting ANY new product work
   startup_search: |
-    search_memory("PO_STORY PO_EPIC PO_BACKLOG PO_CRITERIA requirements user stories", project_id="{project_name}")
+    search_memory("PO_STORY PO_EPIC PO_BACKLOG PO_CRITERIA requirements user stories", project_id="{project_name}", agent_role="PO")
 
   # Store all product outputs with proper prefixes
   storage_rules:
@@ -119,26 +119,26 @@ search_patterns:
 # Memory-Enhanced Workflow
 enhanced_workflow:
   before_product_work:
-    1. "search_memory('PO_STORY PO_EPIC PO_BACKLOG user stories requirements', project_id='{project_name}')"
-    2. "search_memory('BA_REQ BA_BUSINESS PM_SCOPE UX_USER business requirements', project_id='{project_name}')"
+    1. "search_memory('PO_STORY PO_EPIC PO_BACKLOG user stories requirements', project_id='{project_name}', agent_role='PO')"
+    2. "search_memory('BA_REQ BA_BUSINESS PM_SCOPE UX_USER business requirements', project_id='{project_name}', agent_role='PO')"
     3. Review existing stories and epics to avoid conflicts
     4. Identify gaps in current backlog understanding
 
   during_product_work:
-    1. "store_memory('PO_STORY: [user story details]', project_id='{project_name}')"
-    2. "store_memory('PO_EPIC: [epic definition]', project_id='{project_name}')"
-    3. "store_memory('PO_CRITERIA: [acceptance criteria]', project_id='{project_name}')"
-    4. "store_memory('PO_PRIORITY: [prioritization rationale]', project_id='{project_name}')"
+    1. "store_memory('PO_STORY: [user story details]', project_id='{project_name}', agent_role='PO')"
+    2. "store_memory('PO_EPIC: [epic definition]', project_id='{project_name}', agent_role='PO')"
+    3. "store_memory('PO_CRITERIA: [acceptance criteria]', project_id='{project_name}', agent_role='PO')"
+    4. "store_memory('PO_PRIORITY: [prioritization rationale]', project_id='{project_name}', agent_role='PO')"
 
   handoff_preparation:
-    1. "search_memory('PO_STORY PO_EPIC PO_CRITERIA PO_BACKLOG', project_id='{project_name}')"
+    1. "search_memory('PO_STORY PO_EPIC PO_CRITERIA PO_BACKLOG', project_id='{project_name}', agent_role='PO')"
     2. Summarize all product outputs for development teams
-    3. "store_memory('PO_HANDOFF: [summary for Dev/QA teams]', project_id='{project_name}')"
+    3. "store_memory('PO_HANDOFF: [summary for Dev/QA teams]', project_id='{project_name}', agent_role='PO')"
 
 # Memory Commands Reference
 memory_commands:
-  store: "store_memory('[PREFIX]: content', project_id='{project_name}')"
-  search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}')"
+  store: "store_memory('[PREFIX]: content', project_id='{project_name}', agent_role='PO')"
+  search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='PO')"
 
 # Critical Memory Integration Rules
 memory_rules:
@@ -155,15 +155,15 @@ command_examples:
   memory_aware_stories: |
     *create-story {story_name}
     # Will automatically:
-    # 1. search_memory("PO_STORY PO_EPIC BA_REQ user story requirements", project_id="{project_name}")
+    # 1. search_memory("PO_STORY PO_EPIC BA_REQ user story requirements", project_id="{project_name}", agent_role="PO")
     # 2. Review existing stories before creating new ones
-    # 3. store_memory("PO_STORY: {story_details}", project_id="{project_name}")
+    # 3. store_memory("PO_STORY: {story_details}", project_id="{project_name}", agent_role="PO")
 
   context_aware_epics: |
     *create-epic
     # Will automatically:
-    # 1. search_memory("PO_EPIC PO_STORY BA_REQ PM_SCOPE epic requirements", project_id="{project_name}")
-    # 2. search_memory("ARCH_DECISION UX_USER existing architecture", project_id="{project_name}")
+    # 1. search_memory("PO_EPIC PO_STORY BA_REQ PM_SCOPE epic requirements", project_id="{project_name}", agent_role="PO")
+    # 2. search_memory("ARCH_DECISION UX_USER existing architecture", project_id="{project_name}", agent_role="PO")
     # 3. Build on existing patterns and constraints
-    # 4. store_memory("PO_EPIC: {epic_definition}", project_id="{project_name}")
+    # 4. store_memory("PO_EPIC: {epic_definition}", project_id="{project_name}", agent_role="PO")
 ```
