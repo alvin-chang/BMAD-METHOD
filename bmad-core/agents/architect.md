@@ -97,8 +97,8 @@ dependencies:
 memory_integration:
   # Search project memory before starting ANY new architectural work
   startup_search: |
-    search_memory("ARCH_DECISION ARCH_TECH ARCH_PATTERN requirements system", project_id="{project_name}")
- 
+    search_memory("ARCH_DECISION ARCH_TECH ARCH_PATTERN requirements system", project_id="{project_name}", agent_role="ARCH")
+
   # Store all architectural outputs with proper prefixes
   storage_rules:
     - "All architectural decisions → ARCH_DECISION: [content]"
@@ -126,26 +126,26 @@ search_patterns:
 # Memory-Enhanced Workflow
 enhanced_workflow:
   before_architectural_work:
-    1. "search_memory('ARCH_DECISION ARCH_TECH ARCH_PATTERN system architecture', project_id='{project_name}')"
-    2. "search_memory('BA_REQ BA_BUSINESS PM_SCOPE user requirements', project_id='{project_name}')"
+    1. "search_memory('ARCH_DECISION ARCH_TECH ARCH_PATTERN system architecture', project_id='{project_name}', agent_role='ARCH')"
+    2. "search_memory('BA_REQ BA_BUSINESS PM_SCOPE user requirements', project_id='{project_name}', agent_role='ARCH')"
     3. Review existing architectural decisions to avoid conflicts
     4. Identify gaps in current system understanding
-  
+
   during_architectural_work:
-    1. "store_memory('ARCH_DECISION: [architectural decision details]', project_id='{project_name}')"
-    2. "store_memory('ARCH_TECH: [technology selection]', project_id='{project_name}')"
-    3. "store_memory('ARCH_PATTERN: [design pattern implementation]', project_id='{project_name}')"
-    4. "store_memory('ARCH_SECURITY: [security implementation details]', project_id='{project_name}')"
-  
+    1. "store_memory('ARCH_DECISION: [architectural decision details]', project_id='{project_name}', agent_role='ARCH')"
+    2. "store_memory('ARCH_TECH: [technology selection]', project_id='{project_name}', agent_role='ARCH')"
+    3. "store_memory('ARCH_PATTERN: [design pattern implementation]', project_id='{project_name}', agent_role='ARCH')"
+    4. "store_memory('ARCH_SECURITY: [security implementation details]', project_id='{project_name}', agent_role='ARCH')"
+
   handoff_preparation:
-    1. "search_memory('ARCH_DECISION ARCH_TECH ARCH_PATTERN ARCH_SECURITY', project_id='{project_name}')"
+    1. "search_memory('ARCH_DECISION ARCH_TECH ARCH_PATTERN ARCH_SECURITY', project_id='{project_name}', agent_role='ARCH')"
     2. Summarize all architectural outputs for downstream teams
-    3. "store_memory('ARCH_HANDOFF: [summary for Dev/QA teams]', project_id='{project_name}')"
+    3. "store_memory('ARCH_HANDOFF: [summary for Dev/QA teams]', project_id='{project_name}', agent_role='ARCH')"
 
 # Memory Commands Reference
 memory_commands:
-  store: "store_memory('[PREFIX]: content', project_id='{project_name}')"
-  search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}')"
+  store: "store_memory('[PREFIX]: content', project_id='{project_name}', agent_role='ARCH')"
+  search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='ARCH')"
 
 # Critical Memory Integration Rules
 memory_rules:
@@ -162,15 +162,15 @@ command_examples:
   memory_aware_architecture: |
     *create-full-stack-architecture {system_name}
     # Will automatically:
-    # 1. search_memory("ARCH_DECISION ARCH_TECH BA_REQ system requirements", project_id="{project_name}")
+    # 1. search_memory("ARCH_DECISION ARCH_TECH BA_REQ system requirements", project_id="{project_name}", agent_role="ARCH")
     # 2. Review existing architectural decisions before starting
-    # 3. store_memory("ARCH_DECISION: {architecture_decisions}", project_id="{project_name}")
- 
+    # 3. store_memory("ARCH_DECISION: {architecture_decisions}", project_id="{project_name}", agent_role="ARCH")
+
   context_aware_design: |
     *create-backend-architecture
     # Will automatically:
-    # 1. search_memory("ARCH_DECISION ARCH_TECH BA_REQ PM_SCOPE backend", project_id="{project_name}")
-    # 2. search_memory("DEV_PATTERN DEV_CODE existing implementation", project_id="{project_name}")
+    # 1. search_memory("ARCH_DECISION ARCH_TECH BA_REQ PM_SCOPE backend", project_id="{project_name}", agent_role="ARCH")
+    # 2. search_memory("DEV_PATTERN DEV_CODE existing implementation", project_id="{project_name}", agent_role="ARCH")
     # 3. Build on existing patterns and constraints
-    # 4. store_memory("ARCH_TECH: {technology_selections}", project_id="{project_name}")
+    # 4. store_memory("ARCH_TECH: {technology_selections}", project_id="{project_name}", agent_role="ARCH")
 ```

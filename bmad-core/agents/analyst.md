@@ -1,4 +1,5 @@
 <!-- Powered by BMAD™ Core -->
+
 # analyst
 
 ACTIVATION-NOTICE: This file contains your full agent operating guidelines. DO NOT load any external agent files as the complete configuration is in the YAML block below.
@@ -96,12 +97,12 @@ dependencies:
 memory_integration:
   # Search project memory before starting ANY new analysis
   startup_search: |
-    search_memory("BA_REQ BA_INSIGHT BA_BUSINESS requirements analysis", project_id="{project_name}")
-  
+    search_memory("BA_REQ BA_INSIGHT BA_BUSINESS requirements analysis", project_id="{project_name}", agent_role="ANALYSIS")
+
   # Store all analysis outputs with proper prefixes
   storage_rules:
     - "All requirements → BA_REQ: [content]"
-    - "All insights → BA_INSIGHT: [content]" 
+    - "All insights → BA_INSIGHT: [content]"
     - "All business analysis → BA_BUSINESS: [content]"
     - "All competitive analysis → BA_COMPETITIVE: [content]"
     - "All market research → BA_MARKET: [content]"
@@ -125,26 +126,26 @@ search_patterns:
 ## Memory-Enhanced Workflow
 enhanced_workflow:
   before_analysis:
-    1. "search_memory('BA_REQ BA_INSIGHT requirements analysis', project_id='{project_name}')"
-    2. "search_memory('PM_SCOPE PM_TIMELINE project context', project_id='{project_name}')"
+    1. "search_memory('BA_REQ BA_INSIGHT requirements analysis', project_id='{project_name}', agent_role='ANALYSIS')"
+    2. "search_memory('PM_SCOPE PM_TIMELINE project context', project_id='{project_name}', agent_role='ANALYSIS')"
     3. Review existing analysis to avoid duplication
     4. Identify gaps in current understanding
-  
+
   during_analysis:
-    1. "store_memory('BA_REQ: [requirement details]', project_id='{project_name}')"
-    2. "store_memory('BA_INSIGHT: [analysis insight]', project_id='{project_name}')"
-    3. "store_memory('BA_BUSINESS: [business context]', project_id='{project_name}')"
-  
+    1. "store_memory('BA_REQ: [requirement details]', project_id='{project_name}', agent_role='ANALYSIS')"
+    2. "store_memory('BA_INSIGHT: [analysis insight]', project_id='{project_name}', agent_role='ANALYSIS')"
+    3. "store_memory('BA_BUSINESS: [business context]', project_id='{project_name}', agent_role='ANALYSIS')"
+
   handoff_preparation:
-    1. "search_memory('BA_REQ BA_INSIGHT BA_BUSINESS', project_id='{project_name}')"
+    1. "search_memory('BA_REQ BA_INSIGHT BA_BUSINESS', project_id='{project_name}', agent_role='ANALYSIS')"
     2. Summarize all analyst outputs for downstream teams
-    3. "store_memory('BA_HANDOFF: [summary for PM/Architect]', project_id='{project_name}')"
+    3. "store_memory('BA_HANDOFF: [summary for PM/Architect]', project_id='{project_name}', agent_role='ANALYSIS')"
 
 ## Memory Commands Reference
 memory_commands:
-  store: "store_memory('[PREFIX]: content', project_id='{project_name}')"
-  search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}')"
-  
+  store: "store_memory('[PREFIX]: content', project_id='{project_name}', agent_role='ANALYSIS')"
+  search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='ANALYSIS')"
+
 ## Critical Memory Integration Rules
 memory_rules:
   1. "ALWAYS search memory before starting new analysis"
@@ -160,15 +161,15 @@ command_examples:
   memory_aware_brainstorm: |
     *brainstorm {topic}
     # Will automatically:
-    # 1. search_memory("BA_INSIGHT BA_BUSINESS {topic}", project_id="{project_name}")
+    # 1. search_memory("BA_INSIGHT BA_BUSINESS {topic}", project_id="{project_name}", agent_role="ANALYSIS")
     # 2. Review existing insights before starting
-    # 3. store_memory("BA_INSIGHT: {brainstorm_results}", project_id="{project_name}")
-  
+    # 3. store_memory("BA_INSIGHT: {brainstorm_results}", project_id="{project_name}", agent_role="ANALYSIS")
+
   context_aware_analysis: |
     *create-competitor-analysis
     # Will automatically:
-    # 1. search_memory("BA_COMPETITIVE BA_MARKET competitor", project_id="{project_name}")
-    # 2. search_memory("PM_SCOPE market requirements", project_id="{project_name}")
+    # 1. search_memory("BA_COMPETITIVE BA_MARKET competitor", project_id="{project_name}", agent_role="ANALYSIS")
+    # 2. search_memory("PM_SCOPE market requirements", project_id="{project_name}", agent_role="ANALYSIS")
     # 3. Build on existing analysis
-    # 4. store_memory("BA_COMPETITIVE: {analysis_results}", project_id="{project_name}")
+    # 4. store_memory("BA_COMPETITIVE: {analysis_results}", project_id="{project_name}", agent_role="ANALYSIS")
 ```

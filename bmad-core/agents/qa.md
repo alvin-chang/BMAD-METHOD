@@ -102,8 +102,8 @@ dependencies:
 memory_integration:
   # Search project memory before starting ANY QA work
   startup_search: |
-    search_memory("QA_TEST QA_BUG QA_STRATEGY QA_AUTOMATION QA_COVERAGE test quality", project_id="{project_name}")
-    
+    search_memory("QA_TEST QA_BUG QA_STRATEGY QA_AUTOMATION QA_COVERAGE test quality", project_id="{project_name}", agent_role="QA")
+
   # Store all QA outputs with proper prefixes
   storage_rules:
     - "All test strategies → QA_STRATEGY: [content]"
@@ -135,31 +135,31 @@ search_patterns:
 # Memory-Enhanced Workflow
 enhanced_workflow:
   before_qa_work:
-    1. "search_memory('QA_TEST QA_BUG QA_STRATEGY QA_AUTOMATION test patterns', project_id='{project_name}')"
-    2. "search_memory('SM_STORY PO_STORY BA_REQ requirements acceptance criteria', project_id='{project_name}')"
-    3. "search_memory('DEV_CODE DEV_TEST DEV_PATTERN implementation details', project_id='{project_name}')"
+    1. "search_memory('QA_TEST QA_BUG QA_STRATEGY QA_AUTOMATION test patterns', project_id='{project_name}', agent_role='QA')"
+    2. "search_memory('SM_STORY PO_STORY BA_REQ requirements acceptance criteria', project_id='{project_name}', agent_role='QA')"
+    3. "search_memory('DEV_CODE DEV_TEST DEV_PATTERN implementation details', project_id='{project_name}', agent_role='QA')"
     4. Review existing test strategies and quality patterns to avoid duplication
     5. Identify gaps in current quality coverage
-    
+
   during_qa_work:
-    1. "store_memory('QA_STRATEGY: [test approach and methodology]', project_id='{project_name}')"
-    2. "store_memory('QA_TEST: [specific test cases and scenarios]', project_id='{project_name}')"
-    3. "store_memory('QA_BUG: [issues found and analysis]', project_id='{project_name}')"
-    4. "store_memory('QA_GATE: [quality gate decisions and rationale]', project_id='{project_name}')"
-    5. "store_memory('QA_AUTOMATION: [automation patterns and scripts]', project_id='{project_name}')"
-    6. "store_memory('QA_COVERAGE: [coverage analysis and gaps]', project_id='{project_name}')"
-    7. "store_memory('QA_NFR: [non-functional requirements validation]', project_id='{project_name}')"
-    8. "store_memory('QA_RISK: [risk assessments and mitigation]', project_id='{project_name}')"
-    
+    1. "store_memory('QA_STRATEGY: [test approach and methodology]', project_id='{project_name}', agent_role='QA')"
+    2. "store_memory('QA_TEST: [specific test cases and scenarios]', project_id='{project_name}', agent_role='QA')"
+    3. "store_memory('QA_BUG: [issues found and analysis]', project_id='{project_name}', agent_role='QA')"
+    4. "store_memory('QA_GATE: [quality gate decisions and rationale]', project_id='{project_name}', agent_role='QA')"
+    5. "store_memory('QA_AUTOMATION: [automation patterns and scripts]', project_id='{project_name}', agent_role='QA')"
+    6. "store_memory('QA_COVERAGE: [coverage analysis and gaps]', project_id='{project_name}', agent_role='QA')"
+    7. "store_memory('QA_NFR: [non-functional requirements validation]', project_id='{project_name}', agent_role='QA')"
+    8. "store_memory('QA_RISK: [risk assessments and mitigation]', project_id='{project_name}', agent_role='QA')"
+
   handoff_preparation:
-    1. "search_memory('QA_TEST QA_STRATEGY QA_BUG QA_GATE all qa outputs', project_id='{project_name}')"
+    1. "search_memory('QA_TEST QA_STRATEGY QA_BUG QA_GATE all qa outputs', project_id='{project_name}', agent_role='QA')"
     2. Summarize all quality assessments for development and deployment teams
-    3. "store_memory('QA_HANDOFF: [summary for deployment/operations teams]', project_id='{project_name}')"
+    3. "store_memory('QA_HANDOFF: [summary for deployment/operations teams]', project_id='{project_name}', agent_role='QA')"
 
 # Memory Commands Reference
 memory_commands:
-  store: "store_memory('[PREFIX]: content', project_id='{project_name}')"
-  search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}')"
+  store: "store_memory('[PREFIX]: content', project_id='{project_name}', agent_role='QA')"
+  search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='QA')"
 
 # Critical Memory Integration Rules
 memory_rules:
@@ -176,23 +176,23 @@ command_examples:
   memory_aware_review: |
     *review {story_name}
     # Will automatically:
-    # 1. search_memory("QA_TEST QA_BUG QA_STRATEGY SM_STORY DEV_CODE test quality", project_id="{project_name}")
+    # 1. search_memory("QA_TEST QA_BUG QA_STRATEGY SM_STORY DEV_CODE test quality", project_id="{project_name}", agent_role="QA")
     # 2. Review existing quality patterns before creating new tests
-    # 3. store_memory("QA_STRATEGY: {test_approach}", project_id="{project_name}")
-    
+    # 3. store_memory("QA_STRATEGY: {test_approach}", project_id="{project_name}", agent_role="QA")
+
   context_aware_testing: |
     *test-design {story_name}
     # Will automatically:
-    # 1. search_memory("QA_TEST QA_AUTOMATION BA_REQ existing test patterns", project_id="{project_name}")
-    # 2. search_memory("DEV_CODE DEV_PATTERN implementation details", project_id="{project_name}")
+    # 1. search_memory("QA_TEST QA_AUTOMATION BA_REQ existing test patterns", project_id="{project_name}", agent_role="QA")
+    # 2. search_memory("DEV_CODE DEV_PATTERN implementation details", project_id="{project_name}", agent_role="QA")
     # 3. Build on existing test frameworks and avoid test duplication
-    # 4. store_memory("QA_TEST: {test_scenarios}", project_id="{project_name}")
-    
+    # 4. store_memory("QA_TEST: {test_scenarios}", project_id="{project_name}", agent_role="QA")
+
   quality_gate_decision: |
     *gate {story_name}
     # Will automatically:
-    # 1. search_memory("QA_GATE QA_RISK QA_BUG previous quality decisions", project_id="{project_name}")
-    # 2. search_memory("DEV_CODE DEV_TEST DEV_BUGFIX current implementation", project_id="{project_name}")
+    # 1. search_memory("QA_GATE QA_RISK QA_BUG previous quality decisions", project_id="{project_name}", agent_role="QA")
+    # 2. search_memory("DEV_CODE DEV_TEST DEV_BUGFIX current implementation", project_id="{project_name}", agent_role="QA")
     # 3. Apply consistent quality standards based on project history
-    # 4. store_memory("QA_GATE: {gate_decision_rationale}", project_id="{project_name}")
+    # 4. store_memory("QA_GATE: {gate_decision_rationale}", project_id="{project_name}", agent_role="QA")
 ```

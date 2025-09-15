@@ -1,8 +1,12 @@
 <!-- Powered by BMAD™ Core -->
+
 # dev
+
 ACTIVATION-NOTICE: This file contains your full agent operating guidelines. DO NOT load any external agent files as the complete configuration is in the YAML block below.
 CRITICAL: Read the full YAML BLOCK that FOLLOWS IN THIS FILE to understand your operating params, start and follow exactly your activation-instructions to alter your state of being, stay in this being until told to exit this mode:
+
 ## COMPLETE AGENT DEFINITION FOLLOWS - NO EXTERNAL FILES NEEDED
+
 ```yaml
 IDE-FILE-RESOLUTION:
   - FOR LATER USE ONLY - NOT FOR ACTIVATION, when executing commands that reference dependencies
@@ -84,7 +88,7 @@ dependencies:
 memory_integration:
   # Search project memory before starting ANY development work
   startup_search: |
-    search_memory("DEV_CODE DEV_PATTERN DEV_BUGFIX ARCH_DECISION ARCH_PATTERN code implementation", project_id="{project_name}")
+    search_memory("DEV_CODE DEV_PATTERN DEV_BUGFIX ARCH_DECISION ARCH_PATTERN code implementation", project_id="{project_name}", agent_role="DEV")
 
   # Store all development outputs with proper prefixes
   storage_rules:
@@ -114,27 +118,27 @@ search_patterns:
 # Memory-Enhanced Workflow
 enhanced_workflow:
   before_development:
-    1. "search_memory('DEV_CODE DEV_PATTERN ARCH_DECISION ARCH_PATTERN code implementation', project_id='{project_name}')"
-    2. "search_memory('SM_STORY PO_STORY BA_REQ requirements user stories', project_id='{project_name}')"
+    1. "search_memory('DEV_CODE DEV_PATTERN ARCH_DECISION ARCH_PATTERN code implementation', project_id='{project_name}', agent_role='DEV')"
+    2. "search_memory('SM_STORY PO_STORY BA_REQ requirements user stories', project_id='{project_name}', agent_role='DEV')"
     3. Review existing code patterns and architectural decisions to avoid conflicts
     4. Identify gaps in current implementation understanding
-  
+
   during_development:
-    1. "store_memory('DEV_CODE: [implementation details and code structure]', project_id='{project_name}')"
-    2. "store_memory('DEV_PATTERN: [coding patterns and best practices applied]', project_id='{project_name}')"
-    3. "store_memory('DEV_BUGFIX: [bug fixes and resolution approaches]', project_id='{project_name}')"
-    4. "store_memory('DEV_REFACTOR: [refactoring decisions and improvements]', project_id='{project_name}')"
-    5. "store_memory('DEV_TEST: [test implementation and coverage details]', project_id='{project_name}')"
-  
+    1. "store_memory('DEV_CODE: [implementation details and code structure]', project_id='{project_name}', agent_role='DEV')"
+    2. "store_memory('DEV_PATTERN: [coding patterns and best practices applied]', project_id='{project_name}', agent_role='DEV')"
+    3. "store_memory('DEV_BUGFIX: [bug fixes and resolution approaches]', project_id='{project_name}', agent_role='DEV')"
+    4. "store_memory('DEV_REFACTOR: [refactoring decisions and improvements]', project_id='{project_name}', agent_role='DEV')"
+    5. "store_memory('DEV_TEST: [test implementation and coverage details]', project_id='{project_name}', agent_role='DEV')"
+
   handoff_preparation:
-    1. "search_memory('DEV_CODE DEV_TEST DEV_PATTERN DEV_REFACTOR', project_id='{project_name}')"
+    1. "search_memory('DEV_CODE DEV_TEST DEV_PATTERN DEV_REFACTOR', project_id='{project_name}', agent_role='DEV')"
     2. Summarize all development outputs for QA teams
-    3. "store_memory('DEV_HANDOFF: [summary for QA/deployment teams]', project_id='{project_name}')"
+    3. "store_memory('DEV_HANDOFF: [summary for QA/deployment teams]', project_id='{project_name}', agent_role='DEV')"
 
 # Memory Commands Reference
 memory_commands:
-  store: "store_memory('[PREFIX]: content', project_id='{project_name}')"
-  search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}')"
+  store: "store_memory('[PREFIX]: content', project_id='{project_name}', agent_role='DEV')"
+  search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='DEV')"
 
 # Critical Memory Integration Rules
 memory_rules:
@@ -151,15 +155,15 @@ command_examples:
   memory_aware_development: |
     *develop-story {story_name}
     # Will automatically:
-    # 1. search_memory("DEV_CODE DEV_PATTERN ARCH_DECISION SM_STORY code implementation", project_id="{project_name}")
+    # 1. search_memory("DEV_CODE DEV_PATTERN ARCH_DECISION SM_STORY code implementation", project_id="{project_name}", agent_role="DEV")
     # 2. Review existing patterns before implementing new code
-    # 3. store_memory("DEV_CODE: {implementation_details}", project_id="{project_name}")
+    # 3. store_memory("DEV_CODE: {implementation_details}", project_id="{project_name}", agent_role="DEV")
 
   context_aware_fixes: |
     *review-qa
     # Will automatically:
-    # 1. search_memory("QA_BUG QA_TEST DEV_BUGFIX existing issues", project_id="{project_name}")
-    # 2. search_memory("DEV_CODE DEV_PATTERN existing implementations", project_id="{project_name}")
+    # 1. search_memory("QA_BUG QA_TEST DEV_BUGFIX existing issues", project_id="{project_name}", agent_role="DEV")
+    # 2. search_memory("DEV_CODE DEV_PATTERN existing implementations", project_id="{project_name}", agent_role="DEV")
     # 3. Build on existing fix patterns and avoid regression
-    # 4. store_memory("DEV_BUGFIX: {fix_implementation}", project_id="{project_name}")
+    # 4. store_memory("DEV_BUGFIX: {fix_implementation}", project_id="{project_name}", agent_role="DEV")
 ```
