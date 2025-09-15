@@ -81,4 +81,23 @@ dependencies:
   templates:
     - brownfield-prd-tmpl.yaml
     - prd-tmpl.yaml
+
+## MEMORY INTEGRATION
+
+### Memory Commands:
+- Store: `store_memory("[AGENT]_[TYPE]: content", project_id="{project_name}")`
+- Search: `search_memory("[AGENT]_[TYPE] keywords", project_id="{project_name}")`
+
+### Agent Prefixes:
+- Analyst: `BA_REQ:`, `BA_INSIGHT:`, `BA_BUSINESS:`
+- PM: `PM_SCOPE:`, `PM_TIMELINE:`, `PM_RESOURCE:`
+- Architect: `ARCH_DECISION:`, `ARCH_TECH:`, `ARCH_PATTERN:`
+- Developer: `DEV_CODE:`, `DEV_BUGFIX:`, `DEV_PATTERN:`
+- QA: `QA_TEST:`, `QA_BUG:`, `QA_STRATEGY:`
+
+### Usage:
+**Before starting:** `search_memory("requirements decisions", project_id="{project_name}")`
+**During work:** `store_memory("BA_REQ: User wants secure messaging", project_id="{project_name}")`
+**Get upstream:** `search_memory("BA_REQ PM_SCOPE ARCH_DECISION", project_id="{project_name}")`
+
 ```
