@@ -28,6 +28,13 @@ graph TD
             A --> H["data (KB)"]
         end
 
+        subgraph Memory System
+            M["Memory Integration"]
+            M --> N["Project Memory"]
+            M --> O["Agent Memory"]
+            M --> P["Memory Storage (.ai/memory)"]
+        end
+
         subgraph Tooling
             I["tools/builders/web-builder.js"]
         end
@@ -57,6 +64,7 @@ graph TD
     style A fill:#1a73e8,color:#fff
     style I fill:#f9ab00,color:#fff
     style J fill:#34a853,color:#fff
+    style M fill:#4285f4,color:#fff
 ```
 
 ## 3. Core Components
@@ -69,7 +77,41 @@ The `bmad-core` directory contains all the definitions and resources that give t
 - **Structure**: An agent file contains a YAML header that specifies its role, persona, dependencies, and startup instructions. These dependencies are lists of tasks, templates, checklists, and data files that the agent is allowed to use.
 - **Startup Instructions**: Agents can include startup sequences that load project-specific documentation from the `docs/` folder, such as coding standards, API specifications, or project structure documents. This provides immediate project context upon activation.
 - **Document Integration**: Agents can reference and load documents from the project's `docs/` folder as part of tasks, workflows, or startup sequences. Users can also drag documents directly into chat interfaces to provide additional context.
+- **Memory Integration**: All agents are designed to be memory-aware, automatically searching for relevant context before starting work and storing important decisions during execution.
 - **Example**: The `bmad-master` agent lists its dependencies, which tells the build tool which files to include in a web bundle and informs the agent of its own capabilities.
+
+### 3.2. Memory System Integration
+
+The BMAD-METHOD includes a comprehensive memory system that enables persistent storage and retrieval of context information across agent interactions.
+
+#### 3.2.1. Memory Architecture
+
+- **Project-Level Memory**: Maintains context that spans across multiple agents and sessions, stored in `.ai/memory/project/`
+- **Agent-Level Memory**: Maintains context specific to individual agent roles, stored in `.ai/memory/agents/{agent-prefix}/`
+- **External Implementation**: Memory functions (`search_memory()` and `store_memory()`) are provided by the `local-memori` MCP server
+- **Prefix Strategy**: Each agent type uses specific prefixes for organized memory entries (e.g., `DEV_CODE`, `ARCH_DECISION`, `QA_TEST`)
+
+#### 3.2.2. Memory Integration in Components
+
+All core components have been updated to be memory-aware:
+
+- **Agents**: Search memory for context before starting work, store decisions during execution
+- **Tasks**: Store and retrieve context to enhance effectiveness
+- **Workflows**: Use memory for adaptive decision-making
+- **Templates**: Leverage memory for personalized content generation
+- **Checklists**: Use memory for adaptive verification
+
+#### 3.2.3. Memory Operations
+
+Standard memory operations available to all components:
+
+```bash
+# Search for relevant context
+search_memory("DEV_CODE DEV_PATTERN previous implementations", project_id="project_name")
+
+# Store important decisions
+store_memory("DEV_CODE: Implemented authentication with JWT", project_id="project_name")
+```
 
 ### 3.2. Agent Teams (`bmad-core/agent-teams/`)
 
