@@ -21,3 +21,34 @@ devLoadAlwaysFiles:
 devDebugLog: .ai/debug-log.md
 devStoryLocation: docs/stories
 slashPrefix: BMad
+
+# Memory Integration Configuration
+memory:
+  enabled: true
+  isolation:
+    project: true
+    agent: true
+  storage:
+    location: .ai/memory
+    format: json
+  prefixes:
+    analyst: ANALYSIS
+    architect: ARCH
+    bmad-master: BMAD
+    bmad-orchestrator: ORCHESTRATOR
+    dev: DEV
+    devops: DEVOPS
+    performance: PERFORMANCE
+    pm: PM
+    po: PO
+    qa: QA
+    security: SECURITY
+    sm: SM
+    technical-writer: DOC
+    ux-expert: UX
+  retention:
+    days: 30
+    maxEntries: 1000
+  compression:
+    enabled: true
+    threshold: 100
