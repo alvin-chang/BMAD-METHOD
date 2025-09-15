@@ -2,6 +2,21 @@
 
 # Story Definition of Done (DoD) Checklist
 
+## MEMORY-AWARE Checklist Instructions
+
+Before beginning the checklist, perform memory operations to enhance context awareness:
+
+### Memory Initialization
+
+1. Search project memory for relevant patterns and previous issues:
+   ```
+   search_memory("DEV_CODE DEV_PATTERN DEV_BUGFIX previous stories similar issues", project_id="{project_name}")
+   ```
+2. Store checklist initiation for tracking:
+   ```
+   store_memory("DEV_CHECKLIST: Starting DoD checklist for story {story_id}", project_id="{project_name}")
+   ```
+
 ## Instructions for Developer Agent
 
 Before marking a story as 'Review', please go through each item in this checklist. Report the status of each item (e.g., [x] Done, [ ] Not Done, [N/A] Not Applicable) and provide brief comments if necessary.
@@ -90,6 +105,13 @@ After completing the checklist:
 3. Identify any technical debt or follow-up work needed
 4. Note any challenges or learnings for future stories
 5. Confirm whether the story is truly ready for review
+
+Store checklist completion in memory:
+
+```
+store_memory("DEV_CHECKLIST: Completed DoD checklist for story {story_id}", project_id="{project_name}")
+store_memory("DEV_CHECKLIST_RESULTS: Story {story_id} has {completed_items} of {total_items} checklist items completed", project_id="{project_name}")
+```
 
 Be honest - it's better to flag issues now than have them discovered later.]]
 

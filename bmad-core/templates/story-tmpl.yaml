@@ -12,6 +12,12 @@ workflow:
   mode: interactive
   elicitation: advanced-elicitation
 
+# MEMORY-AWARE Template
+# Before generating content, search project memory:
+# search_memory("SM_STORY DEV_CODE DEV_PATTERN similar stories {{epic_num}}.{{story_num}}", project_id="{{project_name}}")
+# Store template generation initiation:
+# store_memory("SM_STORY: Generating story template for {{epic_num}}.{{story_num}} - {{story_title_short}}", project_id="{{project_name}}")
+
 agent_config:
   editable_sections:
     - Status
@@ -136,3 +142,38 @@ sections:
     instruction: Results from QA Agent QA review of the completed story implementation
     owner: qa-agent
     editors: [qa-agent]
+
+  - id: memory-context
+    title: Memory Context
+    instruction: |
+      Context retrieved from project memory to inform this story creation.
+      This section is automatically populated by the system.
+    owner: system
+    editors: [system]
+    sections:
+      - id: related-stories
+        title: Related Stories
+        instruction: |
+          Previously completed stories that may provide context for this implementation:
+          - [ ] Story 1.1: Example related story
+          - [ ] Story 1.2: Another related story
+        owner: system
+        editors: [system]
+
+      - id: implementation-patterns
+        title: Implementation Patterns
+        instruction: |
+          Patterns from previous implementations that may be relevant:
+          - [ ] Pattern 1: Example pattern
+          - [ ] Pattern 2: Another pattern
+        owner: system
+        editors: [system]
+
+      - id: lessons-learned
+        title: Lessons Learned
+        instruction: |
+          Key lessons from previous stories that should inform this implementation:
+          - [ ] Lesson 1: Example lesson
+          - [ ] Lesson 2: Another lesson
+        owner: system
+        editors: [system]

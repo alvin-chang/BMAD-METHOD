@@ -2,6 +2,72 @@
 
 This guide will help you understand and effectively use the BMad Method for agile AI-driven planning and development.
 
+## Memory System Integration
+
+BMAD-METHOD includes a powerful memory system that enables persistent storage and retrieval of context information at both project and agent levels. This system enhances context awareness and continuity across agent interactions and development cycles.
+
+### How Memory Works
+
+The memory system works with an external MCP (Model Context Protocol) server called `local-memori` that provides the actual implementation of `search_memory()` and `store_memory()` functions.
+
+### Memory Configuration
+
+Memory configuration is defined in `.bmad-core/core-config.yaml`:
+
+```yaml
+memory:
+  enabled: true
+  isolation:
+    project: true
+    agent: true
+  storage:
+    location: .ai/memory
+    format: json
+  prefixes:
+    analyst: ANALYSIS
+    architect: ARCH
+    bmad-master: BMAD
+    bmad-orchestrator: ORCHESTRATOR
+    dev: DEV
+    devops: DEVOPS
+    performance: PERFORMANCE
+    pm: PM
+    po: PO
+    qa: QA
+    security: SECURITY
+    sm: SM
+    technical-writer: DOC
+    ux-expert: UX
+  retention:
+    days: 30
+    maxEntries: 1000
+  compression:
+    enabled: true
+    threshold: 100
+```
+
+### Using Memory in Agents
+
+All BMAD agents are designed to be memory-aware and will automatically:
+
+1. Search memory for relevant context before starting work
+2. Store important decisions and outcomes during execution
+3. Follow prefix conventions for organized information storage
+
+Example memory operations in agents:
+
+```bash
+# Search for relevant patterns before starting work
+search_memory("DEV_CODE DEV_PATTERN ARCH_DECISION code implementation", project_id="{project_name}")
+
+# Store implementation decisions
+store_memory("DEV_CODE: Implemented user authentication with JWT tokens", project_id="{project_name}")
+```
+
+### Memory-Aware Tasks
+
+Many BMAD tasks have been updated to be memory-aware, automatically storing and retrieving context to enhance their effectiveness.
+
 ## The BMad Plan and Execute Workflow
 
 First, here is the full standard Greenfield Planning + Execution Workflow. Brownfield is very similar, but it's suggested to understand this greenfield first, even if on a simple project before tackling a brownfield project. The BMad Method needs to be installed to the root of your new project folder. For the planning phase, you can optionally perform it with powerful web agents, potentially resulting in higher quality results at a fraction of the cost it would take to complete if providing your own API key or credits in some Agentic tools. For planning, powerful thinking models and larger context - along with working as a partner with the agents will net the best results.

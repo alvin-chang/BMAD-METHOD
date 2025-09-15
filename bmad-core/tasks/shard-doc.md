@@ -8,6 +8,21 @@
 - Create a folder structure to organize the sharded documents
 - Maintain all content integrity including code blocks, diagrams, and markdown formatting
 
+## MEMORY-AWARE Sharding Process
+
+Before beginning any sharding, perform memory operations to enhance context awareness:
+
+### Memory Initialization
+
+1. Search project memory for previous sharding patterns:
+   ```
+   search_memory("PO_STORY SM_STORY document sharding patterns", project_id="{project_name}")
+   ```
+2. Store task initiation for tracking:
+   ```
+   store_memory("PO_STORY: Starting sharding of document {document_name}", project_id="{project_name}")
+   ```
+
 ## Primary Method: Automatic with markdown-tree
 
 [[LLM: First, check if markdownExploder is set to true in {root}/core-config.yaml. If it is, attempt to run the command: `md-tree explode {input file} {output path}`.
@@ -177,6 +192,13 @@ Document sharded successfully:
   - section-name-1.md: "Section Title 1"
   - section-name-2.md: "Section Title 2"
   ...
+```
+
+Store sharding results in memory:
+
+```
+store_memory("PO_STORY: Completed sharding of document {document_name} into {file_count} sections", project_id="{project_name}")
+store_memory("PO_STORY_DETAILS: Sharded document stored at docs/{folder_name}/ with index file", project_id="{project_name}")
 ```
 
 ## Important Notes

@@ -149,4 +149,43 @@ program
     });
   });
 
+program
+  .command('memory:search')
+  .description('Search project memory for specific patterns')
+  .option('-p, --pattern <pattern>', 'Search pattern (e.g., "DEV_CODE DEV_PATTERN")')
+  .option('-r, --project <name>', 'Project name')
+  .action(async (options) => {
+    console.log('To search memory, use the search_memory function in an MCP-enabled environment:');
+    console.log(
+      `search_memory("${options.pattern || 'pattern'}", project_id="${options.project || 'project_name'}")`,
+    );
+    console.log('\nThis command requires the local-memori MCP server to be running.');
+  });
+
+program
+  .command('memory:store')
+  .description('Store information in project memory')
+  .option('-c, --content <content>', 'Content to store (e.g., "DEV_CODE: Implementation details")')
+  .option('-r, --project <name>', 'Project name')
+  .action(async (options) => {
+    console.log('To store memory, use the store_memory function in an MCP-enabled environment:');
+    console.log(
+      `store_memory("${options.content || 'content'}", project_id="${options.project || 'project_name'}")`,
+    );
+    console.log('\nThis command requires the local-memori MCP server to be running.');
+  });
+
+program
+  .command('memory:init')
+  .description('Initialize memory system for a project')
+  .action(async () => {
+    console.log('Memory system initialization:');
+    console.log('1. Ensure local-memori MCP server is running');
+    console.log('2. Configure memory settings in .bmad-core/core-config.yaml');
+    console.log('3. Memory storage location: .ai/memory/');
+    console.log(
+      '\nMemory system is automatically enabled when using BMAD agents in MCP-enabled environments.',
+    );
+  });
+
 program.parse();
