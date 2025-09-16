@@ -93,47 +93,47 @@ memory_integration:
 
   # Store all product outputs with proper prefixes
   storage_rules:
-    - "All user stories → PO_STORY: [content]"
-    - "All epics → PO_EPIC: [content]"
-    - "All backlog items → PO_BACKLOG: [content]"
-    - "All acceptance criteria → PO_CRITERIA: [content]"
-    - "All prioritization decisions → PO_PRIORITY: [content]"
+    - 'All user stories → PO_STORY: [content]'
+    - 'All epics → PO_EPIC: [content]'
+    - 'All backlog items → PO_BACKLOG: [content]'
+    - 'All acceptance criteria → PO_CRITERIA: [content]'
+    - 'All prioritization decisions → PO_PRIORITY: [content]'
 
 # Agent-Specific Prefixes for Cross-Team Visibility
 agent_prefixes:
-  analyst: ["BA_REQ", "BA_INSIGHT", "BA_BUSINESS", "BA_COMPETITIVE", "BA_MARKET"]
-  pm: ["PM_SCOPE", "PM_TIMELINE", "PM_RESOURCE", "PM_RISK", "PM_STAKEHOLDER"]
-  architect: ["ARCH_DECISION", "ARCH_TECH", "ARCH_PATTERN", "ARCH_SECURITY", "ARCH_INTEGRATION"]
-  developer: ["DEV_CODE", "DEV_BUGFIX", "DEV_PATTERN", "DEV_REFACTOR", "DEV_TEST"]
-  qa: ["QA_TEST", "QA_BUG", "QA_STRATEGY", "QA_AUTOMATION", "QA_COVERAGE"]
-  sm: ["SM_STORY", "SM_SPRINT", "SM_BACKLOG", "SM_VELOCITY", "SM_IMPEDIMENT"]
-  po: ["PO_STORY", "PO_EPIC", "PO_BACKLOG", "PO_CRITERIA", "PO_PRIORITY"]
-  ux: ["UX_DESIGN", "UX_USER", "UX_FLOW", "UX_PROTOTYPE", "UX_RESEARCH"]
+  analyst: ['BA_REQ', 'BA_INSIGHT', 'BA_BUSINESS', 'BA_COMPETITIVE', 'BA_MARKET']
+  pm: ['PM_SCOPE', 'PM_TIMELINE', 'PM_RESOURCE', 'PM_RISK', 'PM_STAKEHOLDER']
+  architect: ['ARCH_DECISION', 'ARCH_TECH', 'ARCH_PATTERN', 'ARCH_SECURITY', 'ARCH_INTEGRATION']
+  developer: ['DEV_CODE', 'DEV_BUGFIX', 'DEV_PATTERN', 'DEV_REFACTOR', 'DEV_TEST']
+  qa: ['QA_TEST', 'QA_BUG', 'QA_STRATEGY', 'QA_AUTOMATION', 'QA_COVERAGE']
+  sm: ['SM_STORY', 'SM_SPRINT', 'SM_BACKLOG', 'SM_VELOCITY', 'SM_IMPEDIMENT']
+  po: ['PO_STORY', 'PO_EPIC', 'PO_BACKLOG', 'PO_CRITERIA', 'PO_PRIORITY']
+  ux: ['UX_DESIGN', 'UX_USER', 'UX_FLOW', 'UX_PROTOTYPE', 'UX_RESEARCH']
 
 # Cross-Agent Memory Search Patterns
 search_patterns:
-  upstream_dependencies: "BA_REQ BA_INSIGHT PM_SCOPE UX_USER" # What I need from others
-  downstream_handoffs: "PO_STORY PO_EPIC PO_CRITERIA PO_BACKLOG" # What I provide to others
-  full_context: "BA_REQ PM_SCOPE PO_STORY ARCH_DECISION DEV_CODE QA_TEST" # Complete project context
+  upstream_dependencies: 'BA_REQ BA_INSIGHT PM_SCOPE UX_USER' # What I need from others
+  downstream_handoffs: 'PO_STORY PO_EPIC PO_CRITERIA PO_BACKLOG' # What I provide to others
+  full_context: 'BA_REQ PM_SCOPE PO_STORY ARCH_DECISION DEV_CODE QA_TEST' # Complete project context
 
 # Memory-Enhanced Workflow
 enhanced_workflow:
   before_product_work:
-    1. "search_memory('PO_STORY PO_EPIC PO_BACKLOG user stories requirements', project_id='{project_name}', agent_role='PO')"
-    2. "search_memory('BA_REQ BA_BUSINESS PM_SCOPE UX_USER business requirements', project_id='{project_name}', agent_role='PO')"
-    3. Review existing stories and epics to avoid conflicts
-    4. Identify gaps in current backlog understanding
+    - "search_memory('PO_STORY PO_EPIC PO_BACKLOG user stories requirements', project_id='{project_name}', agent_role='PO')"
+    - "search_memory('BA_REQ BA_BUSINESS PM_SCOPE UX_USER business requirements', project_id='{project_name}', agent_role='PO')"
+    - 'Review existing stories and epics to avoid conflicts'
+    - 'Identify gaps in current backlog understanding'
 
   during_product_work:
-    1. "store_memory('PO_STORY: [user story details]', project_id='{project_name}', agent_role='PO')"
-    2. "store_memory('PO_EPIC: [epic definition]', project_id='{project_name}', agent_role='PO')"
-    3. "store_memory('PO_CRITERIA: [acceptance criteria]', project_id='{project_name}', agent_role='PO')"
-    4. "store_memory('PO_PRIORITY: [prioritization rationale]', project_id='{project_name}', agent_role='PO')"
+    - "store_memory('PO_STORY: [user story details]', project_id='{project_name}', agent_role='PO')"
+    - "store_memory('PO_EPIC: [epic definition]', project_id='{project_name}', agent_role='PO')"
+    - "store_memory('PO_CRITERIA: [acceptance criteria]', project_id='{project_name}', agent_role='PO')"
+    - "store_memory('PO_PRIORITY: [prioritization rationale]', project_id='{project_name}', agent_role='PO')"
 
   handoff_preparation:
-    1. "search_memory('PO_STORY PO_EPIC PO_CRITERIA PO_BACKLOG', project_id='{project_name}', agent_role='PO')"
-    2. Summarize all product outputs for development teams
-    3. "store_memory('PO_HANDOFF: [summary for Dev/QA teams]', project_id='{project_name}', agent_role='PO')"
+    - "search_memory('PO_STORY PO_EPIC PO_CRITERIA PO_BACKLOG', project_id='{project_name}', agent_role='PO')"
+    - 'Summarize all product outputs for development teams'
+    - "store_memory('PO_HANDOFF: [summary for Dev/QA teams]', project_id='{project_name}', agent_role='PO')"
 
 # Memory Commands Reference
 memory_commands:
@@ -141,8 +141,7 @@ memory_commands:
   search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='PO')"
 
 # Critical Memory Integration Rules
-memory_rules:
-  1. "ALWAYS search memory before starting new product work"
+memory_rules: 1. "ALWAYS search memory before starting new product work"
   2. "NEVER duplicate existing stories without reviewing memory first"
   3. "ALWAYS use proper PO_ prefixes when storing product decisions"
   4. "ALWAYS search for upstream BA and PM decisions that impact product backlog"

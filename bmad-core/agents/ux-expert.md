@@ -81,46 +81,46 @@ memory_integration:
 
   # Store all UX outputs with proper prefixes
   storage_rules:
-    - "All user research → UX_RESEARCH: [content]"
-    - "All design decisions → UX_DESIGN: [content]"
-    - "All user flows → UX_FLOW: [content]"
-    - "All prototypes/wireframes → UX_PROTOTYPE: [content]"
-    - "All user personas/insights → UX_USER: [content]"
+    - 'All user research → UX_RESEARCH: [content]'
+    - 'All design decisions → UX_DESIGN: [content]'
+    - 'All user flows → UX_FLOW: [content]'
+    - 'All prototypes/wireframes → UX_PROTOTYPE: [content]'
+    - 'All user personas/insights → UX_USER: [content]'
 
 # Agent-Specific Prefixes for Cross-Team Visibility
 agent_prefixes:
-  analyst: ["BA_REQ", "BA_INSIGHT", "BA_BUSINESS", "BA_COMPETITIVE", "BA_MARKET"]
-  pm: ["PM_SCOPE", "PM_TIMELINE", "PM_RESOURCE", "PM_RISK", "PM_STAKEHOLDER"]
-  architect: ["ARCH_DECISION", "ARCH_TECH", "ARCH_PATTERN", "ARCH_SECURITY", "ARCH_INTEGRATION"]
-  developer: ["DEV_CODE", "DEV_BUGFIX", "DEV_PATTERN", "DEV_REFACTOR", "DEV_TEST"]
-  qa: ["QA_TEST", "QA_BUG", "QA_STRATEGY", "QA_AUTOMATION", "QA_COVERAGE"]
-  sm: ["SM_STORY", "SM_SPRINT", "SM_BACKLOG", "SM_VELOCITY", "SM_IMPEDIMENT"]
-  po: ["PO_STORY", "PO_EPIC", "PO_BACKLOG", "PO_CRITERIA", "PO_PRIORITY"]
-  ux: ["UX_DESIGN", "UX_USER", "UX_FLOW", "UX_PROTOTYPE", "UX_RESEARCH"]
+  analyst: ['BA_REQ', 'BA_INSIGHT', 'BA_BUSINESS', 'BA_COMPETITIVE', 'BA_MARKET']
+  pm: ['PM_SCOPE', 'PM_TIMELINE', 'PM_RESOURCE', 'PM_RISK', 'PM_STAKEHOLDER']
+  architect: ['ARCH_DECISION', 'ARCH_TECH', 'ARCH_PATTERN', 'ARCH_SECURITY', 'ARCH_INTEGRATION']
+  developer: ['DEV_CODE', 'DEV_BUGFIX', 'DEV_PATTERN', 'DEV_REFACTOR', 'DEV_TEST']
+  qa: ['QA_TEST', 'QA_BUG', 'QA_STRATEGY', 'QA_AUTOMATION', 'QA_COVERAGE']
+  sm: ['SM_STORY', 'SM_SPRINT', 'SM_BACKLOG', 'SM_VELOCITY', 'SM_IMPEDIMENT']
+  po: ['PO_STORY', 'PO_EPIC', 'PO_BACKLOG', 'PO_CRITERIA', 'PO_PRIORITY']
+  ux: ['UX_DESIGN', 'UX_USER', 'UX_FLOW', 'UX_PROTOTYPE', 'UX_RESEARCH']
 
 # Cross-Agent Memory Search Patterns
 search_patterns:
-  upstream_dependencies: "BA_REQ BA_BUSINESS PM_SCOPE PO_STORY" # What I need from others
-  downstream_handoffs: "UX_DESIGN UX_FLOW UX_PROTOTYPE UX_USER UX_RESEARCH" # What I provide to others
-  full_context: "BA_REQ PM_SCOPE PO_STORY UX_DESIGN ARCH_DECISION DEV_CODE" # Complete project context
+  upstream_dependencies: 'BA_REQ BA_BUSINESS PM_SCOPE PO_STORY' # What I need from others
+  downstream_handoffs: 'UX_DESIGN UX_FLOW UX_PROTOTYPE UX_USER UX_RESEARCH' # What I provide to others
+  full_context: 'BA_REQ PM_SCOPE PO_STORY UX_DESIGN ARCH_DECISION DEV_CODE' # Complete project context
 
 # Memory-Enhanced Workflow
 enhanced_workflow:
   before_ux_work:
-    1. "search_memory('UX_DESIGN UX_FLOW UX_PROTOTYPE user experience design', project_id='{project_name}', agent_role='UX')"
-    2. "search_memory('BA_REQ BA_BUSINESS PO_STORY PM_SCOPE user requirements', project_id='{project_name}', agent_role='UX')"
-    3. Review existing designs and user research to avoid conflicts
-    4. Identify gaps in current UX understanding
+    - "search_memory('UX_DESIGN UX_FLOW UX_PROTOTYPE user experience design', project_id='{project_name}', agent_role='UX')"
+    - "search_memory('BA_REQ BA_BUSINESS PO_STORY PM_SCOPE user requirements', project_id='{project_name}', agent_role='UX')"
+    - 'Review existing designs and user research to avoid conflicts'
+    - 'Identify gaps in current UX understanding'
   during_ux_work:
-    1. "store_memory('UX_DESIGN: [design decisions and rationale]', project_id='{project_name}', agent_role='UX')"
-    2. "store_memory('UX_FLOW: [user flow documentation]', project_id='{project_name}', agent_role='UX')"
-    3. "store_memory('UX_PROTOTYPE: [wireframe/prototype details]', project_id='{project_name}', agent_role='UX')"
-    4. "store_memory('UX_RESEARCH: [user research findings]', project_id='{project_name}', agent_role='UX')"
-    5. "store_memory('UX_USER: [persona and user insights]', project_id='{project_name}', agent_role='UX')"
+    - "store_memory('UX_DESIGN: [design decisions and rationale]', project_id='{project_name}', agent_role='UX')"
+    - "store_memory('UX_FLOW: [user flow documentation]', project_id='{project_name}', agent_role='UX')"
+    - "store_memory('UX_PROTOTYPE: [wireframe/prototype details]', project_id='{project_name}', agent_role='UX')"
+    - "store_memory('UX_RESEARCH: [user research findings]', project_id='{project_name}', agent_role='UX')"
+    - "store_memory('UX_USER: [persona and user insights]', project_id='{project_name}', agent_role='UX')"
   handoff_preparation:
-    1. "search_memory('UX_DESIGN UX_FLOW UX_PROTOTYPE UX_RESEARCH UX_USER', project_id='{project_name}', agent_role='UX')"
-    2. Summarize all UX outputs for development teams
-    3. "store_memory('UX_HANDOFF: [summary for Dev/QA teams]', project_id='{project_name}', agent_role='UX')"
+    - "search_memory('UX_DESIGN UX_FLOW UX_PROTOTYPE UX_RESEARCH UX_USER', project_id='{project_name}', agent_role='UX')"
+    - 'Summarize all UX outputs for development teams'
+    - "store_memory('UX_HANDOFF: [summary for Dev/QA teams]', project_id='{project_name}', agent_role='UX')"
 
 # Memory Commands Reference
 memory_commands:
@@ -128,8 +128,7 @@ memory_commands:
   search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='UX')"
 
 # Critical Memory Integration Rules
-memory_rules:
-  1. "ALWAYS search memory before starting new UX work"
+memory_rules: 1. "ALWAYS search memory before starting new UX work"
   2. "NEVER duplicate existing designs without reviewing memory first"
   3. "ALWAYS use proper UX_ prefixes when storing design decisions"
   4. "ALWAYS search for upstream BA and PM decisions that impact UX design"

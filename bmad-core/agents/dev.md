@@ -92,48 +92,48 @@ memory_integration:
 
   # Store all development outputs with proper prefixes
   storage_rules:
-    - "All code implementations → DEV_CODE: [content]"
-    - "All bug fixes → DEV_BUGFIX: [content]"
-    - "All coding patterns → DEV_PATTERN: [content]"
-    - "All refactoring → DEV_REFACTOR: [content]"
-    - "All test implementation → DEV_TEST: [content]"
+    - 'All code implementations → DEV_CODE: [content]'
+    - 'All bug fixes → DEV_BUGFIX: [content]'
+    - 'All coding patterns → DEV_PATTERN: [content]'
+    - 'All refactoring → DEV_REFACTOR: [content]'
+    - 'All test implementation → DEV_TEST: [content]'
 
 # Agent-Specific Prefixes for Cross-Team Visibility
 agent_prefixes:
-  analyst: ["BA_REQ", "BA_INSIGHT", "BA_BUSINESS", "BA_COMPETITIVE", "BA_MARKET"]
-  pm: ["PM_SCOPE", "PM_TIMELINE", "PM_RESOURCE", "PM_RISK", "PM_STAKEHOLDER"]
-  architect: ["ARCH_DECISION", "ARCH_TECH", "ARCH_PATTERN", "ARCH_SECURITY", "ARCH_INTEGRATION"]
-  developer: ["DEV_CODE", "DEV_BUGFIX", "DEV_PATTERN", "DEV_REFACTOR", "DEV_TEST"]
-  qa: ["QA_TEST", "QA_BUG", "QA_STRATEGY", "QA_AUTOMATION", "QA_COVERAGE"]
-  sm: ["SM_STORY", "SM_SPRINT", "SM_BACKLOG", "SM_VELOCITY", "SM_IMPEDIMENT"]
-  po: ["PO_STORY", "PO_EPIC", "PO_BACKLOG", "PO_CRITERIA", "PO_PRIORITY"]
-  ux: ["UX_DESIGN", "UX_USER", "UX_FLOW", "UX_PROTOTYPE", "UX_RESEARCH"]
+  analyst: ['BA_REQ', 'BA_INSIGHT', 'BA_BUSINESS', 'BA_COMPETITIVE', 'BA_MARKET']
+  pm: ['PM_SCOPE', 'PM_TIMELINE', 'PM_RESOURCE', 'PM_RISK', 'PM_STAKEHOLDER']
+  architect: ['ARCH_DECISION', 'ARCH_TECH', 'ARCH_PATTERN', 'ARCH_SECURITY', 'ARCH_INTEGRATION']
+  developer: ['DEV_CODE', 'DEV_BUGFIX', 'DEV_PATTERN', 'DEV_REFACTOR', 'DEV_TEST']
+  qa: ['QA_TEST', 'QA_BUG', 'QA_STRATEGY', 'QA_AUTOMATION', 'QA_COVERAGE']
+  sm: ['SM_STORY', 'SM_SPRINT', 'SM_BACKLOG', 'SM_VELOCITY', 'SM_IMPEDIMENT']
+  po: ['PO_STORY', 'PO_EPIC', 'PO_BACKLOG', 'PO_CRITERIA', 'PO_PRIORITY']
+  ux: ['UX_DESIGN', 'UX_USER', 'UX_FLOW', 'UX_PROTOTYPE', 'UX_RESEARCH']
 
 # Cross-Agent Memory Search Patterns
 search_patterns:
-  upstream_dependencies: "SM_STORY PO_STORY ARCH_DECISION ARCH_PATTERN" # What I need from others
-  downstream_handoffs: "DEV_CODE DEV_TEST DEV_PATTERN DEV_REFACTOR" # What I provide to others
-  full_context: "BA_REQ SM_STORY ARCH_DECISION DEV_CODE QA_TEST" # Complete implementation context
+  upstream_dependencies: 'SM_STORY PO_STORY ARCH_DECISION ARCH_PATTERN' # What I need from others
+  downstream_handoffs: 'DEV_CODE DEV_TEST DEV_PATTERN DEV_REFACTOR' # What I provide to others
+  full_context: 'BA_REQ SM_STORY ARCH_DECISION DEV_CODE QA_TEST' # Complete implementation context
 
 # Memory-Enhanced Workflow
 enhanced_workflow:
   before_development:
-    1. "search_memory('DEV_CODE DEV_PATTERN ARCH_DECISION ARCH_PATTERN code implementation', project_id='{project_name}', agent_role='DEV')"
-    2. "search_memory('SM_STORY PO_STORY BA_REQ requirements user stories', project_id='{project_name}', agent_role='DEV')"
-    3. Review existing code patterns and architectural decisions to avoid conflicts
-    4. Identify gaps in current implementation understanding
+    - "search_memory('DEV_CODE DEV_PATTERN ARCH_DECISION ARCH_PATTERN code implementation', project_id='{project_name}', agent_role='DEV')"
+    - "search_memory('SM_STORY PO_STORY BA_REQ requirements user stories', project_id='{project_name}', agent_role='DEV')"
+    - 'Review existing code patterns and architectural decisions to avoid conflicts'
+    - 'Identify gaps in current implementation understanding'
 
   during_development:
-    1. "store_memory('DEV_CODE: [implementation details and code structure]', project_id='{project_name}', agent_role='DEV')"
-    2. "store_memory('DEV_PATTERN: [coding patterns and best practices applied]', project_id='{project_name}', agent_role='DEV')"
-    3. "store_memory('DEV_BUGFIX: [bug fixes and resolution approaches]', project_id='{project_name}', agent_role='DEV')"
-    4. "store_memory('DEV_REFACTOR: [refactoring decisions and improvements]', project_id='{project_name}', agent_role='DEV')"
-    5. "store_memory('DEV_TEST: [test implementation and coverage details]', project_id='{project_name}', agent_role='DEV')"
+    - "store_memory('DEV_CODE: [implementation details and code structure]', project_id='{project_name}', agent_role='DEV')"
+    - "store_memory('DEV_PATTERN: [coding patterns and best practices applied]', project_id='{project_name}', agent_role='DEV')"
+    - "store_memory('DEV_BUGFIX: [bug fixes and resolution approaches]', project_id='{project_name}', agent_role='DEV')"
+    - "store_memory('DEV_REFACTOR: [refactoring decisions and improvements]', project_id='{project_name}', agent_role='DEV')"
+    - "store_memory('DEV_TEST: [test implementation and coverage details]', project_id='{project_name}', agent_role='DEV')"
 
   handoff_preparation:
-    1. "search_memory('DEV_CODE DEV_TEST DEV_PATTERN DEV_REFACTOR', project_id='{project_name}', agent_role='DEV')"
-    2. Summarize all development outputs for QA teams
-    3. "store_memory('DEV_HANDOFF: [summary for QA/deployment teams]', project_id='{project_name}', agent_role='DEV')"
+    - "search_memory('DEV_CODE DEV_TEST DEV_PATTERN DEV_REFACTOR', project_id='{project_name}', agent_role='DEV')"
+    - 'Summarize all development outputs for QA teams'
+    - "store_memory('DEV_HANDOFF: [summary for QA/deployment teams]', project_id='{project_name}', agent_role='DEV')"
 
 # Memory Commands Reference
 memory_commands:
@@ -141,8 +141,7 @@ memory_commands:
   search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='DEV')"
 
 # Critical Memory Integration Rules
-memory_rules:
-  1. "ALWAYS search memory before starting new development work"
+memory_rules: 1. "ALWAYS search memory before starting new development work"
   2. "NEVER duplicate existing code patterns without reviewing memory first"
   3. "ALWAYS use proper DEV_ prefixes when storing implementation decisions"
   4. "ALWAYS search for upstream architectural and story decisions that impact implementation"

@@ -101,45 +101,45 @@ memory_integration:
 
   # Store all analysis outputs with proper prefixes
   storage_rules:
-    - "All requirements → BA_REQ: [content]"
-    - "All insights → BA_INSIGHT: [content]"
-    - "All business analysis → BA_BUSINESS: [content]"
-    - "All competitive analysis → BA_COMPETITIVE: [content]"
-    - "All market research → BA_MARKET: [content]"
+    - 'All requirements → BA_REQ: [content]'
+    - 'All insights → BA_INSIGHT: [content]'
+    - 'All business analysis → BA_BUSINESS: [content]'
+    - 'All competitive analysis → BA_COMPETITIVE: [content]'
+    - 'All market research → BA_MARKET: [content]'
 
 ## Agent-Specific Prefixes for Cross-Team Visibility
 agent_prefixes:
-  analyst: ["BA_REQ", "BA_INSIGHT", "BA_BUSINESS", "BA_COMPETITIVE", "BA_MARKET"]
-  pm: ["PM_SCOPE", "PM_TIMELINE", "PM_RESOURCE", "PM_RISK", "PM_STAKEHOLDER"]
-  architect: ["ARCH_DECISION", "ARCH_TECH", "ARCH_PATTERN", "ARCH_SECURITY", "ARCH_INTEGRATION"]
-  developer: ["DEV_CODE", "DEV_BUGFIX", "DEV_PATTERN", "DEV_REFACTOR", "DEV_TEST"]
-  qa: ["QA_TEST", "QA_BUG", "QA_STRATEGY", "QA_AUTOMATION", "QA_COVERAGE"]
-  sm: ["SM_STORY", "SM_SPRINT", "SM_BACKLOG", "SM_VELOCITY", "SM_IMPEDIMENT"]
-  ux: ["UX_DESIGN", "UX_USER", "UX_FLOW", "UX_PROTOTYPE", "UX_RESEARCH"]
+  analyst: ['BA_REQ', 'BA_INSIGHT', 'BA_BUSINESS', 'BA_COMPETITIVE', 'BA_MARKET']
+  pm: ['PM_SCOPE', 'PM_TIMELINE', 'PM_RESOURCE', 'PM_RISK', 'PM_STAKEHOLDER']
+  architect: ['ARCH_DECISION', 'ARCH_TECH', 'ARCH_PATTERN', 'ARCH_SECURITY', 'ARCH_INTEGRATION']
+  developer: ['DEV_CODE', 'DEV_BUGFIX', 'DEV_PATTERN', 'DEV_REFACTOR', 'DEV_TEST']
+  qa: ['QA_TEST', 'QA_BUG', 'QA_STRATEGY', 'QA_AUTOMATION', 'QA_COVERAGE']
+  sm: ['SM_STORY', 'SM_SPRINT', 'SM_BACKLOG', 'SM_VELOCITY', 'SM_IMPEDIMENT']
+  ux: ['UX_DESIGN', 'UX_USER', 'UX_FLOW', 'UX_PROTOTYPE', 'UX_RESEARCH']
 
 ## Cross-Agent Memory Search Patterns
 search_patterns:
-  upstream_dependencies: "PM_SCOPE PM_TIMELINE ARCH_DECISION ARCH_TECH"  # What I need from others
-  downstream_handoffs: "BA_REQ BA_INSIGHT BA_BUSINESS"                     # What I provide to others
-  full_context: "BA_REQ PM_SCOPE ARCH_DECISION DEV_CODE QA_TEST SM_STORY"   # Complete project context
+  upstream_dependencies: 'PM_SCOPE PM_TIMELINE ARCH_DECISION ARCH_TECH' # What I need from others
+  downstream_handoffs: 'BA_REQ BA_INSIGHT BA_BUSINESS' # What I provide to others
+  full_context: 'BA_REQ PM_SCOPE ARCH_DECISION DEV_CODE QA_TEST SM_STORY' # Complete project context
 
 ## Memory-Enhanced Workflow
 enhanced_workflow:
   before_analysis:
-    1. "search_memory('BA_REQ BA_INSIGHT requirements analysis', project_id='{project_name}', agent_role='ANALYSIS')"
-    2. "search_memory('PM_SCOPE PM_TIMELINE project context', project_id='{project_name}', agent_role='ANALYSIS')"
-    3. Review existing analysis to avoid duplication
-    4. Identify gaps in current understanding
+    - "search_memory('BA_REQ BA_INSIGHT requirements analysis', project_id='{project_name}', agent_role='ANALYSIS')"
+    - "search_memory('PM_SCOPE PM_TIMELINE project context', project_id='{project_name}', agent_role='ANALYSIS')"
+    - 'Review existing analysis to avoid duplication'
+    - 'Identify gaps in current understanding'
 
   during_analysis:
-    1. "store_memory('BA_REQ: [requirement details]', project_id='{project_name}', agent_role='ANALYSIS')"
-    2. "store_memory('BA_INSIGHT: [analysis insight]', project_id='{project_name}', agent_role='ANALYSIS')"
-    3. "store_memory('BA_BUSINESS: [business context]', project_id='{project_name}', agent_role='ANALYSIS')"
+    - "store_memory('BA_REQ: [requirement details]', project_id='{project_name}', agent_role='ANALYSIS')"
+    - "store_memory('BA_INSIGHT: [analysis insight]', project_id='{project_name}', agent_role='ANALYSIS')"
+    - "store_memory('BA_BUSINESS: [business context]', project_id='{project_name}', agent_role='ANALYSIS')"
 
   handoff_preparation:
-    1. "search_memory('BA_REQ BA_INSIGHT BA_BUSINESS', project_id='{project_name}', agent_role='ANALYSIS')"
-    2. Summarize all analyst outputs for downstream teams
-    3. "store_memory('BA_HANDOFF: [summary for PM/Architect]', project_id='{project_name}', agent_role='ANALYSIS')"
+    - "search_memory('BA_REQ BA_INSIGHT BA_BUSINESS', project_id='{project_name}', agent_role='ANALYSIS')"
+    - 'Summarize all analyst outputs for downstream teams'
+    - "store_memory('BA_HANDOFF: [summary for PM/Architect]', project_id='{project_name}', agent_role='ANALYSIS')"
 
 ## Memory Commands Reference
 memory_commands:
@@ -147,8 +147,7 @@ memory_commands:
   search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='ANALYSIS')"
 
 ## Critical Memory Integration Rules
-memory_rules:
-  1. "ALWAYS search memory before starting new analysis"
+memory_rules: 1. "ALWAYS search memory before starting new analysis"
   2. "NEVER duplicate existing analysis without reviewing memory first"
   3. "ALWAYS use proper BA_ prefixes when storing insights"
   4. "ALWAYS search for upstream PM and ARCH decisions that impact analysis"
