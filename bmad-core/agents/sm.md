@@ -80,48 +80,48 @@ memory_integration:
 
   # Store all SM outputs with proper prefixes
   storage_rules:
-    - "All user stories → SM_STORY: [content]"
-    - "All sprint planning → SM_SPRINT: [content]"
-    - "All backlog management → SM_BACKLOG: [content]"
-    - "All velocity tracking → SM_VELOCITY: [content]"
-    - "All impediment tracking → SM_IMPEDIMENT: [content]"
+    - 'All user stories → SM_STORY: [content]'
+    - 'All sprint planning → SM_SPRINT: [content]'
+    - 'All backlog management → SM_BACKLOG: [content]'
+    - 'All velocity tracking → SM_VELOCITY: [content]'
+    - 'All impediment tracking → SM_IMPEDIMENT: [content]'
 
 # Agent-Specific Prefixes for Cross-Team Visibility
 agent_prefixes:
-  analyst: ["BA_REQ", "BA_INSIGHT", "BA_BUSINESS", "BA_COMPETITIVE", "BA_MARKET"]
-  pm: ["PM_SCOPE", "PM_TIMELINE", "PM_RESOURCE", "PM_RISK", "PM_STAKEHOLDER"]
-  architect: ["ARCH_DECISION", "ARCH_TECH", "ARCH_PATTERN", "ARCH_SECURITY", "ARCH_INTEGRATION"]
-  developer: ["DEV_CODE", "DEV_BUGFIX", "DEV_PATTERN", "DEV_REFACTOR", "DEV_TEST"]
-  qa: ["QA_TEST", "QA_BUG", "QA_STRATEGY", "QA_AUTOMATION", "QA_COVERAGE"]
-  sm: ["SM_STORY", "SM_SPRINT", "SM_BACKLOG", "SM_VELOCITY", "SM_IMPEDIMENT"]
-  po: ["PO_STORY", "PO_EPIC", "PO_BACKLOG", "PO_CRITERIA", "PO_PRIORITY"]
-  ux: ["UX_DESIGN", "UX_USER", "UX_FLOW", "UX_PROTOTYPE", "UX_RESEARCH"]
+  analyst: ['BA_REQ', 'BA_INSIGHT', 'BA_BUSINESS', 'BA_COMPETITIVE', 'BA_MARKET']
+  pm: ['PM_SCOPE', 'PM_TIMELINE', 'PM_RESOURCE', 'PM_RISK', 'PM_STAKEHOLDER']
+  architect: ['ARCH_DECISION', 'ARCH_TECH', 'ARCH_PATTERN', 'ARCH_SECURITY', 'ARCH_INTEGRATION']
+  developer: ['DEV_CODE', 'DEV_BUGFIX', 'DEV_PATTERN', 'DEV_REFACTOR', 'DEV_TEST']
+  qa: ['QA_TEST', 'QA_BUG', 'QA_STRATEGY', 'QA_AUTOMATION', 'QA_COVERAGE']
+  sm: ['SM_STORY', 'SM_SPRINT', 'SM_BACKLOG', 'SM_VELOCITY', 'SM_IMPEDIMENT']
+  po: ['PO_STORY', 'PO_EPIC', 'PO_BACKLOG', 'PO_CRITERIA', 'PO_PRIORITY']
+  ux: ['UX_DESIGN', 'UX_USER', 'UX_FLOW', 'UX_PROTOTYPE', 'UX_RESEARCH']
 
 # Cross-Agent Memory Search Patterns
 search_patterns:
-  upstream_dependencies: "BA_REQ PO_STORY PO_EPIC PM_SCOPE"  # What I need from others
-  downstream_handoffs: "SM_STORY SM_SPRINT SM_BACKLOG SM_VELOCITY"  # What I provide to others
-  full_context: "BA_REQ PM_SCOPE PO_STORY SM_STORY ARCH_DECISION DEV_CODE"  # Complete project context
+  upstream_dependencies: 'BA_REQ PO_STORY PO_EPIC PM_SCOPE' # What I need from others
+  downstream_handoffs: 'SM_STORY SM_SPRINT SM_BACKLOG SM_VELOCITY' # What I provide to others
+  full_context: 'BA_REQ PM_SCOPE PO_STORY SM_STORY ARCH_DECISION DEV_CODE' # Complete project context
 
 # Memory-Enhanced Workflow
 enhanced_workflow:
   before_sprint_work:
-    1. "search_memory('SM_STORY SM_SPRINT SM_BACKLOG sprint planning story creation', project_id='{project_name}', agent_role='SM')"
-    2. "search_memory('PO_STORY PO_EPIC BA_REQ PM_SCOPE user stories requirements', project_id='{project_name}', agent_role='SM')"
-    3. Review existing stories and sprint history to avoid conflicts
-    4. Identify gaps in current sprint planning
+    - "search_memory('SM_STORY SM_SPRINT SM_BACKLOG sprint planning story creation', project_id='{project_name}', agent_role='SM')"
+    - "search_memory('PO_STORY PO_EPIC BA_REQ PM_SCOPE user stories requirements', project_id='{project_name}', agent_role='SM')"
+    - 'Review existing stories and sprint history to avoid conflicts'
+    - 'Identify gaps in current sprint planning'
 
   during_sprint_work:
-    1. "store_memory('SM_STORY: [story details and acceptance criteria]', project_id='{project_name}', agent_role='SM')"
-    2. "store_memory('SM_SPRINT: [sprint planning decisions and capacity]', project_id='{project_name}', agent_role='SM')"
-    3. "store_memory('SM_BACKLOG: [backlog prioritization and grooming notes]', project_id='{project_name}', agent_role='SM')"
-    4. "store_memory('SM_VELOCITY: [velocity tracking and sprint metrics]', project_id='{project_name}', agent_role='SM')"
-    5. "store_memory('SM_IMPEDIMENT: [impediment tracking and resolution]', project_id='{project_name}', agent_role='SM')"
+    - "store_memory('SM_STORY: [story details and acceptance criteria]', project_id='{project_name}', agent_role='SM')"
+    - "store_memory('SM_SPRINT: [sprint planning decisions and capacity]', project_id='{project_name}', agent_role='SM')"
+    - "store_memory('SM_BACKLOG: [backlog prioritization and grooming notes]', project_id='{project_name}', agent_role='SM')"
+    - "store_memory('SM_VELOCITY: [velocity tracking and sprint metrics]', project_id='{project_name}', agent_role='SM')"
+    - "store_memory('SM_IMPEDIMENT: [impediment tracking and resolution]', project_id='{project_name}', agent_role='SM')"
 
   handoff_preparation:
-    1. "search_memory('SM_STORY SM_SPRINT SM_BACKLOG SM_VELOCITY', project_id='{project_name}', agent_role='SM')"
-    2. Summarize all sprint outputs for development teams
-    3. "store_memory('SM_HANDOFF: [summary for Dev/QA teams]', project_id='{project_name}', agent_role='SM')"
+    - "search_memory('SM_STORY SM_SPRINT SM_BACKLOG SM_VELOCITY', project_id='{project_name}', agent_role='SM')"
+    - 'Summarize all sprint outputs for development teams'
+    - "store_memory('SM_HANDOFF: [summary for Dev/QA teams]', project_id='{project_name}', agent_role='SM')"
 
 # Memory Commands Reference
 memory_commands:
@@ -129,8 +129,7 @@ memory_commands:
   search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='SM')"
 
 # Critical Memory Integration Rules
-memory_rules:
-  1. "ALWAYS search memory before starting new sprint or story work"
+memory_rules: 1. "ALWAYS search memory before starting new sprint or story work"
   2. "NEVER duplicate existing stories without reviewing memory first"
   3. "ALWAYS use proper SM_ prefixes when storing sprint decisions"
   4. "ALWAYS search for upstream PO and BA decisions that impact story creation"

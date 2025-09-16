@@ -69,7 +69,7 @@ commands:
   - gate {story}:
       order-of-execution: 'Search memory for existing quality patterns→Read story requirements→Search for related test strategies and bug patterns→Execute qa-gate task→Store gate decision with proper QA prefixes'
       blocking: 'HALT for: Missing critical requirements | Severe quality risks | Incomplete development handoff | Missing test environment'
-      completion: "Gate decision created with proper QA memory storage and team visibility"
+      completion: 'Gate decision created with proper QA memory storage and team visibility'
   - nfr-assess {story}: 'Search existing NFR patterns→Execute nfr-assess task→Store NFR validation results with QA prefixes'
   - review {story}: |
       Adaptive, risk-aware comprehensive review with memory integration.
@@ -106,55 +106,65 @@ memory_integration:
 
   # Store all QA outputs with proper prefixes
   storage_rules:
-    - "All test strategies → QA_STRATEGY: [content]"
-    - "All bug reports and analysis → QA_BUG: [content]"
-    - "All test implementations → QA_TEST: [content]"
-    - "All automation patterns → QA_AUTOMATION: [content]"
-    - "All coverage analysis → QA_COVERAGE: [content]"
-    - "All quality gates → QA_GATE: [content]"
-    - "All NFR assessments → QA_NFR: [content]"
-    - "All risk profiles → QA_RISK: [content]"
+    - 'All test strategies → QA_STRATEGY: [content]'
+    - 'All bug reports and analysis → QA_BUG: [content]'
+    - 'All test implementations → QA_TEST: [content]'
+    - 'All automation patterns → QA_AUTOMATION: [content]'
+    - 'All coverage analysis → QA_COVERAGE: [content]'
+    - 'All quality gates → QA_GATE: [content]'
+    - 'All NFR assessments → QA_NFR: [content]'
+    - 'All risk profiles → QA_RISK: [content]'
 
 # Agent-Specific Prefixes for Cross-Team Visibility
 agent_prefixes:
-  analyst: ["BA_REQ", "BA_INSIGHT", "BA_BUSINESS", "BA_COMPETITIVE", "BA_MARKET"]
-  pm: ["PM_SCOPE", "PM_TIMELINE", "PM_RESOURCE", "PM_RISK", "PM_STAKEHOLDER"]
-  architect: ["ARCH_DECISION", "ARCH_TECH", "ARCH_PATTERN", "ARCH_SECURITY", "ARCH_INTEGRATION"]
-  developer: ["DEV_CODE", "DEV_BUGFIX", "DEV_PATTERN", "DEV_REFACTOR", "DEV_TEST"]
-  qa: ["QA_TEST", "QA_BUG", "QA_STRATEGY", "QA_AUTOMATION", "QA_COVERAGE", "QA_GATE", "QA_NFR", "QA_RISK"]
-  sm: ["SM_STORY", "SM_SPRINT", "SM_BACKLOG", "SM_VELOCITY", "SM_IMPEDIMENT"]
-  po: ["PO_STORY", "PO_EPIC", "PO_BACKLOG", "PO_CRITERIA", "PO_PRIORITY"]
-  ux: ["UX_DESIGN", "UX_USER", "UX_FLOW", "UX_PROTOTYPE", "UX_RESEARCH"]
+  analyst: ['BA_REQ', 'BA_INSIGHT', 'BA_BUSINESS', 'BA_COMPETITIVE', 'BA_MARKET']
+  pm: ['PM_SCOPE', 'PM_TIMELINE', 'PM_RESOURCE', 'PM_RISK', 'PM_STAKEHOLDER']
+  architect: ['ARCH_DECISION', 'ARCH_TECH', 'ARCH_PATTERN', 'ARCH_SECURITY', 'ARCH_INTEGRATION']
+  developer: ['DEV_CODE', 'DEV_BUGFIX', 'DEV_PATTERN', 'DEV_REFACTOR', 'DEV_TEST']
+  qa:
+    [
+      'QA_TEST',
+      'QA_BUG',
+      'QA_STRATEGY',
+      'QA_AUTOMATION',
+      'QA_COVERAGE',
+      'QA_GATE',
+      'QA_NFR',
+      'QA_RISK',
+    ]
+  sm: ['SM_STORY', 'SM_SPRINT', 'SM_BACKLOG', 'SM_VELOCITY', 'SM_IMPEDIMENT']
+  po: ['PO_STORY', 'PO_EPIC', 'PO_BACKLOG', 'PO_CRITERIA', 'PO_PRIORITY']
+  ux: ['UX_DESIGN', 'UX_USER', 'UX_FLOW', 'UX_PROTOTYPE', 'UX_RESEARCH']
 
 # Cross-Agent Memory Search Patterns
 search_patterns:
-  upstream_dependencies: "SM_STORY PO_STORY BA_REQ ARCH_DECISION DEV_CODE" # What I need from others
-  downstream_handoffs: "QA_TEST QA_STRATEGY QA_BUG QA_GATE QA_NFR" # What I provide to others
-  full_context: "BA_REQ SM_STORY ARCH_DECISION DEV_CODE QA_TEST" # Complete QA context
+  upstream_dependencies: 'SM_STORY PO_STORY BA_REQ ARCH_DECISION DEV_CODE' # What I need from others
+  downstream_handoffs: 'QA_TEST QA_STRATEGY QA_BUG QA_GATE QA_NFR' # What I provide to others
+  full_context: 'BA_REQ SM_STORY ARCH_DECISION DEV_CODE QA_TEST' # Complete QA context
 
 # Memory-Enhanced Workflow
 enhanced_workflow:
   before_qa_work:
-    1. "search_memory('QA_TEST QA_BUG QA_STRATEGY QA_AUTOMATION test patterns', project_id='{project_name}', agent_role='QA')"
-    2. "search_memory('SM_STORY PO_STORY BA_REQ requirements acceptance criteria', project_id='{project_name}', agent_role='QA')"
-    3. "search_memory('DEV_CODE DEV_TEST DEV_PATTERN implementation details', project_id='{project_name}', agent_role='QA')"
-    4. Review existing test strategies and quality patterns to avoid duplication
-    5. Identify gaps in current quality coverage
+    - "search_memory('QA_TEST QA_BUG QA_STRATEGY QA_AUTOMATION test patterns', project_id='{project_name}', agent_role='QA')"
+    - "search_memory('SM_STORY PO_STORY BA_REQ requirements acceptance criteria', project_id='{project_name}', agent_role='QA')"
+    - "search_memory('DEV_CODE DEV_TEST DEV_PATTERN implementation details', project_id='{project_name}', agent_role='QA')"
+    - 'Review existing test strategies and quality patterns to avoid duplication'
+    - 'Identify gaps in current quality coverage'
 
   during_qa_work:
-    1. "store_memory('QA_STRATEGY: [test approach and methodology]', project_id='{project_name}', agent_role='QA')"
-    2. "store_memory('QA_TEST: [specific test cases and scenarios]', project_id='{project_name}', agent_role='QA')"
-    3. "store_memory('QA_BUG: [issues found and analysis]', project_id='{project_name}', agent_role='QA')"
-    4. "store_memory('QA_GATE: [quality gate decisions and rationale]', project_id='{project_name}', agent_role='QA')"
-    5. "store_memory('QA_AUTOMATION: [automation patterns and scripts]', project_id='{project_name}', agent_role='QA')"
-    6. "store_memory('QA_COVERAGE: [coverage analysis and gaps]', project_id='{project_name}', agent_role='QA')"
-    7. "store_memory('QA_NFR: [non-functional requirements validation]', project_id='{project_name}', agent_role='QA')"
-    8. "store_memory('QA_RISK: [risk assessments and mitigation]', project_id='{project_name}', agent_role='QA')"
+    - "store_memory('QA_STRATEGY: [test approach and methodology]', project_id='{project_name}', agent_role='QA')"
+    - "store_memory('QA_TEST: [specific test cases and scenarios]', project_id='{project_name}', agent_role='QA')"
+    - "store_memory('QA_BUG: [issues found and analysis]', project_id='{project_name}', agent_role='QA')"
+    - "store_memory('QA_GATE: [quality gate decisions and rationale]', project_id='{project_name}', agent_role='QA')"
+    - "store_memory('QA_AUTOMATION: [automation patterns and scripts]', project_id='{project_name}', agent_role='QA')"
+    - "store_memory('QA_COVERAGE: [coverage analysis and gaps]', project_id='{project_name}', agent_role='QA')"
+    - "store_memory('QA_NFR: [non-functional requirements validation]', project_id='{project_name}', agent_role='QA')"
+    - "store_memory('QA_RISK: [risk assessments and mitigation]', project_id='{project_name}', agent_role='QA')"
 
   handoff_preparation:
-    1. "search_memory('QA_TEST QA_STRATEGY QA_BUG QA_GATE all qa outputs', project_id='{project_name}', agent_role='QA')"
-    2. Summarize all quality assessments for development and deployment teams
-    3. "store_memory('QA_HANDOFF: [summary for deployment/operations teams]', project_id='{project_name}', agent_role='QA')"
+    - "search_memory('QA_TEST QA_STRATEGY QA_BUG QA_GATE all qa outputs', project_id='{project_name}', agent_role='QA')"
+    - 'Summarize all quality assessments for development and deployment teams'
+    - "store_memory('QA_HANDOFF: [summary for deployment/operations teams]', project_id='{project_name}', agent_role='QA')"
 
 # Memory Commands Reference
 memory_commands:
@@ -162,8 +172,7 @@ memory_commands:
   search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='QA')"
 
 # Critical Memory Integration Rules
-memory_rules:
-  1. "ALWAYS search memory before starting new QA work"
+memory_rules: 1. "ALWAYS search memory before starting new QA work"
   2. "NEVER duplicate existing test strategies without reviewing memory first"
   3. "ALWAYS use proper QA_ prefixes when storing quality decisions"
   4. "ALWAYS search for upstream story and development context that impacts testing"

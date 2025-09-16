@@ -101,46 +101,46 @@ memory_integration:
 
   # Store all architectural outputs with proper prefixes
   storage_rules:
-    - "All architectural decisions → ARCH_DECISION: [content]"
-    - "All technology selections → ARCH_TECH: [content]"
-    - "All design patterns → ARCH_PATTERN: [content]"
-    - "All security decisions → ARCH_SECURITY: [content]"
-    - "All integration specifications → ARCH_INTEGRATION: [content]"
+    - 'All architectural decisions → ARCH_DECISION: [content]'
+    - 'All technology selections → ARCH_TECH: [content]'
+    - 'All design patterns → ARCH_PATTERN: [content]'
+    - 'All security decisions → ARCH_SECURITY: [content]'
+    - 'All integration specifications → ARCH_INTEGRATION: [content]'
 
 # Agent-Specific Prefixes for Cross-Team Visibility
 agent_prefixes:
-  analyst: ["BA_REQ", "BA_INSIGHT", "BA_BUSINESS", "BA_COMPETITIVE", "BA_MARKET"]
-  pm: ["PM_SCOPE", "PM_TIMELINE", "PM_RESOURCE", "PM_RISK", "PM_STAKEHOLDER"]
-  architect: ["ARCH_DECISION", "ARCH_TECH", "ARCH_PATTERN", "ARCH_SECURITY", "ARCH_INTEGRATION"]
-  developer: ["DEV_CODE", "DEV_BUGFIX", "DEV_PATTERN", "DEV_REFACTOR", "DEV_TEST"]
-  qa: ["QA_TEST", "QA_BUG", "QA_STRATEGY", "QA_AUTOMATION", "QA_COVERAGE"]
-  sm: ["SM_STORY", "SM_SPRINT", "SM_BACKLOG", "SM_VELOCITY", "SM_IMPEDIMENT"]
-  ux: ["UX_DESIGN", "UX_USER", "UX_FLOW", "UX_PROTOTYPE", "UX_RESEARCH"]
+  analyst: ['BA_REQ', 'BA_INSIGHT', 'BA_BUSINESS', 'BA_COMPETITIVE', 'BA_MARKET']
+  pm: ['PM_SCOPE', 'PM_TIMELINE', 'PM_RESOURCE', 'PM_RISK', 'PM_STAKEHOLDER']
+  architect: ['ARCH_DECISION', 'ARCH_TECH', 'ARCH_PATTERN', 'ARCH_SECURITY', 'ARCH_INTEGRATION']
+  developer: ['DEV_CODE', 'DEV_BUGFIX', 'DEV_PATTERN', 'DEV_REFACTOR', 'DEV_TEST']
+  qa: ['QA_TEST', 'QA_BUG', 'QA_STRATEGY', 'QA_AUTOMATION', 'QA_COVERAGE']
+  sm: ['SM_STORY', 'SM_SPRINT', 'SM_BACKLOG', 'SM_VELOCITY', 'SM_IMPEDIMENT']
+  ux: ['UX_DESIGN', 'UX_USER', 'UX_FLOW', 'UX_PROTOTYPE', 'UX_RESEARCH']
 
 # Cross-Agent Memory Search Patterns
 search_patterns:
-  upstream_dependencies: "BA_REQ BA_INSIGHT PM_SCOPE PM_RESOURCE" # What I need from others
-  downstream_handoffs: "ARCH_DECISION ARCH_TECH ARCH_PATTERN ARCH_SECURITY" # What I provide to others
-  full_context: "BA_REQ PM_SCOPE ARCH_DECISION DEV_CODE QA_TEST SM_STORY" # Complete project context
+  upstream_dependencies: 'BA_REQ BA_INSIGHT PM_SCOPE PM_RESOURCE' # What I need from others
+  downstream_handoffs: 'ARCH_DECISION ARCH_TECH ARCH_PATTERN ARCH_SECURITY' # What I provide to others
+  full_context: 'BA_REQ PM_SCOPE ARCH_DECISION DEV_CODE QA_TEST SM_STORY' # Complete project context
 
 # Memory-Enhanced Workflow
 enhanced_workflow:
   before_architectural_work:
-    1. "search_memory('ARCH_DECISION ARCH_TECH ARCH_PATTERN system architecture', project_id='{project_name}', agent_role='ARCH')"
-    2. "search_memory('BA_REQ BA_BUSINESS PM_SCOPE user requirements', project_id='{project_name}', agent_role='ARCH')"
-    3. Review existing architectural decisions to avoid conflicts
-    4. Identify gaps in current system understanding
+    - "search_memory('ARCH_DECISION ARCH_TECH ARCH_PATTERN system architecture', project_id='{project_name}', agent_role='ARCH')"
+    - "search_memory('BA_REQ BA_BUSINESS PM_SCOPE user requirements', project_id='{project_name}', agent_role='ARCH')"
+    - 'Review existing architectural decisions to avoid conflicts'
+    - 'Identify gaps in current system understanding'
 
   during_architectural_work:
-    1. "store_memory('ARCH_DECISION: [architectural decision details]', project_id='{project_name}', agent_role='ARCH')"
-    2. "store_memory('ARCH_TECH: [technology selection]', project_id='{project_name}', agent_role='ARCH')"
-    3. "store_memory('ARCH_PATTERN: [design pattern implementation]', project_id='{project_name}', agent_role='ARCH')"
-    4. "store_memory('ARCH_SECURITY: [security implementation details]', project_id='{project_name}', agent_role='ARCH')"
+    - "store_memory('ARCH_DECISION: [architectural decision details]', project_id='{project_name}', agent_role='ARCH')"
+    - "store_memory('ARCH_TECH: [technology selection]', project_id='{project_name}', agent_role='ARCH')"
+    - "store_memory('ARCH_PATTERN: [design pattern implementation]', project_id='{project_name}', agent_role='ARCH')"
+    - "store_memory('ARCH_SECURITY: [security implementation details]', project_id='{project_name}', agent_role='ARCH')"
 
   handoff_preparation:
-    1. "search_memory('ARCH_DECISION ARCH_TECH ARCH_PATTERN ARCH_SECURITY', project_id='{project_name}', agent_role='ARCH')"
-    2. Summarize all architectural outputs for downstream teams
-    3. "store_memory('ARCH_HANDOFF: [summary for Dev/QA teams]', project_id='{project_name}', agent_role='ARCH')"
+    - "search_memory('ARCH_DECISION ARCH_TECH ARCH_PATTERN ARCH_SECURITY', project_id='{project_name}', agent_role='ARCH')"
+    - 'Summarize all architectural outputs for downstream teams'
+    - "store_memory('ARCH_HANDOFF: [summary for Dev/QA teams]', project_id='{project_name}', agent_role='ARCH')"
 
 # Memory Commands Reference
 memory_commands:
@@ -148,8 +148,7 @@ memory_commands:
   search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='ARCH')"
 
 # Critical Memory Integration Rules
-memory_rules:
-  1. "ALWAYS search memory before starting new architectural work"
+memory_rules: 1. "ALWAYS search memory before starting new architectural work"
   2. "NEVER duplicate existing architectural decisions without reviewing memory first"
   3. "ALWAYS use proper ARCH_ prefixes when storing architectural decisions"
   4. "ALWAYS search for upstream BA and PM decisions that impact architecture"

@@ -105,46 +105,46 @@ memory_integration:
 
   # Store all product outputs with proper prefixes
   storage_rules:
-    - "All scope decisions → PM_SCOPE: [content]"
-    - "All timeline decisions → PM_TIMELINE: [content]"
-    - "All resource decisions → PM_RESOURCE: [content]"
-    - "All risk assessments → PM_RISK: [content]"
-    - "All stakeholder communications → PM_STAKEHOLDER: [content]"
+    - 'All scope decisions → PM_SCOPE: [content]'
+    - 'All timeline decisions → PM_TIMELINE: [content]'
+    - 'All resource decisions → PM_RESOURCE: [content]'
+    - 'All risk assessments → PM_RISK: [content]'
+    - 'All stakeholder communications → PM_STAKEHOLDER: [content]'
 
 # Agent-Specific Prefixes for Cross-Team Visibility
 agent_prefixes:
-  analyst: ["BA_REQ", "BA_INSIGHT", "BA_BUSINESS", "BA_COMPETITIVE", "BA_MARKET"]
-  pm: ["PM_SCOPE", "PM_TIMELINE", "PM_RESOURCE", "PM_RISK", "PM_STAKEHOLDER"]
-  architect: ["ARCH_DECISION", "ARCH_TECH", "ARCH_PATTERN", "ARCH_SECURITY", "ARCH_INTEGRATION"]
-  developer: ["DEV_CODE", "DEV_BUGFIX", "DEV_PATTERN", "DEV_REFACTOR", "DEV_TEST"]
-  qa: ["QA_TEST", "QA_BUG", "QA_STRATEGY", "QA_AUTOMATION", "QA_COVERAGE"]
-  sm: ["SM_STORY", "SM_SPRINT", "SM_BACKLOG", "SM_VELOCITY", "SM_IMPEDIMENT"]
-  ux: ["UX_DESIGN", "UX_USER", "UX_FLOW", "UX_PROTOTYPE", "UX_RESEARCH"]
+  analyst: ['BA_REQ', 'BA_INSIGHT', 'BA_BUSINESS', 'BA_COMPETITIVE', 'BA_MARKET']
+  pm: ['PM_SCOPE', 'PM_TIMELINE', 'PM_RESOURCE', 'PM_RISK', 'PM_STAKEHOLDER']
+  architect: ['ARCH_DECISION', 'ARCH_TECH', 'ARCH_PATTERN', 'ARCH_SECURITY', 'ARCH_INTEGRATION']
+  developer: ['DEV_CODE', 'DEV_BUGFIX', 'DEV_PATTERN', 'DEV_REFACTOR', 'DEV_TEST']
+  qa: ['QA_TEST', 'QA_BUG', 'QA_STRATEGY', 'QA_AUTOMATION', 'QA_COVERAGE']
+  sm: ['SM_STORY', 'SM_SPRINT', 'SM_BACKLOG', 'SM_VELOCITY', 'SM_IMPEDIMENT']
+  ux: ['UX_DESIGN', 'UX_USER', 'UX_FLOW', 'UX_PROTOTYPE', 'UX_RESEARCH']
 
 # Cross-Agent Memory Search Patterns
 search_patterns:
-  upstream_dependencies: "BA_REQ BA_INSIGHT BA_BUSINESS ARCH_DECISION" # What I need from others
-  downstream_handoffs: "PM_SCOPE PM_TIMELINE PM_RESOURCE PM_RISK" # What I provide to others
-  full_context: "BA_REQ PM_SCOPE ARCH_DECISION DEV_CODE QA_TEST SM_STORY" # Complete project context
+  upstream_dependencies: 'BA_REQ BA_INSIGHT BA_BUSINESS ARCH_DECISION' # What I need from others
+  downstream_handoffs: 'PM_SCOPE PM_TIMELINE PM_RESOURCE PM_RISK' # What I provide to others
+  full_context: 'BA_REQ PM_SCOPE ARCH_DECISION DEV_CODE QA_TEST SM_STORY' # Complete project context
 
 # Memory-Enhanced Workflow
 enhanced_workflow:
   before_product_work:
-    1. "search_memory('PM_SCOPE PM_TIMELINE PM_RESOURCE product requirements', project_id='{project_name}', agent_role='PM')"
-    2. "search_memory('BA_REQ BA_INSIGHT BA_BUSINESS user requirements', project_id='{project_name}', agent_role='PM')"
-    3. Review existing product decisions to avoid duplication
-    4. Identify gaps in current product understanding
+    - "search_memory('PM_SCOPE PM_TIMELINE PM_RESOURCE product requirements', project_id='{project_name}', agent_role='PM')"
+    - "search_memory('BA_REQ BA_INSIGHT BA_BUSINESS user requirements', project_id='{project_name}', agent_role='PM')"
+    - 'Review existing product decisions to avoid duplication'
+    - 'Identify gaps in current product understanding'
 
   during_product_work:
-    1. "store_memory('PM_SCOPE: [scope decision details]', project_id='{project_name}', agent_role='PM')"
-    2. "store_memory('PM_TIMELINE: [timeline decision]', project_id='{project_name}', agent_role='PM')"
-    3. "store_memory('PM_RESOURCE: [resource allocation]', project_id='{project_name}', agent_role='PM')"
-    4. "store_memory('PM_RISK: [risk assessment]', project_id='{project_name}', agent_role='PM')"
+    - "store_memory('PM_SCOPE: [scope decision details]', project_id='{project_name}', agent_role='PM')"
+    - "store_memory('PM_TIMELINE: [timeline decision]', project_id='{project_name}', agent_role='PM')"
+    - "store_memory('PM_RESOURCE: [resource allocation]', project_id='{project_name}', agent_role='PM')"
+    - "store_memory('PM_RISK: [risk assessment]', project_id='{project_name}', agent_role='PM')"
 
   handoff_preparation:
-    1. "search_memory('PM_SCOPE PM_TIMELINE PM_RESOURCE PM_RISK', project_id='{project_name}', agent_role='PM')"
-    2. Summarize all PM outputs for downstream teams
-    3. "store_memory('PM_HANDOFF: [summary for Dev/QA/SM teams]', project_id='{project_name}', agent_role='PM')"
+    - "search_memory('PM_SCOPE PM_TIMELINE PM_RESOURCE PM_RISK', project_id='{project_name}', agent_role='PM')"
+    - 'Summarize all PM outputs for downstream teams'
+    - "store_memory('PM_HANDOFF: [summary for Dev/QA/SM teams]', project_id='{project_name}', agent_role='PM')"
 
 # Memory Commands Reference
 memory_commands:
@@ -152,8 +152,7 @@ memory_commands:
   search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='PM')"
 
 # Critical Memory Integration Rules
-memory_rules:
-  1. "ALWAYS search memory before starting new product work"
+memory_rules: 1. "ALWAYS search memory before starting new product work"
   2. "NEVER duplicate existing product decisions without reviewing memory first"
   3. "ALWAYS use proper PM_ prefixes when storing product decisions"
   4. "ALWAYS search for upstream BA and ARCH decisions that impact product planning"
