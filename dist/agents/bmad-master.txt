@@ -117,17 +117,18 @@ dependencies:
     - project-brief-tmpl.yaml
     - story-tmpl.yaml
   workflows:
-    - brownfield-fullstack.md
-    - brownfield-service.md
-    - brownfield-ui.md
-    - greenfield-fullstack.md
-    - greenfield-service.md
-    - greenfield-ui.md
+    - brownfield-fullstack.yaml
+    - brownfield-service.yaml
+    - brownfield-ui.yaml
+    - greenfield-fullstack.yaml
+    - greenfield-service.yaml
+    - greenfield-ui.yaml
 ```
 ==================== END: .bmad-core/agents/bmad-master.md ====================
 
 ==================== START: .bmad-core/tasks/advanced-elicitation.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Advanced Elicitation Task
 
 ## Purpose
@@ -249,6 +250,7 @@ Choose a number (0-8) or 9 to proceed:
 
 ==================== START: .bmad-core/tasks/brownfield-create-epic.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Create Brownfield Epic Task
 
 ## Purpose
@@ -413,6 +415,7 @@ The epic creation is successful when:
 
 ==================== START: .bmad-core/tasks/brownfield-create-story.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Create Brownfield Story Task
 
 ## Purpose
@@ -564,6 +567,7 @@ The story creation is successful when:
 
 ==================== START: .bmad-core/tasks/correct-course.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Correct Course Task
 
 ## Purpose
@@ -638,6 +642,7 @@ The story creation is successful when:
 
 ==================== START: .bmad-core/tasks/create-deep-research-prompt.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Create Deep Research Prompt Task
 
 This task helps create comprehensive research prompts for various types of deep analysis. It can process inputs from brainstorming sessions, project briefs, market research, or specific research questions to generate targeted prompts for deeper investigation.
@@ -920,6 +925,7 @@ CRITICAL: collaborate with the user to develop specific, actionable research que
 
 ==================== START: .bmad-core/tasks/create-doc.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Create Document from Template (YAML Driven)
 
 ## ⚠️ CRITICAL EXECUTION NOTICE ⚠️
@@ -1025,11 +1031,27 @@ User can type `#yolo` to toggle to YOLO mode (process all sections at once).
 
 ==================== START: .bmad-core/tasks/create-next-story.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Create Next Story Task
 
 ## Purpose
 
 To identify the next logical story based on project progress and epic definitions, and then to prepare a comprehensive, self-contained, and actionable story file using the `Story Template`. This task ensures the story is enriched with all necessary technical context, requirements, and acceptance criteria, making it ready for efficient implementation by a Developer Agent with minimal need for additional research or finding its own context.
+
+## MEMORY-AWARE Task Execution
+
+Before beginning any task execution, perform memory operations to enhance context awareness:
+
+### Memory Initialization
+
+1. Search project memory for relevant story patterns and decisions:
+   ```
+   search_memory("SM_STORY PO_STORY DEV_CODE DEV_PATTERN previous stories", project_id="{project_name}")
+   ```
+2. Store task initiation for tracking:
+   ```
+   store_memory("SM_STORY: Starting creation of story {epicNum}.{storyNum}", project_id="{project_name}")
+   ```
 
 ## SEQUENTIAL Task Execution (Do not proceed until current Task is complete)
 
@@ -1052,6 +1074,10 @@ To identify the next logical story based on project progress and epic definition
   - **CRITICAL**: NEVER automatically skip to another epic. User MUST explicitly instruct which story to create.
 - **If no story files exist:** The next story is ALWAYS 1.1 (first story of first epic)
 - Announce the identified story to the user: "Identified next story for preparation: {epicNum}.{storyNum} - {Story Title}"
+- Store story identification in memory:
+  ```
+  store_memory("SM_STORY: Identified story {epicNum}.{storyNum} for preparation", project_id="{project_name}")
+  ```
 
 ### 2. Gather Story Requirements and Previous Story Context
 
@@ -1061,6 +1087,10 @@ To identify the next logical story based on project progress and epic definition
   - Implementation deviations and technical decisions
   - Challenges encountered and lessons learned
 - Extract relevant insights that inform the current story's preparation
+- Search memory for relevant patterns from previous stories:
+  ```
+  search_memory("SM_STORY DEV_PATTERN DEV_CODE story {epicNum} patterns", project_id="{project_name}")
+  ```
 
 ### 3. Gather Architecture Context
 
@@ -1130,6 +1160,11 @@ ALWAYS cite source documents: `[Source: architecture/{filename}.md#{section}]`
 - Ensure tasks align with both epic requirements and architecture constraints
 - Update status to "Draft" and save the story file
 - Execute `.bmad-core/tasks/execute-checklist` `.bmad-core/checklists/story-draft-checklist`
+- Store completed story information in memory:
+  ```
+  store_memory("SM_STORY: Completed draft of story {epicNum}.{storyNum} - {Story Title}", project_id="{project_name}")
+  store_memory("SM_STORY_DETAILS: Story {epicNum}.{storyNum} contains {task_count} tasks and references {source_count} architecture documents", project_id="{project_name}")
+  ```
 - Provide summary to user including:
   - Story created: `{devStoryLocation}/{epicNum}.{storyNum}.story.md`
   - Status: Draft
@@ -1141,6 +1176,7 @@ ALWAYS cite source documents: `[Source: architecture/{filename}.md#{section}]`
 
 ==================== START: .bmad-core/tasks/document-project.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Document an Existing Project
 
 ## Purpose
@@ -1488,6 +1524,7 @@ Apply the advanced elicitation task after major sections to refine based on user
 
 ==================== START: .bmad-core/tasks/execute-checklist.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Checklist Validation Task
 
 This task provides instructions for validating documentation against checklists. The agent MUST follow these instructions to ensure thorough and systematic validation of documents.
@@ -1577,10 +1614,11 @@ The LLM will:
 ==================== END: .bmad-core/tasks/execute-checklist.md ====================
 
 ==================== START: .bmad-core/tasks/facilitate-brainstorming-session.md ====================
-<!-- Powered by BMAD™ Core -->
----
+## <!-- Powered by BMAD™ Core -->
+
 docOutputLocation: docs/brainstorming-session-results.md
 template: '.bmad-core/templates/brainstorming-output-tmpl.yaml'
+
 ---
 
 # Facilitate Brainstorming Session Task
@@ -1718,6 +1756,7 @@ Generate structured document with these sections:
 
 ==================== START: .bmad-core/tasks/generate-ai-frontend-prompt.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Create AI Frontend Prompt Task
 
 ## Purpose
@@ -1773,6 +1812,7 @@ You will now synthesize the inputs and the above principles into a final, compre
 
 ==================== START: .bmad-core/tasks/index-docs.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Index Documentation Task
 
 ## Purpose
@@ -1950,6 +1990,7 @@ Would you like to proceed with documentation indexing? Please provide the requir
 
 ==================== START: .bmad-core/tasks/shard-doc.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Document Sharding Task
 
 ## Purpose
@@ -1957,6 +1998,21 @@ Would you like to proceed with documentation indexing? Please provide the requir
 - Split a large document into multiple smaller documents based on level 2 sections
 - Create a folder structure to organize the sharded documents
 - Maintain all content integrity including code blocks, diagrams, and markdown formatting
+
+## MEMORY-AWARE Sharding Process
+
+Before beginning any sharding, perform memory operations to enhance context awareness:
+
+### Memory Initialization
+
+1. Search project memory for previous sharding patterns:
+   ```
+   search_memory("PO_STORY SM_STORY document sharding patterns", project_id="{project_name}")
+   ```
+2. Store task initiation for tracking:
+   ```
+   store_memory("PO_STORY: Starting sharding of document {document_name}", project_id="{project_name}")
+   ```
 
 ## Primary Method: Automatic with markdown-tree
 
@@ -2127,6 +2183,13 @@ Document sharded successfully:
   - section-name-1.md: "Section Title 1"
   - section-name-2.md: "Section Title 2"
   ...
+```
+
+Store sharding results in memory:
+
+```
+store_memory("PO_STORY: Completed sharding of document {document_name} into {file_count} sections", project_id="{project_name}")
+store_memory("PO_STORY_DETAILS: Sharded document stored at docs/{folder_name}/ with index file", project_id="{project_name}")
 ```
 
 ## Important Notes
@@ -2903,8 +2966,8 @@ sections:
           - **UI/UX Consistency:** {{ui_compatibility}}
           - **Performance Impact:** {{performance_constraints}}
 
-  - id: tech-stack-alignment
-    title: Tech Stack Alignment
+  - id: tech-stack
+    title: Tech Stack
     instruction: |
       Ensure new components align with existing technology choices:
 
@@ -3066,8 +3129,8 @@ sections:
 
           **Error Handling:** {{error_handling_strategy}}
 
-  - id: source-tree-integration
-    title: Source Tree Integration
+  - id: source-tree
+    title: Source Tree
     instruction: |
       Define how new code will integrate with existing project structure:
 
@@ -3136,7 +3199,7 @@ sections:
           **Monitoring:** {{monitoring_approach}}
 
   - id: coding-standards
-    title: Coding Standards and Conventions
+    title: Coding Standards
     instruction: |
       Ensure new code follows existing project conventions:
 
@@ -5969,6 +6032,12 @@ workflow:
   mode: interactive
   elicitation: advanced-elicitation
 
+# MEMORY-AWARE Template
+# Before generating content, search project memory:
+# search_memory("SM_STORY DEV_CODE DEV_PATTERN similar stories {{epic_num}}.{{story_num}}", project_id="{{project_name}}")
+# Store template generation initiation:
+# store_memory("SM_STORY: Generating story template for {{epic_num}}.{{story_num}} - {{story_title_short}}", project_id="{{project_name}}")
+
 agent_config:
   editable_sections:
     - Status
@@ -6093,10 +6162,46 @@ sections:
     instruction: Results from QA Agent QA review of the completed story implementation
     owner: qa-agent
     editors: [qa-agent]
+
+  - id: memory-context
+    title: Memory Context
+    instruction: |
+      Context retrieved from project memory to inform this story creation.
+      This section is automatically populated by the system.
+    owner: system
+    editors: [system]
+    sections:
+      - id: related-stories
+        title: Related Stories
+        instruction: |
+          Previously completed stories that may provide context for this implementation:
+          - [ ] Story 1.1: Example related story
+          - [ ] Story 1.2: Another related story
+        owner: system
+        editors: [system]
+
+      - id: implementation-patterns
+        title: Implementation Patterns
+        instruction: |
+          Patterns from previous implementations that may be relevant:
+          - [ ] Pattern 1: Example pattern
+          - [ ] Pattern 2: Another pattern
+        owner: system
+        editors: [system]
+
+      - id: lessons-learned
+        title: Lessons Learned
+        instruction: |
+          Key lessons from previous stories that should inform this implementation:
+          - [ ] Lesson 1: Example lesson
+          - [ ] Lesson 2: Another lesson
+        owner: system
+        editors: [system]
 ==================== END: .bmad-core/templates/story-tmpl.yaml ====================
 
 ==================== START: .bmad-core/checklists/architect-checklist.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Architect Solution Validation Checklist
 
 This checklist serves as a comprehensive framework for the Architect to validate the technical design and architecture before development execution. The Architect should systematically work through each item, ensuring the architecture is robust, scalable, secure, and aligned with the product requirements.
@@ -6539,6 +6644,7 @@ After presenting the report, ask the user if they would like detailed analysis o
 
 ==================== START: .bmad-core/checklists/change-checklist.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Change Navigation Checklist
 
 **Purpose:** To systematically guide the selected Agent and user through the analysis and planning required when a significant change (pivot, tech issue, missing requirement, failed story) is identified during the BMad workflow.
@@ -6725,6 +6831,7 @@ Keep it action-oriented and forward-looking.]]
 
 ==================== START: .bmad-core/checklists/pm-checklist.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Product Manager (PM) Requirements Checklist
 
 This checklist serves as a comprehensive framework to ensure the Product Requirements Document (PRD) and Epic definitions are complete, well-structured, and appropriately scoped for MVP development. The PM should systematically work through each item during the product definition process.
@@ -7099,6 +7206,7 @@ After presenting the report, ask if the user wants:
 
 ==================== START: .bmad-core/checklists/po-master-checklist.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Product Owner (PO) Master Validation Checklist
 
 This checklist serves as a comprehensive framework for the Product Owner to validate project plans before development execution. It adapts intelligently based on project type (greenfield vs brownfield) and includes UI/UX considerations when applicable.
@@ -7535,7 +7643,23 @@ After presenting the report, ask if the user wants:
 
 ==================== START: .bmad-core/checklists/story-dod-checklist.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Story Definition of Done (DoD) Checklist
+
+## MEMORY-AWARE Checklist Instructions
+
+Before beginning the checklist, perform memory operations to enhance context awareness:
+
+### Memory Initialization
+
+1. Search project memory for relevant patterns and previous issues:
+   ```
+   search_memory("DEV_CODE DEV_PATTERN DEV_BUGFIX previous stories similar issues", project_id="{project_name}")
+   ```
+2. Store checklist initiation for tracking:
+   ```
+   store_memory("DEV_CHECKLIST: Starting DoD checklist for story {story_id}", project_id="{project_name}")
+   ```
 
 ## Instructions for Developer Agent
 
@@ -7626,6 +7750,13 @@ After completing the checklist:
 4. Note any challenges or learnings for future stories
 5. Confirm whether the story is truly ready for review
 
+Store checklist completion in memory:
+
+```
+store_memory("DEV_CHECKLIST: Completed DoD checklist for story {story_id}", project_id="{project_name}")
+store_memory("DEV_CHECKLIST_RESULTS: Story {story_id} has {completed_items} of {total_items} checklist items completed", project_id="{project_name}")
+```
+
 Be honest - it's better to flag issues now than have them discovered later.]]
 
 - [ ] I, the Developer Agent, confirm that all applicable items above have been addressed.
@@ -7633,6 +7764,7 @@ Be honest - it's better to flag issues now than have them discovered later.]]
 
 ==================== START: .bmad-core/checklists/story-draft-checklist.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Story Draft Checklist
 
 The Scrum Master should use this checklist to validate that each story contains sufficient context for a developer agent to implement it successfully, while assuming the dev agent has reasonable capabilities to figure things out.
@@ -7790,6 +7922,7 @@ Be pragmatic - perfect documentation doesn't exist, but it must be enough to pro
 
 ==================== START: .bmad-core/data/bmad-kb.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # BMAD™ Knowledge Base
 
 ## Overview
@@ -7892,6 +8025,7 @@ npx bmad-method install
   - **Cline**: VS Code extension with AI features
   - **Roo Code**: Web-based IDE with agent support
   - **GitHub Copilot**: VS Code extension with AI peer programming assistant
+  - **Auggie CLI (Augment Code)**: AI-powered development environment
 
 **Note for VS Code Users**: BMAD-METHOD™ assumes when you mention "VS Code" that you're using it with an AI-powered extension like GitHub Copilot, Cline, or Roo. Standard VS Code without AI capabilities cannot run BMad agents. The installer includes built-in support for Cline and Roo.
 
@@ -8600,6 +8734,7 @@ Use the **expansion-creator** pack to build your own:
 
 ==================== START: .bmad-core/data/brainstorming-techniques.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Brainstorming Techniques Data
 
 ## Creative Expansion
@@ -8640,6 +8775,7 @@ Use the **expansion-creator** pack to build your own:
 
 ==================== START: .bmad-core/data/elicitation-methods.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Elicitation Methods Data
 
 ## Core Reflective Methods
@@ -8798,6 +8934,7 @@ Use the **expansion-creator** pack to build your own:
 
 ==================== START: .bmad-core/data/technical-preferences.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # User-Defined Preferred Patterns and Preferences
 
 None Listed

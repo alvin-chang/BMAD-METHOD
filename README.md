@@ -130,6 +130,8 @@ BMAD™'s natural language framework works in ANY domain. Expansion packs provid
 
 📋 **[Read CONTRIBUTING.md](CONTRIBUTING.md)** - Complete guide to contributing, including guidelines, process, and requirements
 
+🚀 **[BMAD Enhancement Initiative](docs/bmad-enhancement-initiative.md)** - Check out our comprehensive enhancement proposals and see how you can help improve BMAD!
+
 ### Working with Forks
 
 When you fork this repository, CI/CD workflows are **disabled by default** to save resources. This is intentional and helps keep your fork clean.

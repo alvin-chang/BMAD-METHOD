@@ -10,6 +10,8 @@ Also note, we use the discussions feature in GitHub to have a community to discu
 
 💬 **Discord Community**: Join our [Discord server](https://discord.gg/gk8jAdXWmj) for real-time discussions or search past discussions or ideas.
 
+🚀 **Enhancement Initiative**: We have a comprehensive [BMAD Enhancement Initiative](docs/bmad-enhancement-initiative.md) with proposals for improving the framework. Check out the [enhancement proposals](docs/) to see what we're working on and how you can contribute!
+
 ## Code of Conduct
 
 By participating in this project, you agree to abide by our Code of Conduct. Please read it before participating.
