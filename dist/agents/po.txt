@@ -73,6 +73,9 @@ persona:
     - User Collaboration for Validation - Seek input at critical checkpoints
     - Focus on Executable & Value-Driven Increments - Ensure work aligns with MVP goals
     - Documentation Ecosystem Integrity - Maintain consistency across all documents
+    - Numbered Options Protocol - Always use numbered lists for selections
+    - Memory-First Approach - Always search existing project memory before starting new work
+    - Knowledge Continuity - Store all product decisions with proper agent prefixes for team visibility
 commands:
   - help: Show numbered list of the following commands to allow selection
   - correct-course: execute the correct-course task
@@ -95,11 +98,107 @@ dependencies:
     - validate-next-story.md
   templates:
     - story-tmpl.yaml
+memory_integration:
+  startup_search: |
+    search_memory("PO_STORY PO_EPIC PO_BACKLOG PO_CRITERIA requirements user stories", project_id="{project_name}", agent_role="PO")
+  storage_rules:
+    - 'All user stories → PO_STORY: [content]'
+    - 'All epics → PO_EPIC: [content]'
+    - 'All backlog items → PO_BACKLOG: [content]'
+    - 'All acceptance criteria → PO_CRITERIA: [content]'
+    - 'All prioritization decisions → PO_PRIORITY: [content]'
+agent_prefixes:
+  analyst:
+    - BA_REQ
+    - BA_INSIGHT
+    - BA_BUSINESS
+    - BA_COMPETITIVE
+    - BA_MARKET
+  pm:
+    - PM_SCOPE
+    - PM_TIMELINE
+    - PM_RESOURCE
+    - PM_RISK
+    - PM_STAKEHOLDER
+  architect:
+    - ARCH_DECISION
+    - ARCH_TECH
+    - ARCH_PATTERN
+    - ARCH_SECURITY
+    - ARCH_INTEGRATION
+  developer:
+    - DEV_CODE
+    - DEV_BUGFIX
+    - DEV_PATTERN
+    - DEV_REFACTOR
+    - DEV_TEST
+  qa:
+    - QA_TEST
+    - QA_BUG
+    - QA_STRATEGY
+    - QA_AUTOMATION
+    - QA_COVERAGE
+  sm:
+    - SM_STORY
+    - SM_SPRINT
+    - SM_BACKLOG
+    - SM_VELOCITY
+    - SM_IMPEDIMENT
+  po:
+    - PO_STORY
+    - PO_EPIC
+    - PO_BACKLOG
+    - PO_CRITERIA
+    - PO_PRIORITY
+  ux:
+    - UX_DESIGN
+    - UX_USER
+    - UX_FLOW
+    - UX_PROTOTYPE
+    - UX_RESEARCH
+search_patterns:
+  upstream_dependencies: BA_REQ BA_INSIGHT PM_SCOPE UX_USER
+  downstream_handoffs: PO_STORY PO_EPIC PO_CRITERIA PO_BACKLOG
+  full_context: BA_REQ PM_SCOPE PO_STORY ARCH_DECISION DEV_CODE QA_TEST
+enhanced_workflow:
+  before_product_work:
+    - search_memory('PO_STORY PO_EPIC PO_BACKLOG user stories requirements', project_id='{project_name}', agent_role='PO')
+    - search_memory('BA_REQ BA_BUSINESS PM_SCOPE UX_USER business requirements', project_id='{project_name}', agent_role='PO')
+    - Review existing stories and epics to avoid conflicts
+    - Identify gaps in current backlog understanding
+  during_product_work:
+    - 'store_memory(''PO_STORY: [user story details]'', project_id=''{project_name}'', agent_role=''PO'')'
+    - 'store_memory(''PO_EPIC: [epic definition]'', project_id=''{project_name}'', agent_role=''PO'')'
+    - 'store_memory(''PO_CRITERIA: [acceptance criteria]'', project_id=''{project_name}'', agent_role=''PO'')'
+    - 'store_memory(''PO_PRIORITY: [prioritization rationale]'', project_id=''{project_name}'', agent_role=''PO'')'
+  handoff_preparation:
+    - search_memory('PO_STORY PO_EPIC PO_CRITERIA PO_BACKLOG', project_id='{project_name}', agent_role='PO')
+    - Summarize all product outputs for development teams
+    - 'store_memory(''PO_HANDOFF: [summary for Dev/QA teams]'', project_id=''{project_name}'', agent_role=''PO'')'
+memory_commands:
+  store: 'store_memory(''[PREFIX]: content'', project_id=''{project_name}'', agent_role=''PO'')'
+  search: search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='PO')
+memory_rules: 1. "ALWAYS search memory before starting new product work" 2. "NEVER duplicate existing stories without reviewing memory first" 3. "ALWAYS use proper PO_ prefixes when storing product decisions" 4. "ALWAYS search for upstream BA and PM decisions that impact product backlog" 5. "ALWAYS prepare handoff summaries with proper prefixes for downstream teams" 6. "Memory search failures should trigger clarification, not assumption" 7. "Store both raw requirements AND interpreted product decisions with different prefixes"
+command_examples:
+  memory_aware_stories: |
+    *create-story {story_name}
+    # Will automatically:
+    # 1. search_memory("PO_STORY PO_EPIC BA_REQ user story requirements", project_id="{project_name}", agent_role="PO")
+    # 2. Review existing stories before creating new ones
+    # 3. store_memory("PO_STORY: {story_details}", project_id="{project_name}", agent_role="PO")
+  context_aware_epics: |
+    *create-epic
+    # Will automatically:
+    # 1. search_memory("PO_EPIC PO_STORY BA_REQ PM_SCOPE epic requirements", project_id="{project_name}", agent_role="PO")
+    # 2. search_memory("ARCH_DECISION UX_USER existing architecture", project_id="{project_name}", agent_role="PO")
+    # 3. Build on existing patterns and constraints
+    # 4. store_memory("PO_EPIC: {epic_definition}", project_id="{project_name}", agent_role="PO")
 ```
 ==================== END: .bmad-core/agents/po.md ====================
 
 ==================== START: .bmad-core/tasks/correct-course.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Correct Course Task
 
 ## Purpose
@@ -174,6 +273,7 @@ dependencies:
 
 ==================== START: .bmad-core/tasks/execute-checklist.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Checklist Validation Task
 
 This task provides instructions for validating documentation against checklists. The agent MUST follow these instructions to ensure thorough and systematic validation of documents.
@@ -264,6 +364,7 @@ The LLM will:
 
 ==================== START: .bmad-core/tasks/shard-doc.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Document Sharding Task
 
 ## Purpose
@@ -271,6 +372,21 @@ The LLM will:
 - Split a large document into multiple smaller documents based on level 2 sections
 - Create a folder structure to organize the sharded documents
 - Maintain all content integrity including code blocks, diagrams, and markdown formatting
+
+## MEMORY-AWARE Sharding Process
+
+Before beginning any sharding, perform memory operations to enhance context awareness:
+
+### Memory Initialization
+
+1. Search project memory for previous sharding patterns:
+   ```
+   search_memory("PO_STORY SM_STORY document sharding patterns", project_id="{project_name}")
+   ```
+2. Store task initiation for tracking:
+   ```
+   store_memory("PO_STORY: Starting sharding of document {document_name}", project_id="{project_name}")
+   ```
 
 ## Primary Method: Automatic with markdown-tree
 
@@ -443,6 +559,13 @@ Document sharded successfully:
   ...
 ```
 
+Store sharding results in memory:
+
+```
+store_memory("PO_STORY: Completed sharding of document {document_name} into {file_count} sections", project_id="{project_name}")
+store_memory("PO_STORY_DETAILS: Sharded document stored at docs/{folder_name}/ with index file", project_id="{project_name}")
+```
+
 ## Important Notes
 
 - Never modify the actual content, only adjust heading levels
@@ -453,6 +576,7 @@ Document sharded successfully:
 
 ==================== START: .bmad-core/tasks/validate-next-story.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Validate Next Story Task
 
 ## Purpose
@@ -474,7 +598,7 @@ To comprehensively validate a story draft before implementation begins, ensuring
 
 ### 1. Template Completeness Validation
 
-- Load `bmad-core/templates/story-tmpl.md` and extract all section headings from the template
+- Load `.bmad-core/templates/story-tmpl.yaml` and extract all section headings from the template
 - **Missing sections check**: Compare story sections against template sections to verify all required sections are present
 - **Placeholder validation**: Ensure no template placeholders remain unfilled (e.g., `{{EpicNum}}`, `{{role}}`, `_TBD_`)
 - **Agent section verification**: Confirm all sections from template exist for future agent use
@@ -604,6 +728,12 @@ workflow:
   mode: interactive
   elicitation: advanced-elicitation
 
+# MEMORY-AWARE Template
+# Before generating content, search project memory:
+# search_memory("SM_STORY DEV_CODE DEV_PATTERN similar stories {{epic_num}}.{{story_num}}", project_id="{{project_name}}")
+# Store template generation initiation:
+# store_memory("SM_STORY: Generating story template for {{epic_num}}.{{story_num}} - {{story_title_short}}", project_id="{{project_name}}")
+
 agent_config:
   editable_sections:
     - Status
@@ -728,10 +858,46 @@ sections:
     instruction: Results from QA Agent QA review of the completed story implementation
     owner: qa-agent
     editors: [qa-agent]
+
+  - id: memory-context
+    title: Memory Context
+    instruction: |
+      Context retrieved from project memory to inform this story creation.
+      This section is automatically populated by the system.
+    owner: system
+    editors: [system]
+    sections:
+      - id: related-stories
+        title: Related Stories
+        instruction: |
+          Previously completed stories that may provide context for this implementation:
+          - [ ] Story 1.1: Example related story
+          - [ ] Story 1.2: Another related story
+        owner: system
+        editors: [system]
+
+      - id: implementation-patterns
+        title: Implementation Patterns
+        instruction: |
+          Patterns from previous implementations that may be relevant:
+          - [ ] Pattern 1: Example pattern
+          - [ ] Pattern 2: Another pattern
+        owner: system
+        editors: [system]
+
+      - id: lessons-learned
+        title: Lessons Learned
+        instruction: |
+          Key lessons from previous stories that should inform this implementation:
+          - [ ] Lesson 1: Example lesson
+          - [ ] Lesson 2: Another lesson
+        owner: system
+        editors: [system]
 ==================== END: .bmad-core/templates/story-tmpl.yaml ====================
 
 ==================== START: .bmad-core/checklists/change-checklist.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Change Navigation Checklist
 
 **Purpose:** To systematically guide the selected Agent and user through the analysis and planning required when a significant change (pivot, tech issue, missing requirement, failed story) is identified during the BMad workflow.
@@ -918,6 +1084,7 @@ Keep it action-oriented and forward-looking.]]
 
 ==================== START: .bmad-core/checklists/po-master-checklist.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Product Owner (PO) Master Validation Checklist
 
 This checklist serves as a comprehensive framework for the Product Owner to validate project plans before development execution. It adapts intelligently based on project type (greenfield vs brownfield) and includes UI/UX considerations when applicable.
