@@ -46,3 +46,22 @@ test-project-install/*
 sample-project/*
 flattened-codebase.xml
 *.stats.md
+
+# Cache and temporary files
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+.nyc_output/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
