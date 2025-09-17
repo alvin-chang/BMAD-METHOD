@@ -265,6 +265,38 @@ The enhanced orchestrator provides:
 - Resource optimization
 - Conflict mediation
 
+### Using Enhanced Features
+
+After installation, you can take advantage of BMAD's enhanced features:
+
+**Template Validation:**
+
+```bash
+# Validate a template
+npm run validate:templates my-template.yaml
+
+# Lint a template for best practices
+npm run lint:templates my-template.yaml
+
+# Watch a template for changes with real-time validation
+npm run validate:templates:watch my-template.yaml
+```
+
+**Enhanced Orchestrator:**
+In an AI-enabled IDE, load the enhanced orchestrator agent:
+
+```
+@.bmad-core/agents/enhanced-bmad-orchestrator.md
+```
+
+The enhanced orchestrator provides:
+
+- Workflow visualization with Mermaid diagrams
+- Real-time monitoring and alerting
+- Bottleneck detection and resolution
+- Resource optimization
+- Conflict mediation
+
 ### Alternative: Clone and Build
 
 ```bash
