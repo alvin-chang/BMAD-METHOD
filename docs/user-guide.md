@@ -8,7 +8,7 @@ BMAD-METHOD includes a powerful memory system that enables persistent storage an
 
 ### How Memory Works
 
-The memory system works with an external MCP (Model Context Protocol) server called `local-memori` that provides the actual implementation of `search_memory()` and `store_memory()` functions.
+The memory system works with an external MCP (Model Context Protocol) server that provides the actual implementation of `search_memory()` and `store_memory()` functions.
 
 ### Memory Configuration
 

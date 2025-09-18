@@ -159,7 +159,6 @@ program
     console.log(
       `search_memory("${options.pattern || 'pattern'}", project_id="${options.project || 'project_name'}")`,
     );
-    console.log('\nThis command requires the local-memori MCP server to be running.');
   });
 
 program
@@ -172,7 +171,6 @@ program
     console.log(
       `store_memory("${options.content || 'content'}", project_id="${options.project || 'project_name'}")`,
     );
-    console.log('\nThis command requires the local-memori MCP server to be running.');
   });
 
 program
@@ -180,9 +178,8 @@ program
   .description('Initialize memory system for a project')
   .action(async () => {
     console.log('Memory system initialization:');
-    console.log('1. Ensure local-memori MCP server is running');
-    console.log('2. Configure memory settings in .bmad-core/core-config.yaml');
-    console.log('3. Memory storage location: .ai/memory/');
+    console.log('1. Configure memory settings in .bmad-core/core-config.yaml');
+    console.log('2. Memory storage location: .ai/memory/');
     console.log(
       '\nMemory system is automatically enabled when using BMAD agents in MCP-enabled environments.',
     );

@@ -88,7 +88,7 @@ The BMAD-METHOD includes a comprehensive memory system that enables persistent s
 
 - **Project-Level Memory**: Maintains context that spans across multiple agents and sessions, stored in `.ai/memory/project/`
 - **Agent-Level Memory**: Maintains context specific to individual agent roles, stored in `.ai/memory/agents/{agent-prefix}/`
-- **External Implementation**: Memory functions (`search_memory()` and `store_memory()`) are provided by the `local-memori` MCP server
+- **External Implementation**: Memory functions (`search_memory()` and `store_memory()`) are provided by an external MCP (Model Context Protocol) server
 - **Prefix Strategy**: Each agent type uses specific prefixes for organized memory entries (e.g., `DEV_CODE`, `ARCH_DECISION`, `QA_TEST`)
 
 #### 3.2.2. Memory Integration in Components
