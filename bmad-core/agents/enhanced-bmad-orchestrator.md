@@ -184,16 +184,26 @@ enhanced_workflow:
     - "store_memory('SM_IMPEDIMENT: [impediment tracking and resolution]', project_id='{project_name}', agent_role='SM')"
     - "store_memory('SM_MONITOR: [workflow monitoring data and alerts]', project_id='{project_name}', agent_role='SM')"
     - "store_memory('SM_PERFORMANCE: [performance analytics and insights]', project_id='{project_name}', agent_role='SM')"
+    - "share_memory('SM_STORY: [story details]', with_agents=['dev', 'qa'], project_id='{project_name}', agent_role='SM')"
+
+  cross_agent_coordination:
+    - "search_memory('DEV_CODE ARCH_DECISION QA_TEST upstream dependencies', project_id='{project_name}', agent_role='ORCH')"
+    - "store_memory('ORCH_AGENT: [coordinated task between agents]', project_id='{project_name}', agent_role='ORCH')"
+    - "share_memory('ORCH_AGENT: [coordination decision]', with_agents=['architect', 'developer', 'qa'], project_id='{project_name}', agent_role='ORCH')"
 
   handoff_preparation:
     - "search_memory('SM_STORY SM_SPRINT SM_BACKLOG SM_VELOCITY SM_IMPEDIMENT', project_id='{project_name}', agent_role='SM')"
     - 'Summarize all sprint outputs for development teams'
     - "store_memory('SM_HANDOFF: [summary for Dev/QA teams]', project_id='{project_name}', agent_role='SM')"
+    - "share_memory('SM_HANDOFF: [summary]', with_agents=['dev', 'qa'], project_id='{project_name}', agent_role='SM')"
 
 # Memory Commands Reference
 memory_commands:
   store: "store_memory('[PREFIX]: content', project_id='{project_name}', agent_role='SM')"
   search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='SM')"
+  update: "update_memory('[PREFIX]: updated_content', project_id='{project_name}', agent_role='SM')"
+  delete: "delete_memory('[PREFIX]', project_id='{project_name}', agent_role='SM')"
+  share: "share_memory('[PREFIX]: content', with_agents=['agent1', 'agent2'], project_id='{project_name}', agent_role='SM')"
 
 # Critical Memory Integration Rules
 memory_rules: 1. "ALWAYS search memory before starting new sprint or story work"
@@ -212,6 +222,7 @@ command_examples:
     # 1. search_memory("SM_STORY SM_BACKLOG PO_STORY user story requirements", project_id="{project_name}", agent_role="SM")
     # 2. Review existing stories before creating new ones
     # 3. store_memory("SM_STORY: {story_details}", project_id="{project_name}", agent_role="SM")
+    # 4. share_memory("SM_STORY: {story_details}", with_agents=["dev", "qa"], project_id="{project_name}", agent_role="SM")
 
   context_aware_epics: |
     *create-epic
@@ -220,6 +231,7 @@ command_examples:
     # 2. search_memory("ARCH_DECISION ARCH_TECH existing architecture", project_id="{project_name}", agent_role="SM")
     # 3. Build on existing patterns and constraints
     # 4. store_memory("SM_EPIC: {epic_definition}", project_id="{project_name}", agent_role="SM")
+    # 5. share_memory("SM_EPIC: {epic_definition}", with_agents=["architect", "pm"], project_id="{project_name}", agent_role="SM")
 
   workflow_visualization: |
     *visualize {workflow_id}
@@ -227,6 +239,7 @@ command_examples:
     # 1. search_memory("ORCH_WORKFLOW ORCH_AGENT ORCH_MONITOR workflow data", project_id="{project_name}", agent_role="ORCH")
     # 2. Generate real-time Mermaid diagram of workflow status
     # 3. store_memory("ORCH_MONITOR: {visualization_data}", project_id="{project_name}", agent_role="ORCH")
+    # 4. share_memory("ORCH_MONITOR: {visualization_data}", with_agents=["pm", "po"], project_id="{project_name}", agent_role="ORCH")
 
   performance_analytics: |
     *analyze-performance
@@ -235,4 +248,14 @@ command_examples:
     # 2. Analyze workflow efficiency and identify bottlenecks
     # 3. Generate performance report with insights
     # 4. store_memory("ORCH_PERFORMANCE: {analytics_results}", project_id="{project_name}", agent_role="ORCH")
+    # 5. share_memory("ORCH_PERFORMANCE: {analytics_results}", with_agents=["pm", "dev"], project_id="{project_name}", agent_role="ORCH")
+
+  memory_management: |
+    *manage-memory
+    # Will automatically:
+    # 1. search_memory("*", project_id="{project_name}", agent_role="ORCH")
+    # 2. Identify obsolete or outdated memories
+    # 3. update_memory("{memory_id}: {updated_content}", project_id="{project_name}", agent_role="ORCH")
+    # 4. delete_memory("{obsolete_memory_id}", project_id="{project_name}", agent_role="ORCH")
+    # 5. share_memory("{important_update}", with_agents=["all"], project_id="{project_name}", agent_role="ORCH")
 ```
