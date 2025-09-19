@@ -130,6 +130,11 @@ enhanced_workflow:
     - "store_memory('DEV_REFACTOR: [refactoring decisions and improvements]', project_id='{project_name}', agent_role='DEV')"
     - "store_memory('DEV_TEST: [test implementation and coverage details]', project_id='{project_name}', agent_role='DEV')"
 
+  after_development:
+    - "search_memory('DEV_CODE DEV_BUGFIX previous_implementations', project_id='{project_name}', agent_role='DEV')"
+    - "update_memory('DEV_CODE: [updated implementation with performance improvements]', project_id='{project_name}', agent_role='DEV')"
+    - "delete_memory('DEV_OBSOLETE: [deprecated code patterns]', project_id='{project_name}', agent_role='DEV')"
+
   handoff_preparation:
     - "search_memory('DEV_CODE DEV_TEST DEV_PATTERN DEV_REFACTOR', project_id='{project_name}', agent_role='DEV')"
     - 'Summarize all development outputs for QA teams'
@@ -139,6 +144,8 @@ enhanced_workflow:
 memory_commands:
   store: "store_memory('[PREFIX]: content', project_id='{project_name}', agent_role='DEV')"
   search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='DEV')"
+  update: "update_memory('[PREFIX]: updated_content', project_id='{project_name}', agent_role='DEV')"
+  delete: "delete_memory('[PREFIX]', project_id='{project_name}', agent_role='DEV')"
 
 # Critical Memory Integration Rules
 memory_rules: 1. "ALWAYS search memory before starting new development work"
@@ -165,4 +172,6 @@ command_examples:
     # 2. search_memory("DEV_CODE DEV_PATTERN existing implementations", project_id="{project_name}", agent_role="DEV")
     # 3. Build on existing fix patterns and avoid regression
     # 4. store_memory("DEV_BUGFIX: {fix_implementation}", project_id="{project_name}", agent_role="DEV")
+    # 5. update_memory("DEV_CODE: {updated_code_with_fix}", project_id="{project_name}", agent_role="DEV")
+    # 6. delete_memory("DEV_OBSOLETE: {deprecated_patterns}", project_id="{project_name}", agent_role="DEV")
 ```

@@ -137,6 +137,11 @@ enhanced_workflow:
     - "store_memory('ARCH_PATTERN: [design pattern implementation]', project_id='{project_name}', agent_role='ARCH')"
     - "store_memory('ARCH_SECURITY: [security implementation details]', project_id='{project_name}', agent_role='ARCH')"
 
+  after_architectural_review:
+    - "search_memory('ARCH_DECISION previous_decisions', project_id='{project_name}', agent_role='ARCH')"
+    - "update_memory('ARCH_DECISION: [updated_decision_with_new_requirements]', project_id='{project_name}', agent_role='ARCH')"
+    - "delete_memory('ARCH_OBSOLETE: [deprecated_architectural_decisions]', project_id='{project_name}', agent_role='ARCH')"
+
   handoff_preparation:
     - "search_memory('ARCH_DECISION ARCH_TECH ARCH_PATTERN ARCH_SECURITY', project_id='{project_name}', agent_role='ARCH')"
     - 'Summarize all architectural outputs for downstream teams'
@@ -146,6 +151,8 @@ enhanced_workflow:
 memory_commands:
   store: "store_memory('[PREFIX]: content', project_id='{project_name}', agent_role='ARCH')"
   search: "search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='ARCH')"
+  update: "update_memory('[PREFIX]: updated_content', project_id='{project_name}', agent_role='ARCH')"
+  delete: "delete_memory('[PREFIX]', project_id='{project_name}', agent_role='ARCH')"
 
 # Critical Memory Integration Rules
 memory_rules: 1. "ALWAYS search memory before starting new architectural work"

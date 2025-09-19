@@ -112,6 +112,24 @@ Examples:
 /memory store project ARCH_PATTERN_API_DESIGN "RESTful API with OpenAPI 3.0 specification, following resource-based URL patterns and standard HTTP status codes."
 ```
 
+#### Update Existing Memory
+```bash
+# Update existing memory with new information
+/memory update project ARCH_DECISION_DATABASE_CHOICE "Updated: Selected PostgreSQL with TimescaleDB extension for time-series data optimization."
+
+# Update with new confidence level
+/memory update agent DEV_PATTERN_ERROR_HANDLING "Revised implementation with async/await pattern for better error handling" --confidence 0.95
+```
+
+#### Delete Memory
+```bash
+# Remove obsolete decisions
+/memory delete project ARCH_DECISION_OBSOLETE_TECHNOLOGY
+
+# Remove outdated patterns
+/memory delete agent DEV_PATTERN_DEPRECATED_FRAMEWORK
+```
+
 #### Store Agent Memory
 ```bash
 # Store agent-specific context
@@ -162,6 +180,15 @@ Examples:
 
 # Import memory from backup
 /memory import memory-backup.json
+
+# Update existing memory entry
+/memory update project ARCH_DECISION_DATABASE_CHOICE "Updated: Selected PostgreSQL with TimescaleDB extension for time-series data optimization."
+
+# Delete memory entry
+/memory delete project ARCH_DECISION_OBSOLETE_TECHNOLOGY
+
+# Share memory with specific agents
+/memory share ARCH_DECISION_DATABASE_CHOICE --with-agents dev,qa --context "Database selection affects implementation and testing"
 ```
 
 ## Best Practices

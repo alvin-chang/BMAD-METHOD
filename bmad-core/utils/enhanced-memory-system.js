@@ -64,6 +64,81 @@ class EnhancedMemorySystem {
   }
 
   /**
+   * Update existing memory with new content
+   * @param {string} memoryId - Memory ID to update
+   * @param {string} content - New content
+   * @param {Object} options - Update options
+   * @returns {Object} Updated memory object
+   */
+  async updateMemory(memoryId, content, options = {}) {
+    try {
+      // Retrieve existing memory
+      const existingMemory = await this.retrieveMemory(memoryId, options);
+      if (!existingMemory) {
+        throw new Error(`Memory with ID ${memoryId} not found`);
+      }
+      
+      // Update memory content and metadata
+      existingMemory.content = content;
+      existingMemory.last_updated = new Date().toISOString();
+      
+      // Update optional fields if provided
+      if (options.confidence !== undefined) {
+        existingMemory.confidence = options.confidence;
+      }
+      if (options.tags) {
+        existingMemory.tags = options.tags;
+      }
+      if (options.related_memories) {
+        existingMemory.related_memories = options.related_memories;
+      }
+      
+      // Update the memory file
+      const memoryPath = this.getMemoryPath(existingMemory);
+      if (memoryPath) {
+        await fs.writeJson(memoryPath, existingMemory, { spaces: 2 });
+        return existingMemory;
+      } else {
+        throw new Error(`Unable to determine memory path for ID ${memoryId}`);
+      }
+    } catch (error) {
+      throw new Error(`Failed to update memory: ${error.message}`);
+    }
+  }
+
+  /**
+   * Delete memory by ID
+   * @param {string} memoryId - Memory ID to delete
+   * @param {Object} options - Delete options
+   * @returns {boolean} True if deletion was successful
+   */
+  async deleteMemory(memoryId, options = {}) {
+    try {
+      // First retrieve the memory to get its path
+      const memory = await this.retrieveMemory(memoryId, options);
+      if (!memory) {
+        return false; // Memory not found
+      }
+      
+      // Get the file path
+      const memoryPath = this.getMemoryPath(memory);
+      if (!memoryPath) {
+        throw new Error(`Unable to determine memory path for ID ${memoryId}`);
+      }
+      
+      // Delete the file
+      if (await fs.pathExists(memoryPath)) {
+        await fs.remove(memoryPath);
+        return true;
+      }
+      
+      return false;
+    } catch (error) {
+      throw new Error(`Failed to delete memory: ${error.message}`);
+    }
+  }
+
+  /**
    * Search memories with advanced filtering
    * @param {string} query - Search query
    * @param {Object} options - Search options
@@ -417,8 +492,8 @@ class EnhancedMemorySystem {
     if (!str1 || !str2) return 0;
     
     // Calculate Jaccard similarity of character sets
-    const set1 = new Set(str1.toLowerCase().split(''));
-    const set2 = new Set(str2.toLowerCase().split(''));
+    const set1 = new Set([...str1.toLowerCase()]);
+    const set2 = new Set([...str2.toLowerCase()]);
     
     const intersection = new Set([...set1].filter(x => set2.has(x)));
     const union = new Set([...set1, ...set2]);
@@ -459,6 +534,136 @@ class EnhancedMemorySystem {
       return path.join(storageDir, `${memory.id}.${this.format}`);
     } catch (error) {
       return null;
+    }
+  }
+
+  /**
+   * Update existing memory with new content
+   * @param {string} memoryId - Memory ID to update
+   * @param {string} content - New content
+   * @param {Object} options - Update options
+   * @returns {Object} Updated memory object
+   */
+  async updateMemory(memoryId, content, options = {}) {
+    try {
+      // Retrieve existing memory
+      const existingMemory = await this.retrieveMemory(memoryId, options);
+      if (!existingMemory) {
+        throw new Error(`Memory with ID ${memoryId} not found`);
+      }
+      
+      // Update memory content and metadata
+      existingMemory.content = content;
+      existingMemory.last_updated = new Date().toISOString();
+      
+      // Update optional fields if provided
+      if (options.confidence !== undefined) {
+        existingMemory.confidence = options.confidence;
+      }
+      if (options.tags) {
+        existingMemory.tags = options.tags;
+      }
+      if (options.related_memories) {
+        existingMemory.related_memories = options.related_memories;
+      }
+      
+      // Update the memory file
+      const memoryPath = this.getMemoryPath(existingMemory);
+      if (memoryPath) {
+        await fs.writeJson(memoryPath, existingMemory, { spaces: 2 });
+        return existingMemory;
+      } else {
+        throw new Error(`Unable to determine memory path for ID ${memoryId}`);
+      }
+    } catch (error) {
+      throw new Error(`Failed to update memory: ${error.message}`);
+    }
+  }
+
+  /**
+   * Delete memory by ID
+   * @param {string} memoryId - Memory ID to delete
+   * @param {Object} options - Delete options
+   * @returns {boolean} True if deletion was successful
+   */
+  async deleteMemory(memoryId, options = {}) {
+    try {
+      // First retrieve the memory to get its path
+      const memory = await this.retrieveMemory(memoryId, options);
+      if (!memory) {
+        return false; // Memory not found
+      }
+      
+      // Get the file path
+      const memoryPath = this.getMemoryPath(memory);
+      if (!memoryPath) {
+        throw new Error(`Unable to determine memory path for ID ${memoryId}`);
+      }
+      
+      // Delete the file
+      if (await fs.pathExists(memoryPath)) {
+        await fs.remove(memoryPath);
+        return true;
+      }
+      
+      return false;
+    } catch (error) {
+      throw new Error(`Failed to delete memory: ${error.message}`);
+    }
+  }
+
+  /**
+   * Clean up old memories based on retention policies
+   * @param {Object} options - Cleanup options
+   * @returns {Object} Cleanup result
+   */
+  async cleanupMemories(options = {}) {
+    try {
+      const retentionDays = options.retention_days || this.config.retention?.days || 30;
+      const maxEntries = options.max_entries || this.config.retention?.maxEntries || 1000;
+      
+      // Get all memories
+      const allMemories = await this.searchMemory('', { limit: 10000 });
+      
+      // Sort memories by timestamp (oldest first)
+      allMemories.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+      
+      const now = new Date();
+      const cutoffDate = new Date(now.getTime() - (retentionDays * 24 * 60 * 60 * 1000));
+      
+      let deletedCount = 0;
+      let reason = '';
+      
+      // First check if we need to delete based on max entries
+      if (allMemories.length > maxEntries) {
+        const excessCount = allMemories.length - maxEntries;
+        // Delete the oldest memories
+        for (let i = 0; i < excessCount; i++) {
+          await this.deleteMemory(allMemories[i].id);
+          deletedCount++;
+        }
+        reason = `Exceeded max entries limit (${maxEntries})`;
+      } 
+      // Otherwise check based on age
+      else {
+        for (const memory of allMemories) {
+          const memoryDate = new Date(memory.timestamp);
+          if (memoryDate < cutoffDate) {
+            await this.deleteMemory(memory.id);
+            deletedCount++;
+          }
+        }
+        reason = `Older than retention period (${retentionDays} days)`;
+      }
+      
+      return {
+        deleted: deletedCount,
+        total: allMemories.length,
+        reason: reason,
+        message: `Cleaned up ${deletedCount} out of ${allMemories.length} memories`
+      };
+    } catch (error) {
+      throw new Error(`Failed to cleanup memories: ${error.message}`);
     }
   }
 }
