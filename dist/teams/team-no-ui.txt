@@ -700,6 +700,10 @@ enhanced_workflow:
     - 'store_memory(''ARCH_TECH: [technology selection]'', project_id=''{project_name}'', agent_role=''ARCH'')'
     - 'store_memory(''ARCH_PATTERN: [design pattern implementation]'', project_id=''{project_name}'', agent_role=''ARCH'')'
     - 'store_memory(''ARCH_SECURITY: [security implementation details]'', project_id=''{project_name}'', agent_role=''ARCH'')'
+  after_architectural_review:
+    - search_memory('ARCH_DECISION previous_decisions', project_id='{project_name}', agent_role='ARCH')
+    - 'update_memory(''ARCH_DECISION: [updated_decision_with_new_requirements]'', project_id=''{project_name}'', agent_role=''ARCH'')'
+    - 'delete_memory(''ARCH_OBSOLETE: [deprecated_architectural_decisions]'', project_id=''{project_name}'', agent_role=''ARCH'')'
   handoff_preparation:
     - search_memory('ARCH_DECISION ARCH_TECH ARCH_PATTERN ARCH_SECURITY', project_id='{project_name}', agent_role='ARCH')
     - Summarize all architectural outputs for downstream teams
@@ -707,6 +711,8 @@ enhanced_workflow:
 memory_commands:
   store: 'store_memory(''[PREFIX]: content'', project_id=''{project_name}'', agent_role=''ARCH'')'
   search: search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='ARCH')
+  update: 'update_memory(''[PREFIX]: updated_content'', project_id=''{project_name}'', agent_role=''ARCH'')'
+  delete: delete_memory('[PREFIX]', project_id='{project_name}', agent_role='ARCH')
 memory_rules: 1. "ALWAYS search memory before starting new architectural work" 2. "NEVER duplicate existing architectural decisions without reviewing memory first" 3. "ALWAYS use proper ARCH_ prefixes when storing architectural decisions" 4. "ALWAYS search for upstream BA and PM decisions that impact architecture" 5. "ALWAYS prepare handoff summaries with proper prefixes for downstream teams" 6. "Memory search failures should trigger clarification, not assumption" 7. "Store both raw requirements AND interpreted architectural decisions with different prefixes"
 command_examples:
   memory_aware_architecture: |
