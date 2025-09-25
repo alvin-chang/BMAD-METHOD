@@ -860,16 +860,14 @@ class WorkflowMonitor {
   
   /**
    * Register a new workflow
-   * @param {string} workflowId - Unique workflow identifier
-   * @param {Object} workflowData - Workflow data
+   * @param {Object} workflow - Workflow object
    */
-  registerWorkflow(workflowId, workflowData) {
-    this.workflows.set(workflowId, {
-      id: workflowId,
-      ...workflowData,
+  registerWorkflow(workflow) {
+    this.workflows.set(workflow.id, {
+      ...workflow,
       status: 'pending',
       startTime: new Date(),
-      phases: workflowData.phases ? workflowData.phases.map(phase => ({
+      phases: workflow.phases ? workflow.phases.map(phase => ({
         ...phase,
         status: 'pending',
         startTime: null,
@@ -910,6 +908,45 @@ class WorkflowMonitor {
     // Add timestamp for completion/ failure
     if (status === 'completed' || status === 'failed') {
       workflow.endTime = new Date();
+    }
+  }
+
+  /**
+   * Update workflow with changes
+   * @param {string} workflowId - Workflow identifier
+   * @param {Object} changes - Changes to apply
+   */
+  updateWorkflow(workflowId, changes) {
+    const workflow = this.workflows.get(workflowId);
+    if (!workflow) return;
+    
+    // Apply changes to workflow
+    Object.assign(workflow, changes);
+    
+    // Update metrics if status changed
+    if (changes.status) {
+      const previousStatus = workflow.status;
+      const newStatus = changes.status;
+      
+      // Update metrics based on status changes
+      if (previousStatus === 'active' && newStatus === 'completed') {
+        this.metrics.activeWorkflows--;
+        this.metrics.completedWorkflows++;
+      } else if (previousStatus === 'active' && newStatus === 'failed') {
+        this.metrics.activeWorkflows--;
+        this.metrics.failedWorkflows++;
+      } else if (previousStatus === 'pending' && newStatus === 'active') {
+        this.metrics.activeWorkflows++;
+      }
+      
+      workflow.status = newStatus;
+    }
+    
+    // Add timestamp for completion/ failure
+    if (changes.status === 'completed' || changes.status === 'failed') {
+      workflow.endTime = new Date();
+    } else if (changes.status === 'active' && !workflow.startTime) {
+      workflow.startTime = new Date();
     }
   }
   
@@ -958,13 +995,12 @@ class WorkflowMonitor {
   
   /**
    * Register an agent
-   * @param {string} agentId - Unique agent identifier
-   * @param {Object} agentData - Agent data
+   * @param {Object} agent - Agent object
    */
-  registerAgent(agentId, agentData) {
-    this.agents.set(agentId, {
-      id: agentId,
-      ...agentData,
+  registerAgent(agent) {
+    this.agents.set(agent.id, {
+      id: agent.id,
+      ...agent,
       status: 'idle',
       currentWorkflow: null,
       currentTask: null,
@@ -973,7 +1009,7 @@ class WorkflowMonitor {
     });
     
     // Initialize agent utilization metric
-    this.metrics.agentUtilization[agentId] = 0;
+    this.metrics.agentUtilization[agent.id] = 0;
   }
   
   /**
@@ -996,6 +1032,35 @@ class WorkflowMonitor {
     
     // Add details to agent
     Object.assign(agent, details);
+    
+    // Update metrics
+    this.updateAgentUtilization(agentId);
+  }
+
+  /**
+   * Update agent with changes
+   * @param {string} agentId - Agent identifier
+   * @param {Object} changes - Changes to apply
+   */
+  updateAgent(agentId, changes) {
+    const agent = this.agents.get(agentId);
+    if (!agent) return;
+    
+    // Apply changes to agent
+    Object.assign(agent, changes);
+    
+    // Update metrics if status changed
+    if (changes.status) {
+      const previousStatus = agent.status;
+      const newStatus = changes.status;
+      
+      // Update utilization if agent became busy
+      if (previousStatus === 'idle' && newStatus === 'busy') {
+        agent.lastActive = new Date();
+      }
+      
+      agent.status = newStatus;
+    }
     
     // Update metrics
     this.updateAgentUtilization(agentId);
@@ -1111,6 +1176,22 @@ class WorkflowMonitor {
     });
     
     return bottlenecks;
+  }
+  
+  /**
+   * Detect bottlenecks across all workflows
+   * @returns {Array} Array of all bottlenecks
+   */
+  detectBottlenecks() {
+    const allBottlenecks = [];
+    
+    // Check bottlenecks for each workflow
+    this.workflows.forEach((workflow, workflowId) => {
+      const bottlenecks = this.checkForBottlenecks(workflowId);
+      allBottlenecks.push(...bottlenecks);
+    });
+    
+    return allBottlenecks;
   }
 }
 

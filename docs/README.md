@@ -31,6 +31,9 @@ Making it easier for new users to learn and use BMAD effectively with interactiv
 - [Memory System Enhancement](memory-system-enhancement.md) - Proposal for improved memory integration
 - [Documentation Enhancement](documentation-enhancement.md) - Proposal for better documentation and onboarding
 - [BMAD Enhancement Initiative](bmad-enhancement-initiative.md) - Comprehensive summary tying all enhancements together
+- [Mathematical Framework](bmad-mathematical-framework.md) - Formal mathematical foundation for the BMAD methodology
+- [Framework Implementation Mapping](bmad-framework-implementation-mapping.md) - Mapping of mathematical concepts to implementation
+- [Framework Practical Examples](bmad-framework-practical-examples.md) - Real-world applications of the mathematical framework
 
 ## Getting Started
 

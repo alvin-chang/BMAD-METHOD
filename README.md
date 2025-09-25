@@ -23,7 +23,7 @@ Foundations in Agentic Agile Driven Development, known as the Breakthrough Metho
 
 **3. Enhanced Validation System:** Our new template validation system ensures your BMAD templates are correctly structured with real-time feedback and error recovery.
 
-**4. Advanced Orchestration:** The enhanced BMAD Orchestrator provides workflow visualization, monitoring, and bottleneck detection.
+**4. Advanced Orchestration:** The enhanced BMAD Orchestrator provides advanced workflow visualization, real-time monitoring, bottleneck detection, performance analytics, and delivery prediction.
 
 **5. Improved Agent Communication:** Standardized handoff protocols ensure seamless transitions between agents.
 
@@ -45,11 +45,13 @@ BMAD has undergone a significant enhancement initiative that has improved the fr
 
 ### 2. Orchestrator Agent Enhancement
 
-- **Workflow Visualization**: Real-time Mermaid diagrams showing workflow status
-- **Monitoring and Alerting**: Track workflow progress with automated alerts
-- **Bottleneck Detection**: Identify and resolve workflow delays
-- **Resource Optimization**: Balance workloads across agents
-- **Conflict Resolution**: Mediate disagreements between agents
+- **Advanced Workflow Visualization**: Real-time Mermaid diagrams showing workflow status with color-coded phases and interactive diagrams
+- **Comprehensive Monitoring and Alerting**: Track workflow progress with automated alerts and real-time metrics
+- **Intelligent Bottleneck Detection**: Identify and resolve workflow delays with advanced analytics
+- **Dynamic Resource Optimization**: Balance workloads across agents with AI-driven allocation algorithms
+- **Automated Conflict Resolution**: Mediate disagreements between agents with intelligent conflict resolution mechanisms
+- **Performance Analytics**: Detailed performance metrics with historical data visualization
+- **Delivery Prediction**: Predictive modeling for timeline estimation with confidence scoring
 
 ### 3. Agent Communication Enhancement
 
@@ -93,7 +95,7 @@ These enhancements make BMAD significantly more powerful, user-friendly, and eff
 - **[Learn how to use BMad](docs/user-guide.md)** → Complete user guide and walkthrough
 - **[See available AI agents](/bmad-core/agents)** → Specialized roles for your team
 - **[Explore validation and linting tools](#enhanced-template-validation-system)** → Template validation and linting tools
-- **[Use enhanced orchestrator features](#enhanced-orchestrator-features)** → Workflow visualization and monitoring
+- **[Use enhanced orchestrator features](#enhanced-orchestrator-features)** → Advanced workflow visualization, monitoring, and analytics
 - **[Explore non-technical uses](#-beyond-software-development---expansion-packs)** → Creative writing, business, wellness, education
 - **[Create my own AI agents](docs/expansion-packs.md)** → Build agents for your domain
 - **[Browse ready-made expansion packs](expansion-packs/)** → Game dev, DevOps, infrastructure and get inspired with ideas and examples
@@ -122,11 +124,14 @@ npm run validate:templates:watch my-template.yaml
 
 The BMAD Orchestrator has been significantly enhanced with new capabilities:
 
-- **Workflow Visualization**: Real-time Mermaid diagrams of your workflows
-- **Monitoring and Alerting**: Track workflow progress and get alerted to issues
-- **Bottleneck Detection**: Identify and resolve workflow delays
-- **Resource Optimization**: Balance workloads across agents
-- **Conflict Resolution**: Mediate disagreements between agents
+- **Advanced Workflow Visualization**: Interactive Mermaid diagrams with color-coded status representations and real-time updates
+- **Comprehensive Monitoring and Alerting**: Real-time metrics tracking with automated alerts for workflow progress and issues
+- **Intelligent Bottleneck Detection**: Advanced analytics for identifying and resolving workflow delays
+- **Dynamic Resource Optimization**: AI-driven allocation algorithms for balancing workloads across agents
+- **Automated Conflict Resolution**: Intelligent mediation mechanisms for agent disagreements
+- **Performance Analytics**: Detailed performance metrics with historical data visualization and trend analysis
+- **Delivery Prediction**: Predictive modeling for timeline estimation with confidence scoring
+- **Advanced Reporting**: Comprehensive orchestration reports with customizable dashboards
 
 To use the enhanced orchestrator:
 
@@ -134,6 +139,26 @@ To use the enhanced orchestrator:
 # In an AI-enabled IDE, load the enhanced orchestrator:
 # @.bmad-core/agents/enhanced-bmad-orchestrator.md
 ```
+
+### New Orchestrator Commands
+
+The enhanced orchestrator includes additional commands for advanced functionality:
+
+- `*visualize [workflow-id]` - Generate real-time visualization of workflow status with interactive diagrams
+- `*analyze-performance` - Analyze workflow performance and identify bottlenecks with detailed metrics
+- `*predict-delivery` - Predict delivery dates based on current progress and trends with confidence scoring
+
+### Enhanced Orchestrator Modules
+
+The Enhanced BMAD Orchestrator is built on a modular architecture with five core components:
+
+1. **WorkflowManager** - Manages workflow lifecycles with creation, modification, and visualization capabilities
+2. **AgentCoordinator** - Coordinates agent interactions with workload balancing and conflict resolution
+3. **PerformanceMonitor** - Monitors system performance with bottleneck detection and delivery prediction
+4. **ResourceManager** - Manages resource allocation with optimization and capacity planning
+5. **EscalationManager** - Handles issue escalations and conflict resolution between agents
+
+📖 **[See the complete Orchestrator API documentation](docs/orchestrator-api.md)** - Detailed API reference for all orchestrator features
 
 ## Recent Major Enhancements
 
@@ -149,11 +174,13 @@ BMAD has undergone a significant enhancement initiative that has improved the fr
 
 ### 2. Orchestrator Agent Enhancement
 
-- **Workflow Visualization**: Real-time Mermaid diagrams showing workflow status
-- **Monitoring and Alerting**: Track workflow progress with automated alerts
-- **Bottleneck Detection**: Identify and resolve workflow delays
-- **Resource Optimization**: Balance workloads across agents
-- **Conflict Resolution**: Mediate disagreements between agents
+- **Advanced Workflow Visualization**: Interactive Mermaid diagrams with color-coded status representations and real-time updates
+- **Comprehensive Monitoring and Alerting**: Real-time metrics tracking with automated alerts for workflow progress and issues
+- **Intelligent Bottleneck Detection**: Advanced analytics for identifying and resolving workflow delays
+- **Dynamic Resource Optimization**: AI-driven allocation algorithms for balancing workloads across agents
+- **Automated Conflict Resolution**: Intelligent mediation mechanisms for agent disagreements
+- **Performance Analytics**: Detailed performance metrics with historical data visualization and trend analysis
+- **Delivery Prediction**: Predictive modeling for timeline estimation with confidence scoring
 
 ### 3. Agent Communication Enhancement
 
@@ -200,7 +227,7 @@ This will:
 
 This makes it easy to benefit from the latest improvements, bug fixes, and new agents without losing your customizations!
 
-## Quick Start
+## Installation
 
 ### One Command for Everything (IDE Installation)
 
@@ -221,6 +248,20 @@ This single command handles:
 - **Enhanced features** - Installs the new validation system, orchestrator enhancements, and other improvements
 
 > **That's it!** Whether you're installing for the first time, upgrading, or adding expansion packs - these commands do everything.
+
+### Programmatic Installation to Multiple Directories
+
+For advanced users who need to install BMAD-METHOD to multiple directories programmatically, we provide specialized scripts:
+
+```bash
+# Install to multiple directories
+node install-multiple-directories.js /path/to/project1 /path/to/project2
+
+# Test installations
+node test-installation.js /path/to/project1 /path/to/project2
+```
+
+See [INSTALL-MULTIPLE-READ-ME.md](INSTALL-MULTIPLE-READ-ME.md) for detailed usage instructions.
 
 **Prerequisites**: [Node.js](https://nodejs.org) v20+ required
 
@@ -259,43 +300,13 @@ In an AI-enabled IDE, load the enhanced orchestrator agent:
 
 The enhanced orchestrator provides:
 
-- Workflow visualization with Mermaid diagrams
-- Real-time monitoring and alerting
-- Bottleneck detection and resolution
-- Resource optimization
-- Conflict mediation
-
-### Using Enhanced Features
-
-After installation, you can take advantage of BMAD's enhanced features:
-
-**Template Validation:**
-
-```bash
-# Validate a template
-npm run validate:templates my-template.yaml
-
-# Lint a template for best practices
-npm run lint:templates my-template.yaml
-
-# Watch a template for changes with real-time validation
-npm run validate:templates:watch my-template.yaml
-```
-
-**Enhanced Orchestrator:**
-In an AI-enabled IDE, load the enhanced orchestrator agent:
-
-```
-@.bmad-core/agents/enhanced-bmad-orchestrator.md
-```
-
-The enhanced orchestrator provides:
-
-- Workflow visualization with Mermaid diagrams
-- Real-time monitoring and alerting
-- Bottleneck detection and resolution
-- Resource optimization
-- Conflict mediation
+- Advanced workflow visualization with interactive Mermaid diagrams and color-coded status representations
+- Real-time monitoring and alerting with comprehensive metrics tracking
+- Intelligent bottleneck detection and resolution with advanced analytics
+- Dynamic resource optimization with AI-driven allocation algorithms
+- Automated conflict mediation between agents
+- Performance analytics with historical data visualization
+- Delivery prediction with confidence scoring
 
 ### Alternative: Clone and Build
 
@@ -317,10 +328,16 @@ BMAD™'s natural language framework works in ANY domain. Expansion packs provid
 - 🚀 **[Expansion Packs Guide](docs/expansion-packs.md)** - Extend BMad to any domain beyond software development
 - 🔍 **[Template Validation Guide](docs/template-validation-implementation-summary.md)** - Comprehensive guide to the new template validation system
 - 🎯 **[Orchestrator Enhancement Guide](docs/orchestrator-enhancement.md)** - Details on the enhanced orchestrator features
+- 📚 **[Orchestrator API Documentation](docs/orchestrator-api.md)** - Complete API reference for the orchestrator
+- 📋 **[Orchestrator Implementation Summary](docs/orchestrator-implementation-summary.md)** - Technical implementation details
+- 📘 **[Orchestrator Usage Guide](docs/orchestrator-usage-guide.md)** - Comprehensive usage instructions
 - 🤝 **[Agent Communication Guide](docs/agent-communication-enhancement.md)** - Improved agent handoff processes
 - 🧠 **[Memory System Guide](docs/enhanced-memory-system.md)** - Enhanced memory system with cross-agent sharing
 - 🎓 **[Quick Start Guide](docs/quick-start-guide.md)** - Fast onboarding for new users
 - 🎥 **[Video Tutorials](docs/onboarding-video-script.md)** - Planned video content for learning BMad
+- 📐 **[Mathematical Framework](docs/bmad-mathematical-framework.md)** - Formal mathematical foundation for the BMAD methodology
+- 🔄 **[Framework Implementation Mapping](docs/bmad-framework-implementation-mapping.md)** - Mapping of mathematical concepts to implementation
+- 💡 **[Framework Practical Examples](docs/bmad-framework-practical-examples.md)** - Real-world applications of the mathematical framework
 
 ### New Agent Roles
 

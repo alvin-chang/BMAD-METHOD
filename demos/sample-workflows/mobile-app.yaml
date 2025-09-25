@@ -1,0 +1,185 @@
+```yaml
+# Mobile App Development Workflow
+# This workflow demonstrates the process of developing a mobile application
+
+workflow:
+  id: mobile-app-dev-001
+  name: "Mobile App Development"
+  description: "Complete workflow for developing a cross-platform mobile application with native performance"
+  
+phases:
+  - name: "Market Research"
+    description: "Analyze market needs and competitor offerings"
+    duration: "7 days"
+    agents: 
+      - "market-analyst"
+      - "product-manager"
+    deliverables:
+      - "Market Analysis Report"
+      - "Competitor Analysis"
+      - "Feature Prioritization"
+    success_criteria:
+      - "Market opportunity validated"
+      - "Target user personas defined"
+      - "Feature set prioritized"
+      
+  - name: "App Design"
+    description: "Create app architecture and user experience design"
+    duration: "10 days"
+    agents:
+      - "mobile-architect"
+      - "ux-designer"
+    deliverables:
+      - "App Architecture Document"
+      - "User Flow Diagrams"
+      - "UI Mockups"
+    success_criteria:
+      - "App architecture approved"
+      - "User experience validated through testing"
+      - "UI design approved by stakeholders"
+      
+  - name: "Development Environment Setup"
+    description: "Set up development tools and CI/CD pipeline"
+    duration: "3 days"
+    agents:
+      - "devops-engineer"
+      - "mobile-developer"
+    deliverables:
+      - "Development Environment"
+      - "CI/CD Pipeline"
+      - "Code Repository"
+    success_criteria:
+      - "Development environment configured"
+      - "CI/CD pipeline operational"
+      - "Code repository accessible to team"
+      
+  - name: "Core Feature Implementation"
+    description: "Implement the core features of the mobile app"
+    duration: "25 days"
+    agents:
+      - "mobile-developer"
+      - "backend-developer"
+    deliverables:
+      - "Core App Features"
+      - "Backend APIs"
+      - "Database Implementation"
+    success_criteria:
+      - "All core features implemented"
+      - "Backend services operational"
+      - "Database schema implemented"
+      
+  - name: "UI Implementation"
+    description: "Implement the user interface and user experience"
+    duration: "15 days"
+    agents:
+      - "mobile-developer"
+      - "ui-designer"
+    deliverables:
+      - "UI Components"
+      - "Navigation Implementation"
+      - "Interactive Elements"
+    success_criteria:
+      - "All UI components implemented"
+      - "Navigation flows working correctly"
+      - "Responsive design validated"
+      
+  - name: "Integration Testing"
+    description: "Test integration between app components and backend services"
+    duration: "8 days"
+    agents:
+      - "qa-engineer"
+      - "automation-tester"
+    deliverables:
+      - "Integration Test Plans"
+      - "Integration Test Reports"
+      - "API Integration Validation"
+    success_criteria:
+      - "All integrations tested"
+      - "API responses validated"
+      - "Data consistency verified"
+      
+  - name: "Performance Optimization"
+    description: "Optimize app performance and battery usage"
+    duration: "7 days"
+    agents:
+      - "performance-specialist"
+      - "mobile-developer"
+    deliverables:
+      - "Performance Optimization Report"
+      - "Battery Usage Analysis"
+      - "Load Time Improvements"
+    success_criteria:
+      - "App startup time < 2 seconds"
+      - "Battery usage optimized"
+      - "Memory leaks identified and fixed"
+      
+  - name: "User Acceptance Testing"
+    description: "Conduct user acceptance testing with target audience"
+    duration: "10 days"
+    agents:
+      - "ux-researcher"
+      - "product-manager"
+    deliverables:
+      - "UAT Test Plans"
+      - "User Feedback Report"
+      - "Bug Reports"
+    success_criteria:
+      - "User acceptance criteria met"
+      - "Critical user issues resolved"
+      - "Usability score > 4.0/5"
+      
+  - name: "App Store Preparation"
+    description: "Prepare app for submission to app stores"
+    duration: "5 days"
+    agents:
+      - "release-manager"
+      - "legal-specialist"
+    deliverables:
+      - "App Store Listings"
+      - "Legal Documentation"
+      - "Marketing Materials"
+    success_criteria:
+      - "App store listings complete"
+      - "Legal requirements fulfilled"
+      - "Marketing materials approved"
+      
+  - name: "Launch and Monitoring"
+    description: "Launch the app and monitor performance"
+    duration: "Ongoing"
+    agents:
+      - "devops-engineer"
+      - "support-specialist"
+    deliverables:
+      - "App Launched"
+      - "Monitoring Dashboard"
+      - "Support Procedures"
+    success_criteria:
+      - "App successfully launched"
+      - "Monitoring alerts configured"
+      - "Support procedures established"
+
+resources:
+  - name: "Development Workstations"
+    type: "compute"
+    quantity: 5
+  - name: "Mobile Testing Devices"
+    type: "hardware"
+    quantity: 10
+  - name: "Cloud Services"
+    type: "cloud"
+    quantity: 1
+    
+success_metrics:
+  - "App store ratings > 4.5/5"
+  - "Crash rate < 0.5%"
+  - "User retention > 30% after 30 days"
+  - "Download targets met"
+  
+risk_mitigation:
+  - risk: "App store rejection"
+    mitigation: "Follow app store guidelines strictly"
+  - risk: "Performance issues on older devices"
+    mitigation: "Test on diverse device portfolio"
+  - risk: "Security vulnerabilities"
+    mitigation: "Conduct security code reviews"
+```

@@ -253,6 +253,20 @@ If you want to do the planning on the web with Claude (Sonnet 4 or Opus), Gemini
 npx bmad-method install
 ```
 
+### Programmatic Installation to Multiple Directories
+
+For advanced users who need to install BMAD-METHOD to multiple directories programmatically, we provide specialized scripts in the project root:
+
+```bash
+# Install to multiple directories
+node install-multiple-directories.js /path/to/project1 /path/to/project2
+
+# Test installations
+node test-installation.js /path/to/project1 /path/to/project2
+```
+
+See [INSTALL-MULTIPLE-READ-ME.md](INSTALL-MULTIPLE-READ-ME.md) for detailed usage instructions.
+
 ### OpenCode
 
 BMAD integrates with OpenCode via a project-level `opencode.jsonc`/`opencode.json` (JSON-only, no Markdown fallback).

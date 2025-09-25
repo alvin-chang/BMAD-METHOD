@@ -1,3 +1,8 @@
+#!/usr/bin/env node
+
+// BMAD™ CLI Tool
+// Copyright © 2025 BMAD™. All rights reserved.
+
 const { Command } = require('commander');
 const WebBuilder = require('./builders/web-builder');
 const V3ToV4Upgrader = require('./upgraders/v3-to-v4-upgrader');
@@ -183,6 +188,190 @@ program
     console.log(
       '\nMemory system is automatically enabled when using BMAD agents in MCP-enabled environments.',
     );
+  });
+
+program
+  .command('orchestrator-help')
+  .description('Show help for the BMAD Orchestrator CLI')
+  .action(async () => {
+    try {
+      // Dynamically import the orchestrator CLI
+      const orchestratorPath = path.join(__dirname, '..', 'bmad-core', 'orchestrator', 'cli.js');
+      
+      // Execute the orchestrator CLI with help command
+      const { spawn } = require('child_process');
+      const orchestrator = spawn('node', [orchestratorPath, 'help'], {
+        stdio: 'inherit'
+      });
+      
+      // Handle orchestrator exit
+      orchestrator.on('close', (code) => {
+        process.exit(code);
+      });
+      
+      // Handle orchestrator errors
+      orchestrator.on('error', (error) => {
+        console.error('Failed to start orchestrator:', error.message);
+        process.exit(1);
+      });
+    } catch (error) {
+      console.error('Failed to start orchestrator:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('orchestrator-status')
+  .description('Show status from the BMAD Orchestrator CLI')
+  .action(async () => {
+    try {
+      // Dynamically import the orchestrator CLI
+      const orchestratorPath = path.join(__dirname, '..', 'bmad-core', 'orchestrator', 'cli.js');
+      
+      // Execute the orchestrator CLI with status command
+      const { spawn } = require('child_process');
+      const orchestrator = spawn('node', [orchestratorPath, 'status'], {
+        stdio: 'inherit'
+      });
+      
+      // Handle orchestrator exit
+      orchestrator.on('close', (code) => {
+        process.exit(code);
+      });
+      
+      // Handle orchestrator errors
+      orchestrator.on('error', (error) => {
+        console.error('Failed to start orchestrator:', error.message);
+        process.exit(1);
+      });
+    } catch (error) {
+      console.error('Failed to start orchestrator:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('orchestrator-agents')
+  .description('List agents from the BMAD Orchestrator CLI')
+  .action(async () => {
+    try {
+      // Dynamically import the orchestrator CLI
+      const orchestratorPath = path.join(__dirname, '..', 'bmad-core', 'orchestrator', 'cli.js');
+      
+      // Execute the orchestrator CLI with agents command
+      const { spawn } = require('child_process');
+      const orchestrator = spawn('node', [orchestratorPath, 'agents'], {
+        stdio: 'inherit'
+      });
+      
+      // Handle orchestrator exit
+      orchestrator.on('close', (code) => {
+        process.exit(code);
+      });
+      
+      // Handle orchestrator errors
+      orchestrator.on('error', (error) => {
+        console.error('Failed to start orchestrator:', error.message);
+        process.exit(1);
+      });
+    } catch (error) {
+      console.error('Failed to start orchestrator:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('orchestrator-workflows')
+  .description('List workflows from the BMAD Orchestrator CLI')
+  .action(async () => {
+    try {
+      // Dynamically import the orchestrator CLI
+      const orchestratorPath = path.join(__dirname, '..', 'bmad-core', 'orchestrator', 'cli.js');
+      
+      // Execute the orchestrator CLI with workflows command
+      const { spawn } = require('child_process');
+      const orchestrator = spawn('node', [orchestratorPath, 'workflows'], {
+        stdio: 'inherit'
+      });
+      
+      // Handle orchestrator exit
+      orchestrator.on('close', (code) => {
+        process.exit(code);
+      });
+      
+      // Handle orchestrator errors
+      orchestrator.on('error', (error) => {
+        console.error('Failed to start orchestrator:', error.message);
+        process.exit(1);
+      });
+    } catch (error) {
+      console.error('Failed to start orchestrator:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('orchestrator-create-workflow')
+  .description('Create a workflow using the BMAD Orchestrator CLI')
+  .argument('<name>', 'Workflow name')
+  .argument('<agents>', 'Comma-separated list of agents involved')
+  .argument('<phases>', 'Comma-separated list of workflow phases')
+  .action(async (name, agents, phases) => {
+    try {
+      // Dynamically import the orchestrator CLI
+      const orchestratorPath = path.join(__dirname, '..', 'bmad-core', 'orchestrator', 'cli.js');
+      
+      // Execute the orchestrator CLI with create-workflow command
+      const { spawn } = require('child_process');
+      const orchestrator = spawn('node', [orchestratorPath, 'create-workflow', name, agents, phases], {
+        stdio: 'inherit'
+      });
+      
+      // Handle orchestrator exit
+      orchestrator.on('close', (code) => {
+        process.exit(code);
+      });
+      
+      // Handle orchestrator errors
+      orchestrator.on('error', (error) => {
+        console.error('Failed to start orchestrator:', error.message);
+        process.exit(1);
+      });
+    } catch (error) {
+      console.error('Failed to start orchestrator:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('orchestrator-visualize')
+  .description('Visualize a workflow using the BMAD Orchestrator CLI')
+  .argument('<workflowId>', 'Workflow ID')
+  .action(async (workflowId) => {
+    try {
+      // Dynamically import the orchestrator CLI
+      const orchestratorPath = path.join(__dirname, '..', 'bmad-core', 'orchestrator', 'cli.js');
+      
+      // Execute the orchestrator CLI with visualize command
+      const { spawn } = require('child_process');
+      const orchestrator = spawn('node', [orchestratorPath, 'visualize', workflowId], {
+        stdio: 'inherit'
+      });
+      
+      // Handle orchestrator exit
+      orchestrator.on('close', (code) => {
+        process.exit(code);
+      });
+      
+      // Handle orchestrator errors
+      orchestrator.on('error', (error) => {
+        console.error('Failed to start orchestrator:', error.message);
+        process.exit(1);
+      });
+    } catch (error) {
+      console.error('Failed to start orchestrator:', error.message);
+      process.exit(1);
+    }
   });
 
 program.parse();

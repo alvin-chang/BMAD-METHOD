@@ -1,0 +1,152 @@
+```yaml
+# E-commerce Platform Development Workflow
+# This workflow demonstrates a complete e-commerce platform development process
+
+workflow:
+  id: ecommerce-platform-dev-001
+  name: "E-commerce Platform Development"
+  description: "Complete workflow for developing a modern e-commerce platform with user accounts, product catalog, shopping cart, and payment processing"
+  
+phases:
+  - name: "Requirements Gathering"
+    description: "Collect and document all business requirements for the e-commerce platform"
+    duration: "5 days"
+    agents: 
+      - "business-analyst"
+      - "product-owner"
+    deliverables:
+      - "Requirements Document"
+      - "User Stories"
+      - "Acceptance Criteria"
+    success_criteria:
+      - "All stakeholders have reviewed and approved requirements"
+      - "User stories are estimated and prioritized"
+      
+  - name: "System Architecture"
+    description: "Design the overall system architecture including databases, APIs, and integrations"
+    duration: "7 days"
+    agents:
+      - "solution-architect"
+      - "security-specialist"
+    deliverables:
+      - "System Architecture Document"
+      - "Database Schema"
+      - "API Specifications"
+    success_criteria:
+      - "Architecture review completed with all stakeholders"
+      - "Security assessment passed"
+      
+  - name: "UI/UX Design"
+    description: "Create user interface designs and user experience flows"
+    duration: "10 days"
+    agents:
+      - "ux-designer"
+      - "ui-designer"
+    deliverables:
+      - "Wireframes"
+      - "Mockups"
+      - "Interactive Prototype"
+    success_criteria:
+      - "Design review completed with product team"
+      - "User testing sessions completed"
+      
+  - name: "Frontend Development"
+    description: "Implement the frontend components of the e-commerce platform"
+    duration: "15 days"
+    agents:
+      - "frontend-developer"
+      - "frontend-architect"
+    deliverables:
+      - "Frontend Components"
+      - "Responsive UI Implementation"
+      - "Integration with Backend APIs"
+    success_criteria:
+      - "All frontend components implemented"
+      - "Cross-browser compatibility verified"
+      - "Performance benchmarks met"
+      
+  - name: "Backend Development"
+    description: "Implement the backend services and business logic"
+    duration: "20 days"
+    agents:
+      - "backend-developer"
+      - "backend-architect"
+    deliverables:
+      - "REST APIs"
+      - "Database Implementation"
+      - "Business Logic Components"
+    success_criteria:
+      - "All APIs implemented and documented"
+      - "Database schema implemented"
+      - "Unit tests coverage > 85%"
+      
+  - name: "Payment Integration"
+    description: "Integrate with payment providers and implement security measures"
+    duration: "8 days"
+    agents:
+      - "payment-specialist"
+      - "security-engineer"
+    deliverables:
+      - "Payment Gateway Integration"
+      - "Security Implementation"
+      - "PCI Compliance Documentation"
+    success_criteria:
+      - "Payment processing tested with sandbox accounts"
+      - "Security audit passed"
+      - "PCI compliance verified"
+      
+  - name: "Testing"
+    description: "Comprehensive testing of all platform features"
+    duration: "12 days"
+    agents:
+      - "qa-engineer"
+      - "automation-tester"
+    deliverables:
+      - "Test Plans"
+      - "Test Execution Reports"
+      - "Bug Reports"
+    success_criteria:
+      - "All critical bugs resolved"
+      - "Test coverage > 90%"
+      - "Performance testing completed"
+      
+  - name: "Deployment"
+    description: "Deploy the platform to production environment"
+    duration: "5 days"
+    agents:
+      - "devops-engineer"
+      - "release-manager"
+    deliverables:
+      - "Production Deployment"
+      - "Monitoring Setup"
+      - "Rollback Plan"
+    success_criteria:
+      - "Platform deployed to production"
+      - "Monitoring alerts configured"
+      - "Rollback procedures documented"
+
+resources:
+  - name: "Development Servers"
+    type: "compute"
+    quantity: 3
+  - name: "Database Server"
+    type: "database"
+    quantity: 1
+  - name: "Load Balancer"
+    type: "network"
+    quantity: 1
+    
+success_metrics:
+  - "On-time delivery"
+  - "Budget adherence"
+  - "Quality score > 4.5/5"
+  - "User satisfaction > 85%"
+  
+risk_mitigation:
+  - risk: "Payment integration delays"
+    mitigation: "Engage payment provider support early"
+  - risk: "Performance issues"
+    mitigation: "Implement continuous performance testing"
+  - risk: "Security vulnerabilities"
+    mitigation: "Conduct regular security assessments"
+```
