@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/package.json",
   "name": "bmad-method",
   "version": "4.43.0",
-  "description": "Breakthrough Method of Agile AI-driven Development",
+  "description": "Breakthrough Method of Agile AI-driven Development with Enhanced Orchestrator for Advanced Workflow Visualization, Performance Analytics, and Delivery Prediction",
   "keywords": [
     "agile",
     "ai",
@@ -10,7 +10,12 @@
     "development",
     "methodology",
     "agents",
-    "bmad"
+    "bmad",
+    "visualization",
+    "analytics",
+    "prediction",
+    "workflow",
+    "mermaid"
   ],
   "repository": {
     "type": "git",
@@ -21,7 +26,11 @@
   "main": "tools/cli.js",
   "bin": {
     "bmad": "tools/bmad-npx-wrapper.js",
-    "bmad-method": "tools/bmad-npx-wrapper.js"
+    "bmad-method": "tools/bmad-npx-wrapper.js",
+    "bmad-orchestrator": "bmad-core/orchestrator/cli.js",
+    "template-validator": "bmad-core/utils/template-validator-cli.js",
+    "template-validator-watch": "bmad-core/utils/template-validator-watch.js",
+    "template-linter": "bmad-core/utils/template-linter-cli.js"
   },
   "scripts": {
     "build": "node tools/cli.js build",
@@ -35,6 +44,11 @@
     "lint": "eslint . --ext .js,.cjs,.mjs,.yaml --max-warnings=0",
     "lint:fix": "eslint . --ext .js,.cjs,.mjs,.yaml --fix",
     "list:agents": "node tools/cli.js list:agents",
+    "orchestrator": "node tools/cli.js orchestrator",
+    "orchestrator:cli": "node bmad-core/orchestrator/cli.js",
+    "orchestrator:demo": "node examples/working-orchestrator-demo.js",
+    "orchestrator:demo:comprehensive": "node examples/comprehensive-orchestrator-demo.js",
+    "orchestrator:cli:test": "node examples/test-orchestrator-cli.js",
     "pre-release": "npm run validate && npm run format:check && npm run lint",
     "prepare": "husky",
     "preview:release": "node tools/preview-release-notes.js",
@@ -43,7 +57,15 @@
     "release:patch": "gh workflow run \"Manual Release\" -f version_bump=patch",
     "release:watch": "gh run watch",
     "setup:hooks": "chmod +x tools/setup-hooks.sh && ./tools/setup-hooks.sh",
+    "test": "jest",
+    "test:orchestrator": "cd bmad-core/orchestrator && jest",
+    "test:orchestrator:watch": "cd bmad-core/orchestrator && jest --watch",
+    "test:orchestrator:coverage": "cd bmad-core/orchestrator && jest --coverage",
+    "test:orchestrator:cli": "cd bmad-core/orchestrator && node cli.js help",
     "validate": "node tools/cli.js validate",
+    "validate:templates": "node bmad-core/utils/template-validator-cli.js",
+    "validate:templates:watch": "node bmad-core/utils/template-validator-watch.js",
+    "lint:templates": "node bmad-core/utils/template-linter-cli.js",
     "version:all": "node tools/bump-all-versions.js",
     "version:all:major": "node tools/bump-all-versions.js major",
     "version:all:minor": "node tools/bump-all-versions.js minor",
@@ -56,7 +78,9 @@
     "version:expansion:set": "node tools/update-expansion-version.js",
     "version:major": "node tools/version-bump.js major",
     "version:minor": "node tools/version-bump.js minor",
-    "version:patch": "node tools/version-bump.js patch"
+    "version:patch": "node tools/version-bump.js patch",
+    "install:multiple": "node install-multiple-directories.js",
+    "test:installations": "node test-installation.js"
   },
   "lint-staged": {
     "**/*.{js,cjs,mjs}": [
@@ -73,7 +97,9 @@
   },
   "dependencies": {
     "@kayvan/markdown-tree-parser": "^1.6.1",
+    "ajv": "^8.12.0",
     "chalk": "^4.1.2",
+    "chokidar": "^3.5.3",
     "commander": "^14.0.0",
     "comment-json": "^4.2.5",
     "fs-extra": "^11.3.1",

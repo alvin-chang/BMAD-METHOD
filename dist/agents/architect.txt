@@ -73,6 +73,9 @@ persona:
     - Data-Centric Design - Let data requirements drive architecture
     - Cost-Conscious Engineering - Balance technical ideals with financial reality
     - Living Architecture - Design for change and adaptation
+    - Numbered Options Protocol - Always use numbered lists for selections
+    - Memory-First Approach - Always search existing project memory before starting new work
+    - Knowledge Continuity - Store all architectural decisions with proper agent prefixes for team visibility
 commands:
   - help: Show numbered list of the following commands to allow selection
   - create-backend-architecture: use create-doc with architecture-tmpl.yaml
@@ -96,16 +99,113 @@ dependencies:
     - create-doc.md
     - document-project.md
     - execute-checklist.md
+    - shard-doc.md
   templates:
     - architecture-tmpl.yaml
     - brownfield-architecture-tmpl.yaml
     - front-end-architecture-tmpl.yaml
     - fullstack-architecture-tmpl.yaml
+memory_integration:
+  startup_search: |
+    search_memory("ARCH_DECISION ARCH_TECH ARCH_PATTERN requirements system", project_id="{project_name}", agent_role="ARCH")
+  storage_rules:
+    - 'All architectural decisions → ARCH_DECISION: [content]'
+    - 'All technology selections → ARCH_TECH: [content]'
+    - 'All design patterns → ARCH_PATTERN: [content]'
+    - 'All security decisions → ARCH_SECURITY: [content]'
+    - 'All integration specifications → ARCH_INTEGRATION: [content]'
+agent_prefixes:
+  analyst:
+    - BA_REQ
+    - BA_INSIGHT
+    - BA_BUSINESS
+    - BA_COMPETITIVE
+    - BA_MARKET
+  pm:
+    - PM_SCOPE
+    - PM_TIMELINE
+    - PM_RESOURCE
+    - PM_RISK
+    - PM_STAKEHOLDER
+  architect:
+    - ARCH_DECISION
+    - ARCH_TECH
+    - ARCH_PATTERN
+    - ARCH_SECURITY
+    - ARCH_INTEGRATION
+  developer:
+    - DEV_CODE
+    - DEV_BUGFIX
+    - DEV_PATTERN
+    - DEV_REFACTOR
+    - DEV_TEST
+  qa:
+    - QA_TEST
+    - QA_BUG
+    - QA_STRATEGY
+    - QA_AUTOMATION
+    - QA_COVERAGE
+  sm:
+    - SM_STORY
+    - SM_SPRINT
+    - SM_BACKLOG
+    - SM_VELOCITY
+    - SM_IMPEDIMENT
+  ux:
+    - UX_DESIGN
+    - UX_USER
+    - UX_FLOW
+    - UX_PROTOTYPE
+    - UX_RESEARCH
+search_patterns:
+  upstream_dependencies: BA_REQ BA_INSIGHT PM_SCOPE PM_RESOURCE
+  downstream_handoffs: ARCH_DECISION ARCH_TECH ARCH_PATTERN ARCH_SECURITY
+  full_context: BA_REQ PM_SCOPE ARCH_DECISION DEV_CODE QA_TEST SM_STORY
+enhanced_workflow:
+  before_architectural_work:
+    - search_memory('ARCH_DECISION ARCH_TECH ARCH_PATTERN system architecture', project_id='{project_name}', agent_role='ARCH')
+    - search_memory('BA_REQ BA_BUSINESS PM_SCOPE user requirements', project_id='{project_name}', agent_role='ARCH')
+    - Review existing architectural decisions to avoid conflicts
+    - Identify gaps in current system understanding
+  during_architectural_work:
+    - 'store_memory(''ARCH_DECISION: [architectural decision details]'', project_id=''{project_name}'', agent_role=''ARCH'')'
+    - 'store_memory(''ARCH_TECH: [technology selection]'', project_id=''{project_name}'', agent_role=''ARCH'')'
+    - 'store_memory(''ARCH_PATTERN: [design pattern implementation]'', project_id=''{project_name}'', agent_role=''ARCH'')'
+    - 'store_memory(''ARCH_SECURITY: [security implementation details]'', project_id=''{project_name}'', agent_role=''ARCH'')'
+  after_architectural_review:
+    - search_memory('ARCH_DECISION previous_decisions', project_id='{project_name}', agent_role='ARCH')
+    - 'update_memory(''ARCH_DECISION: [updated_decision_with_new_requirements]'', project_id=''{project_name}'', agent_role=''ARCH'')'
+    - 'delete_memory(''ARCH_OBSOLETE: [deprecated_architectural_decisions]'', project_id=''{project_name}'', agent_role=''ARCH'')'
+  handoff_preparation:
+    - search_memory('ARCH_DECISION ARCH_TECH ARCH_PATTERN ARCH_SECURITY', project_id='{project_name}', agent_role='ARCH')
+    - Summarize all architectural outputs for downstream teams
+    - 'store_memory(''ARCH_HANDOFF: [summary for Dev/QA teams]'', project_id=''{project_name}'', agent_role=''ARCH'')'
+memory_commands:
+  store: 'store_memory(''[PREFIX]: content'', project_id=''{project_name}'', agent_role=''ARCH'')'
+  search: search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='ARCH')
+  update: 'update_memory(''[PREFIX]: updated_content'', project_id=''{project_name}'', agent_role=''ARCH'')'
+  delete: delete_memory('[PREFIX]', project_id='{project_name}', agent_role='ARCH')
+memory_rules: 1. "ALWAYS search memory before starting new architectural work" 2. "NEVER duplicate existing architectural decisions without reviewing memory first" 3. "ALWAYS use proper ARCH_ prefixes when storing architectural decisions" 4. "ALWAYS search for upstream BA and PM decisions that impact architecture" 5. "ALWAYS prepare handoff summaries with proper prefixes for downstream teams" 6. "Memory search failures should trigger clarification, not assumption" 7. "Store both raw requirements AND interpreted architectural decisions with different prefixes"
+command_examples:
+  memory_aware_architecture: |
+    *create-full-stack-architecture {system_name}
+    # Will automatically:
+    # 1. search_memory("ARCH_DECISION ARCH_TECH BA_REQ system requirements", project_id="{project_name}", agent_role="ARCH")
+    # 2. Review existing architectural decisions before starting
+    # 3. store_memory("ARCH_DECISION: {architecture_decisions}", project_id="{project_name}", agent_role="ARCH")
+  context_aware_design: |
+    *create-backend-architecture
+    # Will automatically:
+    # 1. search_memory("ARCH_DECISION ARCH_TECH BA_REQ PM_SCOPE backend", project_id="{project_name}", agent_role="ARCH")
+    # 2. search_memory("DEV_PATTERN DEV_CODE existing implementation", project_id="{project_name}", agent_role="ARCH")
+    # 3. Build on existing patterns and constraints
+    # 4. store_memory("ARCH_TECH: {technology_selections}", project_id="{project_name}", agent_role="ARCH")
 ```
 ==================== END: .bmad-core/agents/architect.md ====================
 
 ==================== START: .bmad-core/tasks/create-deep-research-prompt.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Create Deep Research Prompt Task
 
 This task helps create comprehensive research prompts for various types of deep analysis. It can process inputs from brainstorming sessions, project briefs, market research, or specific research questions to generate targeted prompts for deeper investigation.
@@ -388,6 +488,7 @@ CRITICAL: collaborate with the user to develop specific, actionable research que
 
 ==================== START: .bmad-core/tasks/create-doc.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Create Document from Template (YAML Driven)
 
 ## ⚠️ CRITICAL EXECUTION NOTICE ⚠️
@@ -493,6 +594,7 @@ User can type `#yolo` to toggle to YOLO mode (process all sections at once).
 
 ==================== START: .bmad-core/tasks/document-project.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Document an Existing Project
 
 ## Purpose
@@ -840,6 +942,7 @@ Apply the advanced elicitation task after major sections to refine based on user
 
 ==================== START: .bmad-core/tasks/execute-checklist.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Checklist Validation Task
 
 This task provides instructions for validating documentation against checklists. The agent MUST follow these instructions to ensure thorough and systematic validation of documents.
@@ -927,6 +1030,218 @@ The LLM will:
 - Present a final report with pass/fail rates and key findings
 - Offer to provide detailed analysis of any section, especially those with warnings or failures
 ==================== END: .bmad-core/tasks/execute-checklist.md ====================
+
+==================== START: .bmad-core/tasks/shard-doc.md ====================
+<!-- Powered by BMAD™ Core -->
+
+# Document Sharding Task
+
+## Purpose
+
+- Split a large document into multiple smaller documents based on level 2 sections
+- Create a folder structure to organize the sharded documents
+- Maintain all content integrity including code blocks, diagrams, and markdown formatting
+
+## MEMORY-AWARE Sharding Process
+
+Before beginning any sharding, perform memory operations to enhance context awareness:
+
+### Memory Initialization
+
+1. Search project memory for previous sharding patterns:
+   ```
+   search_memory("PO_STORY SM_STORY document sharding patterns", project_id="{project_name}")
+   ```
+2. Store task initiation for tracking:
+   ```
+   store_memory("PO_STORY: Starting sharding of document {document_name}", project_id="{project_name}")
+   ```
+
+## Primary Method: Automatic with markdown-tree
+
+[[LLM: First, check if markdownExploder is set to true in .bmad-core/core-config.yaml. If it is, attempt to run the command: `md-tree explode {input file} {output path}`.
+
+If the command succeeds, inform the user that the document has been sharded successfully and STOP - do not proceed further.
+
+If the command fails (especially with an error indicating the command is not found or not available), inform the user: "The markdownExploder setting is enabled but the md-tree command is not available. Please either:
+
+1. Install @kayvan/markdown-tree-parser globally with: `npm install -g @kayvan/markdown-tree-parser`
+2. Or set markdownExploder to false in .bmad-core/core-config.yaml
+
+**IMPORTANT: STOP HERE - do not proceed with manual sharding until one of the above actions is taken.**"
+
+If markdownExploder is set to false, inform the user: "The markdownExploder setting is currently false. For better performance and reliability, you should:
+
+1. Set markdownExploder to true in .bmad-core/core-config.yaml
+2. Install @kayvan/markdown-tree-parser globally with: `npm install -g @kayvan/markdown-tree-parser`
+
+I will now proceed with the manual sharding process."
+
+Then proceed with the manual method below ONLY if markdownExploder is false.]]
+
+### Installation and Usage
+
+1. **Install globally**:
+
+   ```bash
+   npm install -g @kayvan/markdown-tree-parser
+   ```
+
+2. **Use the explode command**:
+
+   ```bash
+   # For PRD
+   md-tree explode docs/prd.md docs/prd
+
+   # For Architecture
+   md-tree explode docs/architecture.md docs/architecture
+
+   # For any document
+   md-tree explode [source-document] [destination-folder]
+   ```
+
+3. **What it does**:
+   - Automatically splits the document by level 2 sections
+   - Creates properly named files
+   - Adjusts heading levels appropriately
+   - Handles all edge cases with code blocks and special markdown
+
+If the user has @kayvan/markdown-tree-parser installed, use it and skip the manual process below.
+
+---
+
+## Manual Method (if @kayvan/markdown-tree-parser is not available or user indicated manual method)
+
+### Task Instructions
+
+1. Identify Document and Target Location
+
+- Determine which document to shard (user-provided path)
+- Create a new folder under `docs/` with the same name as the document (without extension)
+- Example: `docs/prd.md` → create folder `docs/prd/`
+
+2. Parse and Extract Sections
+
+CRITICAL AEGNT SHARDING RULES:
+
+1. Read the entire document content
+2. Identify all level 2 sections (## headings)
+3. For each level 2 section:
+   - Extract the section heading and ALL content until the next level 2 section
+   - Include all subsections, code blocks, diagrams, lists, tables, etc.
+   - Be extremely careful with:
+     - Fenced code blocks (```) - ensure you capture the full block including closing backticks and account for potential misleading level 2's that are actually part of a fenced section example
+     - Mermaid diagrams - preserve the complete diagram syntax
+     - Nested markdown elements
+     - Multi-line content that might contain ## inside code blocks
+
+CRITICAL: Use proper parsing that understands markdown context. A ## inside a code block is NOT a section header.]]
+
+### 3. Create Individual Files
+
+For each extracted section:
+
+1. **Generate filename**: Convert the section heading to lowercase-dash-case
+   - Remove special characters
+   - Replace spaces with dashes
+   - Example: "## Tech Stack" → `tech-stack.md`
+
+2. **Adjust heading levels**:
+   - The level 2 heading becomes level 1 (# instead of ##) in the sharded new document
+   - All subsection levels decrease by 1:
+
+   ```txt
+     - ### → ##
+     - #### → ###
+     - ##### → ####
+     - etc.
+   ```
+
+3. **Write content**: Save the adjusted content to the new file
+
+### 4. Create Index File
+
+Create an `index.md` file in the sharded folder that:
+
+1. Contains the original level 1 heading and any content before the first level 2 section
+2. Lists all the sharded files with links:
+
+```markdown
+# Original Document Title
+
+[Original introduction content if any]
+
+## Sections
+
+- [Section Name 1](./section-name-1.md)
+- [Section Name 2](./section-name-2.md)
+- [Section Name 3](./section-name-3.md)
+  ...
+```
+
+### 5. Preserve Special Content
+
+1. **Code blocks**: Must capture complete blocks including:
+
+   ```language
+   content
+   ```
+
+2. **Mermaid diagrams**: Preserve complete syntax:
+
+   ```mermaid
+   graph TD
+   ...
+   ```
+
+3. **Tables**: Maintain proper markdown table formatting
+
+4. **Lists**: Preserve indentation and nesting
+
+5. **Inline code**: Preserve backticks
+
+6. **Links and references**: Keep all markdown links intact
+
+7. **Template markup**: If documents contain {{placeholders}} ,preserve exactly
+
+### 6. Validation
+
+After sharding:
+
+1. Verify all sections were extracted
+2. Check that no content was lost
+3. Ensure heading levels were properly adjusted
+4. Confirm all files were created successfully
+
+### 7. Report Results
+
+Provide a summary:
+
+```text
+Document sharded successfully:
+- Source: [original document path]
+- Destination: docs/[folder-name]/
+- Files created: [count]
+- Sections:
+  - section-name-1.md: "Section Title 1"
+  - section-name-2.md: "Section Title 2"
+  ...
+```
+
+Store sharding results in memory:
+
+```
+store_memory("PO_STORY: Completed sharding of document {document_name} into {file_count} sections", project_id="{project_name}")
+store_memory("PO_STORY_DETAILS: Sharded document stored at docs/{folder_name}/ with index file", project_id="{project_name}")
+```
+
+## Important Notes
+
+- Never modify the actual content, only adjust heading levels
+- Preserve ALL formatting, including whitespace where significant
+- Handle edge cases like sections with code blocks containing ## symbols
+- Ensure the sharding is reversible (could reconstruct the original from shards)
+==================== END: .bmad-core/tasks/shard-doc.md ====================
 
 ==================== START: .bmad-core/templates/architecture-tmpl.yaml ====================
 # <!-- Powered by BMAD™ Core -->
@@ -1694,8 +2009,8 @@ sections:
           - **UI/UX Consistency:** {{ui_compatibility}}
           - **Performance Impact:** {{performance_constraints}}
 
-  - id: tech-stack-alignment
-    title: Tech Stack Alignment
+  - id: tech-stack
+    title: Tech Stack
     instruction: |
       Ensure new components align with existing technology choices:
 
@@ -1857,8 +2172,8 @@ sections:
 
           **Error Handling:** {{error_handling_strategy}}
 
-  - id: source-tree-integration
-    title: Source Tree Integration
+  - id: source-tree
+    title: Source Tree
     instruction: |
       Define how new code will integrate with existing project structure:
 
@@ -1927,7 +2242,7 @@ sections:
           **Monitoring:** {{monitoring_approach}}
 
   - id: coding-standards
-    title: Coding Standards and Conventions
+    title: Coding Standards
     instruction: |
       Ensure new code follows existing project conventions:
 
@@ -3113,6 +3428,7 @@ sections:
 
 ==================== START: .bmad-core/checklists/architect-checklist.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Architect Solution Validation Checklist
 
 This checklist serves as a comprehensive framework for the Architect to validate the technical design and architecture before development execution. The Architect should systematically work through each item, ensuring the architecture is robust, scalable, secure, and aligned with the product requirements.
@@ -3555,6 +3871,7 @@ After presenting the report, ask the user if they would like detailed analysis o
 
 ==================== START: .bmad-core/data/technical-preferences.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # User-Defined Preferred Patterns and Preferences
 
 None Listed

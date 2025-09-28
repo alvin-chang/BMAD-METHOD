@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "local-memori": {
+      "httpUrl": "http://localhost:4004/mcp",
+      "headers": {}
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    }
+  }
+}
+

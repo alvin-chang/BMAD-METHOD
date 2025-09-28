@@ -72,11 +72,11 @@ orchestrator:
     coordination: true
     max_workload: 10
     auto_balance: true
-    communication_timeout: 30000 # milliseconds
+    communication_timeout: 30000  # milliseconds
 
   # Performance Monitoring Settings
   monitoring:
-    health_check_interval: 60000 # milliseconds
+    health_check_interval: 60000  # milliseconds
     bottleneck_detection: true
     delivery_prediction: true
     analytics_collection: true
@@ -84,7 +84,7 @@ orchestrator:
   # Cross-Agent Sharing Settings
   cross_agent:
     sharing: true
-    sync_interval: 300000 # milliseconds (5 minutes)
+    sync_interval: 300000  # milliseconds (5 minutes)
     message_retention_days: 7
 
   # Enhanced Features

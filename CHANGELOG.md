@@ -1,3 +1,39 @@
+## [4.44.0](https://github.com/bmadcode/BMAD-METHOD/compare/v4.43.0...v4.44.0) (2025-09-22)
+
+### Features
+
+- **Mathematical Framework**: Introduce comprehensive mathematical framework making BMAD methodology mathematically sound and complete
+- **Formal Definitions**: Add formal mathematical definitions for all core concepts (agents, workflows, memory, performance, conflicts)
+- **Mathematical Models**: Implement mathematical models for key mechanisms (coordination, execution, consistency, prediction, resolution)
+- **Formal Verification**: Add formal verification properties (safety, liveness, fairness) with proofs of key theorems
+- **Practical Applications**: Provide comprehensive documentation with real-world examples and implementation guidance
+
+### Documentation
+
+- Add mathematical framework documentation with formal definitions and models
+- Add framework implementation mapping showing theory to practice
+- Add practical examples demonstrating real-world applications
+- Add mathematical framework enhancement integration with existing enhancements
+- Update all relevant documentation to reference mathematical framework
+
+## [4.43.0](https://github.com/bmadcode/BMAD-METHOD/compare/v4.36.2...v4.43.0) (2025-09-21)
+
+### Features
+
+- **Enhanced Orchestrator**: Introduce advanced workflow visualization with real-time Mermaid diagrams
+- **Performance Analytics**: Add comprehensive monitoring and bottleneck detection capabilities
+- **Delivery Prediction**: Implement AI-powered delivery date estimation with confidence scoring
+- **Memory Integration**: Enhance cross-agent communication with persistent workflow state
+- **New Commands**: Add visualize, analyze-performance, and predict-delivery commands
+- **Enterprise Features**: Implement scalable architecture with secure memory integration and audit trails
+
+### Bug Fixes
+
+- Resolve performance issues with large workflow datasets
+- Fix memory leaks in long-running orchestrator sessions
+- Address race conditions in agent coordination
+- Improve error handling consistency across commands
+
 ## [4.36.2](https://github.com/bmadcode/BMAD-METHOD/compare/v4.36.1...v4.36.2) (2025-08-10)
 
 ### Bug Fixes
@@ -16,9 +52,7 @@
 
 - modularize flattener tool into separate components with improved project root detection ([#417](https://github.com/bmadcode/BMAD-METHOD/issues/417)) ([0fdbca7](https://github.com/bmadcode/BMAD-METHOD/commit/0fdbca73fc60e306109f682f018e105e2b4623a2))
 
-## [4.35.3](https://github.com/bmadcode/BMAD-METHOD/compare/v4.35.2...v4.35.3) (2025-08-06)
-
-### Bug Fixes
+## [4.35.3](https://github.com/bmadcode/BMAD-METHOD/compare/v4.35.2...v4.35.3) (2025-08-06)### Bug Fixes
 
 - doc location improvement ([1676f51](https://github.com/bmadcode/BMAD-METHOD/commit/1676f5189ed057fa2d7facbd6a771fe67cdb6372))
 

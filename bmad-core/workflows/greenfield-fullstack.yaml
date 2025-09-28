@@ -13,6 +13,12 @@ workflow:
     - prototype
     - mvp
 
+  # MEMORY-AWARE Workflow
+  # Before starting, search project memory for relevant patterns:
+  # search_memory("BA_REQ BA_INSIGHT BA_BUSINESS similar projects", project_id="{project_name}")
+  # Store workflow initiation:
+  # store_memory("BA_REQ: Starting greenfield-fullstack workflow for {project_name}", project_id="{project_name}")
+
   sequence:
     - agent: analyst
       creates: project-brief.md
@@ -20,11 +26,16 @@ workflow:
         - brainstorming_session
         - market_research_prompt
       notes: "Can do brainstorming first, then optional deep research before creating project brief. SAVE OUTPUT: Copy final project-brief.md to your project's docs/ folder."
+      # Memory operations:
+      # store_memory("BA_REQ: Created project brief for {project_name}", project_id="{project_name}")
 
     - agent: pm
       creates: prd.md
       requires: project-brief.md
       notes: "Creates PRD from project brief using prd-tmpl. SAVE OUTPUT: Copy final prd.md to your project's docs/ folder."
+      # Memory operations:
+      # search_memory("PM_SCOPE PM_TIMELINE similar PRDs", project_id="{project_name}")
+      # store_memory("PM_SCOPE: Created PRD for {project_name}", project_id="{project_name}")
 
     - agent: ux-expert
       creates: front-end-spec.md
@@ -32,12 +43,17 @@ workflow:
       optional_steps:
         - user_research_prompt
       notes: "Creates UI/UX specification using front-end-spec-tmpl. SAVE OUTPUT: Copy final front-end-spec.md to your project's docs/ folder."
+      # Memory operations:
+      # search_memory("UX_DESIGN UX_USER similar UI specs", project_id="{project_name}")
+      # store_memory("UX_DESIGN: Created front-end spec for {project_name}", project_id="{project_name}")
 
     - agent: ux-expert
       creates: v0_prompt (optional)
       requires: front-end-spec.md
       condition: user_wants_ai_generation
       notes: "OPTIONAL BUT RECOMMENDED: Generate AI UI prompt for tools like v0, Lovable, etc. Use the generate-ai-frontend-prompt task. User can then generate UI in external tool and download project structure."
+      # Memory operations:
+      # store_memory("UX_DESIGN: Generated AI frontend prompt for {project_name}", project_id="{project_name}")
 
     - agent: architect
       creates: fullstack-architecture.md
@@ -48,6 +64,9 @@ workflow:
         - technical_research_prompt
         - review_generated_ui_structure
       notes: "Creates comprehensive architecture using fullstack-architecture-tmpl. If user generated UI with v0/Lovable, can incorporate the project structure into architecture. May suggest changes to PRD stories or new stories. SAVE OUTPUT: Copy final fullstack-architecture.md to your project's docs/ folder."
+      # Memory operations:
+      # search_memory("ARCH_DECISION ARCH_TECH similar architectures", project_id="{project_name}")
+      # store_memory("ARCH_DECISION: Created fullstack architecture for {project_name}", project_id="{project_name}")
 
     - agent: pm
       updates: prd.md (if needed)
@@ -116,6 +135,9 @@ workflow:
         - Implements approved story
         - Updates File List with all changes
         - Marks story as "Review" when complete
+      # Memory operations:
+      # search_memory("DEV_CODE DEV_PATTERN similar implementations", project_id="{project_name}")
+      # store_memory("DEV_CODE: Implemented story for {project_name}", project_id="{project_name}")
 
     - agent: qa
       action: review_implementation
@@ -128,6 +150,9 @@ workflow:
         - Fixes small issues directly
         - Leaves checklist for remaining items
         - Updates story status (Review → Done or stays Review)
+      # Memory operations:
+      # search_memory("QA_TEST QA_BUG similar reviews", project_id="{project_name}")
+      # store_memory("QA_TEST: Reviewed implementation for {project_name}", project_id="{project_name}")
 
     - agent: dev
       action: address_qa_feedback
@@ -162,6 +187,9 @@ workflow:
         Project development phase complete.
 
         Reference: {root}/data/bmad-kb.md#IDE Development Workflow
+      # Memory operations:
+      # store_memory("PROJECT: Completed development of {project_name}", project_id="{project_name}")
+      # store_memory("PROJECT_SUMMARY: {project_name} completed with {story_count} stories implemented", project_id="{project_name}")
 
   flow_diagram: |
     ```mermaid

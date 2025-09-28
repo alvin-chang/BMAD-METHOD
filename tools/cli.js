@@ -1,3 +1,8 @@
+#!/usr/bin/env node
+
+// BMAD™ CLI Tool
+// Copyright © 2025 BMAD™. All rights reserved.
+
 const { Command } = require('commander');
 const WebBuilder = require('./builders/web-builder');
 const V3ToV4Upgrader = require('./upgraders/v3-to-v4-upgrader');
@@ -147,6 +152,226 @@ program
       dryRun: options.dryRun,
       backup: options.backup,
     });
+  });
+
+program
+  .command('memory:search')
+  .description('Search project memory for specific patterns')
+  .option('-p, --pattern <pattern>', 'Search pattern (e.g., "DEV_CODE DEV_PATTERN")')
+  .option('-r, --project <name>', 'Project name')
+  .action(async (options) => {
+    console.log('To search memory, use the search_memory function in an MCP-enabled environment:');
+    console.log(
+      `search_memory("${options.pattern || 'pattern'}", project_id="${options.project || 'project_name'}")`,
+    );
+  });
+
+program
+  .command('memory:store')
+  .description('Store information in project memory')
+  .option('-c, --content <content>', 'Content to store (e.g., "DEV_CODE: Implementation details")')
+  .option('-r, --project <name>', 'Project name')
+  .action(async (options) => {
+    console.log('To store memory, use the store_memory function in an MCP-enabled environment:');
+    console.log(
+      `store_memory("${options.content || 'content'}", project_id="${options.project || 'project_name'}")`,
+    );
+  });
+
+program
+  .command('memory:init')
+  .description('Initialize memory system for a project')
+  .action(async () => {
+    console.log('Memory system initialization:');
+    console.log('1. Configure memory settings in .bmad-core/core-config.yaml');
+    console.log('2. Memory storage location: .ai/memory/');
+    console.log(
+      '\nMemory system is automatically enabled when using BMAD agents in MCP-enabled environments.',
+    );
+  });
+
+program
+  .command('orchestrator-help')
+  .description('Show help for the BMAD Orchestrator CLI')
+  .action(async () => {
+    try {
+      // Dynamically import the orchestrator CLI
+      const orchestratorPath = path.join(__dirname, '..', 'bmad-core', 'orchestrator', 'cli.js');
+      
+      // Execute the orchestrator CLI with help command
+      const { spawn } = require('child_process');
+      const orchestrator = spawn('node', [orchestratorPath, 'help'], {
+        stdio: 'inherit'
+      });
+      
+      // Handle orchestrator exit
+      orchestrator.on('close', (code) => {
+        process.exit(code);
+      });
+      
+      // Handle orchestrator errors
+      orchestrator.on('error', (error) => {
+        console.error('Failed to start orchestrator:', error.message);
+        process.exit(1);
+      });
+    } catch (error) {
+      console.error('Failed to start orchestrator:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('orchestrator-status')
+  .description('Show status from the BMAD Orchestrator CLI')
+  .action(async () => {
+    try {
+      // Dynamically import the orchestrator CLI
+      const orchestratorPath = path.join(__dirname, '..', 'bmad-core', 'orchestrator', 'cli.js');
+      
+      // Execute the orchestrator CLI with status command
+      const { spawn } = require('child_process');
+      const orchestrator = spawn('node', [orchestratorPath, 'status'], {
+        stdio: 'inherit'
+      });
+      
+      // Handle orchestrator exit
+      orchestrator.on('close', (code) => {
+        process.exit(code);
+      });
+      
+      // Handle orchestrator errors
+      orchestrator.on('error', (error) => {
+        console.error('Failed to start orchestrator:', error.message);
+        process.exit(1);
+      });
+    } catch (error) {
+      console.error('Failed to start orchestrator:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('orchestrator-agents')
+  .description('List agents from the BMAD Orchestrator CLI')
+  .action(async () => {
+    try {
+      // Dynamically import the orchestrator CLI
+      const orchestratorPath = path.join(__dirname, '..', 'bmad-core', 'orchestrator', 'cli.js');
+      
+      // Execute the orchestrator CLI with agents command
+      const { spawn } = require('child_process');
+      const orchestrator = spawn('node', [orchestratorPath, 'agents'], {
+        stdio: 'inherit'
+      });
+      
+      // Handle orchestrator exit
+      orchestrator.on('close', (code) => {
+        process.exit(code);
+      });
+      
+      // Handle orchestrator errors
+      orchestrator.on('error', (error) => {
+        console.error('Failed to start orchestrator:', error.message);
+        process.exit(1);
+      });
+    } catch (error) {
+      console.error('Failed to start orchestrator:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('orchestrator-workflows')
+  .description('List workflows from the BMAD Orchestrator CLI')
+  .action(async () => {
+    try {
+      // Dynamically import the orchestrator CLI
+      const orchestratorPath = path.join(__dirname, '..', 'bmad-core', 'orchestrator', 'cli.js');
+      
+      // Execute the orchestrator CLI with workflows command
+      const { spawn } = require('child_process');
+      const orchestrator = spawn('node', [orchestratorPath, 'workflows'], {
+        stdio: 'inherit'
+      });
+      
+      // Handle orchestrator exit
+      orchestrator.on('close', (code) => {
+        process.exit(code);
+      });
+      
+      // Handle orchestrator errors
+      orchestrator.on('error', (error) => {
+        console.error('Failed to start orchestrator:', error.message);
+        process.exit(1);
+      });
+    } catch (error) {
+      console.error('Failed to start orchestrator:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('orchestrator-create-workflow')
+  .description('Create a workflow using the BMAD Orchestrator CLI')
+  .argument('<name>', 'Workflow name')
+  .argument('<agents>', 'Comma-separated list of agents involved')
+  .argument('<phases>', 'Comma-separated list of workflow phases')
+  .action(async (name, agents, phases) => {
+    try {
+      // Dynamically import the orchestrator CLI
+      const orchestratorPath = path.join(__dirname, '..', 'bmad-core', 'orchestrator', 'cli.js');
+      
+      // Execute the orchestrator CLI with create-workflow command
+      const { spawn } = require('child_process');
+      const orchestrator = spawn('node', [orchestratorPath, 'create-workflow', name, agents, phases], {
+        stdio: 'inherit'
+      });
+      
+      // Handle orchestrator exit
+      orchestrator.on('close', (code) => {
+        process.exit(code);
+      });
+      
+      // Handle orchestrator errors
+      orchestrator.on('error', (error) => {
+        console.error('Failed to start orchestrator:', error.message);
+        process.exit(1);
+      });
+    } catch (error) {
+      console.error('Failed to start orchestrator:', error.message);
+      process.exit(1);
+    }
+  });
+
+program
+  .command('orchestrator-visualize')
+  .description('Visualize a workflow using the BMAD Orchestrator CLI')
+  .argument('<workflowId>', 'Workflow ID')
+  .action(async (workflowId) => {
+    try {
+      // Dynamically import the orchestrator CLI
+      const orchestratorPath = path.join(__dirname, '..', 'bmad-core', 'orchestrator', 'cli.js');
+      
+      // Execute the orchestrator CLI with visualize command
+      const { spawn } = require('child_process');
+      const orchestrator = spawn('node', [orchestratorPath, 'visualize', workflowId], {
+        stdio: 'inherit'
+      });
+      
+      // Handle orchestrator exit
+      orchestrator.on('close', (code) => {
+        process.exit(code);
+      });
+      
+      // Handle orchestrator errors
+      orchestrator.on('error', (error) => {
+        console.error('Failed to start orchestrator:', error.message);
+        process.exit(1);
+      });
+    } catch (error) {
+      console.error('Failed to start orchestrator:', error.message);
+      process.exit(1);
+    }
   });
 
 program.parse();

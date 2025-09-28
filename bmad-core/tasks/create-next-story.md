@@ -6,6 +6,21 @@
 
 To identify the next logical story based on project progress and epic definitions, and then to prepare a comprehensive, self-contained, and actionable story file using the `Story Template`. This task ensures the story is enriched with all necessary technical context, requirements, and acceptance criteria, making it ready for efficient implementation by a Developer Agent with minimal need for additional research or finding its own context.
 
+## MEMORY-AWARE Task Execution
+
+Before beginning any task execution, perform memory operations to enhance context awareness:
+
+### Memory Initialization
+
+1. Search project memory for relevant story patterns and decisions:
+   ```
+   search_memory("SM_STORY PO_STORY DEV_CODE DEV_PATTERN previous stories", project_id="{project_name}")
+   ```
+2. Store task initiation for tracking:
+   ```
+   store_memory("SM_STORY: Starting creation of story {epicNum}.{storyNum}", project_id="{project_name}")
+   ```
+
 ## SEQUENTIAL Task Execution (Do not proceed until current Task is complete)
 
 ### 0. Load Core Configuration and Check Workflow
@@ -27,6 +42,10 @@ To identify the next logical story based on project progress and epic definition
   - **CRITICAL**: NEVER automatically skip to another epic. User MUST explicitly instruct which story to create.
 - **If no story files exist:** The next story is ALWAYS 1.1 (first story of first epic)
 - Announce the identified story to the user: "Identified next story for preparation: {epicNum}.{storyNum} - {Story Title}"
+- Store story identification in memory:
+  ```
+  store_memory("SM_STORY: Identified story {epicNum}.{storyNum} for preparation", project_id="{project_name}")
+  ```
 
 ### 2. Gather Story Requirements and Previous Story Context
 
@@ -36,6 +55,10 @@ To identify the next logical story based on project progress and epic definition
   - Implementation deviations and technical decisions
   - Challenges encountered and lessons learned
 - Extract relevant insights that inform the current story's preparation
+- Search memory for relevant patterns from previous stories:
+  ```
+  search_memory("SM_STORY DEV_PATTERN DEV_CODE story {epicNum} patterns", project_id="{project_name}")
+  ```
 
 ### 3. Gather Architecture Context
 
@@ -105,6 +128,11 @@ ALWAYS cite source documents: `[Source: architecture/{filename}.md#{section}]`
 - Ensure tasks align with both epic requirements and architecture constraints
 - Update status to "Draft" and save the story file
 - Execute `{root}/tasks/execute-checklist` `{root}/checklists/story-draft-checklist`
+- Store completed story information in memory:
+  ```
+  store_memory("SM_STORY: Completed draft of story {epicNum}.{storyNum} - {Story Title}", project_id="{project_name}")
+  store_memory("SM_STORY_DETAILS: Story {epicNum}.{storyNum} contains {task_count} tasks and references {source_count} architecture documents", project_id="{project_name}")
+  ```
 - Provide summary to user including:
   - Story created: `{devStoryLocation}/{epicNum}.{storyNum}.story.md`
   - Status: Draft

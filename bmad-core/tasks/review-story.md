@@ -4,6 +4,21 @@
 
 Perform a comprehensive test architecture review with quality gate decision. This adaptive, risk-aware review creates both a story update and a detailed gate file.
 
+## MEMORY-AWARE Review Process
+
+Before beginning any review, perform memory operations to enhance context awareness:
+
+### Memory Initialization
+
+1. Search project memory for relevant review patterns and previous issues:
+   ```
+   search_memory("QA_TEST QA_BUG DEV_CODE DEV_PATTERN previous reviews {story_id}", project_id="{project_name}")
+   ```
+2. Store task initiation for tracking:
+   ```
+   store_memory("QA_TEST: Starting review of story {story_id} - {story_title}", project_id="{project_name}")
+   ```
+
 ## Inputs
 
 ```yaml
@@ -313,4 +328,10 @@ After review:
 2. Create the gate file in directory from `qa.qaLocation/gates`
 3. Recommend status: "Ready for Done" or "Changes Required" (owner decides)
 4. If files were modified, list them in QA Results and ask Dev to update File List
-5. Always provide constructive feedback and actionable recommendations
+5. Store review results in memory:
+   ```
+   store_memory("QA_TEST: Completed review of story {story_id} - {story_title}", project_id="{project_name}")
+   store_memory("QA_TEST_RESULTS: Story {story_id} received {gate_status} with quality score {quality_score}", project_id="{project_name}")
+   store_memory("QA_TEST_ISSUES: Found {issue_count} issues in story {story_id} - {high_severity_count} high, {medium_severity_count} medium", project_id="{project_name}")
+   ```
+6. Always provide constructive feedback and actionable recommendations

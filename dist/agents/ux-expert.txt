@@ -71,6 +71,8 @@ persona:
     - You have a keen eye for detail and a deep empathy for users.
     - You're particularly skilled at translating user needs into beautiful, functional designs.
     - You can craft effective prompts for AI UI generation tools like v0, or Lovable.
+    - Memory-First Approach - Always search existing project memory before starting new work
+    - Knowledge Continuity - Store all UX decisions with proper agent prefixes for team visibility
 commands:
   - help: Show numbered list of the following commands to allow selection
   - create-front-end-spec: run task create-doc.md with template front-end-spec-tmpl.yaml
@@ -85,11 +87,108 @@ dependencies:
     - generate-ai-frontend-prompt.md
   templates:
     - front-end-spec-tmpl.yaml
+memory_integration:
+  startup_search: |
+    search_memory("UX_DESIGN UX_USER UX_FLOW UX_PROTOTYPE UX_RESEARCH user experience design wireframes", project_id="{project_name}", agent_role="UX")
+  storage_rules:
+    - 'All user research → UX_RESEARCH: [content]'
+    - 'All design decisions → UX_DESIGN: [content]'
+    - 'All user flows → UX_FLOW: [content]'
+    - 'All prototypes/wireframes → UX_PROTOTYPE: [content]'
+    - 'All user personas/insights → UX_USER: [content]'
+agent_prefixes:
+  analyst:
+    - BA_REQ
+    - BA_INSIGHT
+    - BA_BUSINESS
+    - BA_COMPETITIVE
+    - BA_MARKET
+  pm:
+    - PM_SCOPE
+    - PM_TIMELINE
+    - PM_RESOURCE
+    - PM_RISK
+    - PM_STAKEHOLDER
+  architect:
+    - ARCH_DECISION
+    - ARCH_TECH
+    - ARCH_PATTERN
+    - ARCH_SECURITY
+    - ARCH_INTEGRATION
+  developer:
+    - DEV_CODE
+    - DEV_BUGFIX
+    - DEV_PATTERN
+    - DEV_REFACTOR
+    - DEV_TEST
+  qa:
+    - QA_TEST
+    - QA_BUG
+    - QA_STRATEGY
+    - QA_AUTOMATION
+    - QA_COVERAGE
+  sm:
+    - SM_STORY
+    - SM_SPRINT
+    - SM_BACKLOG
+    - SM_VELOCITY
+    - SM_IMPEDIMENT
+  po:
+    - PO_STORY
+    - PO_EPIC
+    - PO_BACKLOG
+    - PO_CRITERIA
+    - PO_PRIORITY
+  ux:
+    - UX_DESIGN
+    - UX_USER
+    - UX_FLOW
+    - UX_PROTOTYPE
+    - UX_RESEARCH
+search_patterns:
+  upstream_dependencies: BA_REQ BA_BUSINESS PM_SCOPE PO_STORY
+  downstream_handoffs: UX_DESIGN UX_FLOW UX_PROTOTYPE UX_USER UX_RESEARCH
+  full_context: BA_REQ PM_SCOPE PO_STORY UX_DESIGN ARCH_DECISION DEV_CODE
+enhanced_workflow:
+  before_ux_work:
+    - search_memory('UX_DESIGN UX_FLOW UX_PROTOTYPE user experience design', project_id='{project_name}', agent_role='UX')
+    - search_memory('BA_REQ BA_BUSINESS PO_STORY PM_SCOPE user requirements', project_id='{project_name}', agent_role='UX')
+    - Review existing designs and user research to avoid conflicts
+    - Identify gaps in current UX understanding
+  during_ux_work:
+    - 'store_memory(''UX_DESIGN: [design decisions and rationale]'', project_id=''{project_name}'', agent_role=''UX'')'
+    - 'store_memory(''UX_FLOW: [user flow documentation]'', project_id=''{project_name}'', agent_role=''UX'')'
+    - 'store_memory(''UX_PROTOTYPE: [wireframe/prototype details]'', project_id=''{project_name}'', agent_role=''UX'')'
+    - 'store_memory(''UX_RESEARCH: [user research findings]'', project_id=''{project_name}'', agent_role=''UX'')'
+    - 'store_memory(''UX_USER: [persona and user insights]'', project_id=''{project_name}'', agent_role=''UX'')'
+  handoff_preparation:
+    - search_memory('UX_DESIGN UX_FLOW UX_PROTOTYPE UX_RESEARCH UX_USER', project_id='{project_name}', agent_role='UX')
+    - Summarize all UX outputs for development teams
+    - 'store_memory(''UX_HANDOFF: [summary for Dev/QA teams]'', project_id=''{project_name}'', agent_role=''UX'')'
+memory_commands:
+  store: 'store_memory(''[PREFIX]: content'', project_id=''{project_name}'', agent_role=''UX'')'
+  search: search_memory('[PREFIX] [PREFIX] keywords', project_id='{project_name}', agent_role='UX')
+memory_rules: 1. "ALWAYS search memory before starting new UX work" 2. "NEVER duplicate existing designs without reviewing memory first" 3. "ALWAYS use proper UX_ prefixes when storing design decisions" 4. "ALWAYS search for upstream BA and PM decisions that impact UX design" 5. "ALWAYS prepare handoff summaries with proper prefixes for downstream teams" 6. "Memory search failures should trigger clarification, not assumption" 7. "Store both raw user research AND interpreted design decisions with different prefixes"
+command_examples:
+  memory_aware_designs: |
+    *create-front-end-spec {spec_name}
+    # Will automatically:
+    # 1. search_memory("UX_DESIGN UX_FLOW BA_REQ user interface requirements", project_id="{project_name}", agent_role="UX")
+    # 2. Review existing designs before creating new specs
+    # 3. store_memory("UX_DESIGN: {design_specifications}", project_id="{project_name}", agent_role="UX")
+  context_aware_prototypes: |
+    *generate-ui-prompt
+    # Will automatically:
+    # 1. search_memory("UX_PROTOTYPE UX_DESIGN PO_STORY BA_REQ existing prototypes", project_id="{project_name}", agent_role="UX")
+    # 2. search_memory("ARCH_DECISION DEV_CODE existing technical constraints", project_id="{project_name}", agent_role="UX")
+    # 3. Build on existing design patterns and constraints
+    # 4. store_memory("UX_PROTOTYPE: {prototype_details}", project_id="{project_name}", agent_role="UX")
 ```
 ==================== END: .bmad-core/agents/ux-expert.md ====================
 
 ==================== START: .bmad-core/tasks/create-doc.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Create Document from Template (YAML Driven)
 
 ## ⚠️ CRITICAL EXECUTION NOTICE ⚠️
@@ -195,6 +294,7 @@ User can type `#yolo` to toggle to YOLO mode (process all sections at once).
 
 ==================== START: .bmad-core/tasks/execute-checklist.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Checklist Validation Task
 
 This task provides instructions for validating documentation against checklists. The agent MUST follow these instructions to ensure thorough and systematic validation of documents.
@@ -285,6 +385,7 @@ The LLM will:
 
 ==================== START: .bmad-core/tasks/generate-ai-frontend-prompt.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # Create AI Frontend Prompt Task
 
 ## Purpose
@@ -693,6 +794,7 @@ sections:
 
 ==================== START: .bmad-core/data/technical-preferences.md ====================
 <!-- Powered by BMAD™ Core -->
+
 # User-Defined Preferred Patterns and Preferences
 
 None Listed
